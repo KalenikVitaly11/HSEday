@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">HSE day</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_map">КАРТА</string>
+    <string name="navigation_faculties">ФАКУЛЬТЕТЫ</string>
+    <string name="navigation_organisations">ОРГАНИЗАЦИИ</string>
+    <string name="navigation_aboutHSE">О ВШЭ</string>
+    <string name="navigation_posvyashenie">ПОСВЯЩЕНИЕ</string>
+    <string name="hse_day">ДЕНЬ ВЫШКИ</string>
+    <string name="departments">Направления"\n"</string>
+    <string name="contancts">Контакты"\n"</string>
+    <string name="about_hse_title">Национальный исследовательский университет \'Высшая школа экономики\'</string>
+    <string name="about_hse_text">Один из лучших вузов социально-экономичекого профиля в России. НИУ ВШЭ готовит высококлассных востребованных специалистов
+    не только в области экономических, социальных наук и менеджмента, но и по гуманитарным, физико-математическим, техническим
+    направлениям, дизайну и рекламе. Сегодня Высшая школа экономики - это: 4 кампуса(Москва, Санкт-Петербург, Нижний Новгород, Пермь) 20000 студентов. "\n\n"<b>Контакты</b>
+    "\n\n"+79104194939"\n"
+    https://www.hse.ru"\n"
+    hse.inc@gmail.com</string>
+
+    <string name="crow_0">Введите код, чтобы начать посвящение</string>
+    <string name="crow_1">Клянусь стремиться к знаниям</string>
+    <string name="crow_2">Клянусь хоть раз крикнуть "Дайте поспать" тем, кто кричит "Халява, приди!"</string>
+    <string name="crow_3">Клянусь хоть раз спеть в общежитии с друзьями под гитару песню "Растолстела"</string>
+    <string name="crow_4">Клянусь учиться в Вышке, пока три незача не разлучат нас</string>
+    <string name="crow_5">Клянусь быть верным духу Вышки</string>
+    <string name="crow_6">Клянусь с уважением относиться к студентам и преподавателям</string>
+    <string name="crow_7">Клянусь верить в себя и не сдаваться. Даже если я попал на пересдачу, на комиссию или в Армию.</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_about_organisation">AboutOrganisationActivity</string>
+</resources>

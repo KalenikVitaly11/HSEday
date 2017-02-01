@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hseday.NavigationFragments.FragmentDedication"
+    android:orientation="vertical"
+    android:background="@color/cardview_light_background">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ДАЛЕЕ"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/actionBarbackground"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp"
+        android:id="@+id/nextCrow" />
+
+    <ImageView
+        android:id="@+id/crow"
+        android:layout_width="match_parent"
+        android:src="@drawable/crow"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="330dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/crow_0"
+        android:layout_below="@+id/crow"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:textSize="26sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="center"
+        android:id="@+id/DedicationWords" />
+
+</RelativeLayout>
