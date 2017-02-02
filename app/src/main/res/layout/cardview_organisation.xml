@@ -17,8 +17,8 @@
         android:clickable="false">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/organisation_icon"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"

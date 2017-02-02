@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="faculty_name_1">Факультет коммуникаций, медиа и дизайна</string>
+    <string name="faculty_name_2">Факультет гуманитарных наук</string>
+    <string name="faculty_name_3">Факультет экономических наук</string>
+    <string name="faculty_name_4">МИЭФ</string>
+    <string name="faculty_name_5">Факультет права</string>
+    <string name="faculty_name_6">Факультет мировой экономики и мировой политики</string>
+    <string name="faculty_name_7">Факультет социальных наук</string>
+    <string name="faculty_name_8">Институт образования</string>
+    <string name="faculty_name_9">Высшая школа урбанистики</string>
+    <string name="faculty_name_10">Факультет бизнеса и менеджмента</string>
+    <string name="faculty_name_11">Факультет компьютерных наук</string>
+    <string name="faculty_name_12">Факультет математики</string>
+    <string name="faculty_name_13">МИЭМ</string>
+    <string name="faculty_name_14">Лицей НИУ ВШЭ</string>
+    <string name="faculty_name_15">ФДП НИУ ВШЭ (Факультет довузовской подготовки)</string>
+    <string name="faculty_name_16">Поступление в НИУ ВШЭ</string>
+</resources>

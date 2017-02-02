@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="organisation_name_1">AIESEC</string>
+    <string name="organisation_name_2">Best Buddies</string>
+    <string name="organisation_name_3">HSE press</string>
+    <string name="organisation_name_4">ICEF Outreach</string>
+    <string name="organisation_name_5">Keystone Society</string>
+    <string name="organisation_name_6">The Вышка</string>
+    <string name="organisation_name_7">Ассоциация интеллектуальных клубов НИУ ВШЭ (АИК)</string>
+    <string name="organisation_name_8">Ингруп СтС</string>
+    <string name="organisation_name_9">I like trip</string>
+    <string name="organisation_name_10">Студенческий спортивный клуб НИУ ВШЭ</string>
+    <string name="organisation_name_11">Школа кураторов</string>
+    <string name="organisation_name_12">Студсовет НИУ ВШЭ</string>
+    <string name="organisation_name_13">Парусная школа НИУ ВШЭ</string>
+    <string name="organisation_name_14">Театр Le Defi</string>
+    <string name="organisation_name_15">Зеленая Вышка</string>
+    <string name="organisation_name_16">Палата национальностей</string>
+    <string name="organisation_name_17">Армянский клуб</string>
+    <string name="organisation_name_18">Кейс клуб</string>
+    <string name="organisation_name_19">Клуб исторической реконструкции \'Spiritum Saeculorum\'</string>
+    <string name="organisation_name_20">Клуб \'Бизнес в стиле.RU\'</string>
+    <string name="organisation_name_21">Клуб веселых и находчивых НИУ ВШЭ</string>
+    <string name="organisation_name_22">Клуб дебатов НИУ ВШЭ</string>
+    <string name="organisation_name_23">Клуб управленческой борьбы</string>
+    <string name="organisation_name_24">Благотворительный проект \'Открой глаза\'</string>
+    <string name="organisation_name_25">Турклуб НИУ ВШЭ</string>
+    <string name="organisation_name_26">Школа тренинга</string>
+    <string name="organisation_name_27">Клуб \'Экстремальные виды спорта\' НИУ ВШЭ</string>
+</resources>
