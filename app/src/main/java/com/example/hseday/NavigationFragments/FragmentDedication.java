@@ -50,15 +50,14 @@ public class FragmentDedication extends android.app.Fragment implements View.OnC
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Count = 0;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity) getActivity()).setActionBarTitle("Посвящение");
+        Count = 0;
         View view = inflater.inflate(R.layout.fragment_dedication, container, false);
-
-
         DedicationText = (TextView) view.findViewById(R.id.DedicationWords);
         Crow = (ImageView) view.findViewById(R.id.crow);
         NextCrow = (Button) view.findViewById(R.id.nextCrow);
