@@ -1,5 +1,7 @@
 package com.example.hseday.NavigationFragments;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +28,10 @@ public class FragmentDedication extends android.app.Fragment implements View.OnC
     private String mParam2;
     TextView DedicationText;
     ImageView Crow;
+    ProgressBar ProgressBar;
     Button NextCrow;
+    Button PreviousCrow;
+    Button StartDedication;
 
     private OnFragmentInteractionListener mListener;
 
@@ -51,17 +57,27 @@ public class FragmentDedication extends android.app.Fragment implements View.OnC
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         Count = 0;
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity) getActivity()).setActionBarTitle("Посвящение");
-        Count = 0;
         View view = inflater.inflate(R.layout.fragment_dedication, container, false);
         DedicationText = (TextView) view.findViewById(R.id.DedicationWords);
         Crow = (ImageView) view.findViewById(R.id.crow);
-        NextCrow = (Button) view.findViewById(R.id.nextCrow);
+        NextCrow = (Button) view.findViewById(R.id.next_crow);
+        PreviousCrow = (Button) view.findViewById(R.id.previous_crow);
+        ProgressBar = (ProgressBar) view.findViewById(R.id.dedication_progress);
+        StartDedication = (Button) view.findViewById(R.id.start_dedication);
+
+        StartDedication.setOnClickListener(this);
         NextCrow.setOnClickListener(this);
+        PreviousCrow.setOnClickListener(this);
+
+        Count = 0;
+        ProgressBar.setProgress(0);
+        ProgressBar.setProgressTintList(ColorStateList.valueOf(Color.rgb(255, 127, 0))); //  Настройка цвета прогресс бара
         return view;
     }
 
@@ -75,37 +91,64 @@ public class FragmentDedication extends android.app.Fragment implements View.OnC
     @Override
     public void onDetach() {
         super.onDetach();
+        ProgressBar.setProgress(0);
+        mListener = null;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ProgressBar.setProgress(0);
         mListener = null;
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.nextCrow:
-                Count++;
-                switch(Count){
-                    case 1: DedicationText.setText(R.string.crow_1);
-                        Crow.setImageResource(R.drawable.crow_1);
-                        break;
-                    case 2: DedicationText.setText(R.string.crow_2);
-                        Crow.setImageResource(R.drawable.crow_2);
-                        break;
-                    case 3: DedicationText.setText(R.string.crow_3);
-                        Crow.setImageResource(R.drawable.crow_3);
-                        break;
-                    case 4: DedicationText.setText(R.string.crow_4);
-                        Crow.setImageResource(R.drawable.crow_4);
-                        break;
-                    case 5: DedicationText.setText(R.string.crow_5);
-                        Crow.setImageResource(R.drawable.crow_5);
-                        break;
-                    case 6: DedicationText.setText(R.string.crow_6);
-                        Crow.setImageResource(R.drawable.crow_6);
-                        break;
-                    case 7: DedicationText.setText(R.string.crow_7);
-                        Crow.setImageResource(R.drawable.crow_7);
-                        break;
+            case R.id.next_crow:
+                if(Count != 7){
+                    Count++;
                 }
+                break;
+            case R.id.previous_crow:
+                if(Count != 1){
+                    Count--;
+                }
+                break;
+            case R.id.start_dedication:
+                Count++;
+                StartDedication.setEnabled(false);
+                StartDedication.setVisibility(View.GONE);
+                NextCrow.setEnabled(true);
+                NextCrow.setVisibility(View.VISIBLE);
+                ProgressBar.setVisibility(View.VISIBLE);
+                PreviousCrow.setEnabled(true);
+                PreviousCrow.setVisibility(View.VISIBLE);
+                break;
+
+        }
+        ProgressBar.setProgress(Count);
+        switch(Count){
+            case 1: DedicationText.setText(R.string.crow_1);
+                Crow.setImageResource(R.drawable.crow_1);
+                break;
+            case 2: DedicationText.setText(R.string.crow_2);
+                Crow.setImageResource(R.drawable.crow_2);
+                break;
+            case 3: DedicationText.setText(R.string.crow_3);
+                Crow.setImageResource(R.drawable.crow_3);
+                break;
+            case 4: DedicationText.setText(R.string.crow_4);
+                Crow.setImageResource(R.drawable.crow_4);
+                break;
+            case 5: DedicationText.setText(R.string.crow_5);
+                Crow.setImageResource(R.drawable.crow_5);
+                break;
+            case 6: DedicationText.setText(R.string.crow_6);
+                Crow.setImageResource(R.drawable.crow_6);
+                break;
+            case 7: DedicationText.setText(R.string.crow_7);
+                Crow.setImageResource(R.drawable.crow_7);
                 break;
         }
 

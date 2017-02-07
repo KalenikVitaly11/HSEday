@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/cardview_light_background">
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ДАЛЕЕ"
@@ -15,7 +15,53 @@
         android:background="@color/actionBarbackground"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
-        android:id="@+id/nextCrow" />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/actionBarbackground"
+            android:text="@string/start_dedication"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            android:id="@+id/start_dedication"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/actionBarbackground"
+            android:text="@string/previous"
+            android:textColor="@android:color/background_light"
+            android:id="@+id/previous_crow"
+            android:drawableLeft="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:visibility="invisible"
+            android:clickable="false" />
+
+        <ProgressBar
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="false"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:max="7"
+            android:progress="1"
+            android:layout_width="120dp"
+            android:id="@+id/dedication_progress"
+            android:visibility="invisible" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/actionBarbackground"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/next"
+            android:textColor="@android:color/background_light"
+            android:id="@+id/next_crow"
+            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:visibility="invisible"
+            android:clickable="false" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/crow"

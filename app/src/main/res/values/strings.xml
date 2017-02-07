@@ -28,7 +28,9 @@
     <string name="crow_6">Клянусь с уважением относиться к студентам и преподавателям</string>
     <string name="crow_7">Клянусь верить в себя и не сдаваться. Даже если я попал на пересдачу, на комиссию или в Армию.</string>
     <string name="action_settings">Settings</string>
-
+    <string name="next">Далее</string>
+    <string name="previous">Назад</string>
+    <string name="start_dedication">Начать</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_about_organisation">AboutOrganisationActivity</string>

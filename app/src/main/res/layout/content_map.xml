@@ -9,8 +9,4 @@
     tools:context="com.example.hseday.MainActivity"
     tools:showIn="@layout/app_bar_map"
     android:background="@color/cardview_light_background">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/pushkin" />
 </RelativeLayout>

@@ -68,6 +68,7 @@ public class FragmentOrganisations extends android.app.Fragment {
         mGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(mGridLayoutManager);
+        mAdapter.setHasStableIds(true);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
