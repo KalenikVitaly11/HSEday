@@ -9,8 +9,8 @@
     <string name="navigation_aboutHSE">О ВШЭ</string>
     <string name="navigation_posvyashenie">ПОСВЯЩЕНИЕ</string>
     <string name="hse_day">ДЕНЬ ВЫШКИ</string>
-    <string name="departments">Направления"\n"</string>
-    <string name="contancts">Контакты"\n"</string>
+    <string name="departments">Направления</string>
+    <string name="contancts">Контакты</string>
     <string name="about_hse_title">Национальный исследовательский университет \'Высшая школа экономики\'</string>
     <string name="about_hse_text">Один из лучших вузов социально-экономичекого профиля в России. НИУ ВШЭ готовит высококлассных востребованных специалистов
     не только в области экономических, социальных наук и менеджмента, но и по гуманитарным, физико-математическим, техническим
@@ -34,4 +34,21 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_about_organisation">AboutOrganisationActivity</string>
+
+    <string name="map_menu_quest">Квест</string>
+    <string name="map_menu_ball">Спорт</string>
+    <string name="map_menu_paper">Лекции</string>
+    <string name="map_menu_tent">Шатры</string>
+    <string name="map_menu_microphone">Микрофоны</string>
+
+    <string name="cardview_time_string"><b>Время: </b></string>
+    <string name="cardview_person_string"><u>Лектор: </u></string>
+    <string name="cardview_title_string"><u>Название: </u></string>
+    <string name="cardview_contacts_string"><u>Контакты: </u></string>
+
+    <string name="tent_time_1">14:00 &#8211; 19:00</string>
+    <string name="tent_title_1">Веранда нетворкинга</string>
+    <string name="tent_text_1">&#8211;Игра от Бизнес-инкубатора НИУ ВШЭ \n В игре может участвовать любое количество человек. Она займет полчаса, в течение которых  люди с идеями попытаются найти все
+     необходимые ресурсы, заручиться нужной поддержкой и гордо выйти со своим стартапом на IPO. \n &#8211; Консультанты Бизнес-инкубатора \n &#8211; Библиотека</string>
+
 </resources>

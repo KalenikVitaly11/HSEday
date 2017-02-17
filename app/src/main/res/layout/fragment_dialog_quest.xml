@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    tools:context="com.example.hseday.DialogFragments.DialogQuest"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/quest_2"
+        android:adjustViewBounds="true"
+        android:id="@+id/quest_dialog_image" />
+
+    <TextView
+        android:id="@+id/quest_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Лекция"
+        android:textAlignment="textStart"
+        android:textSize="22sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="13dp" />
+
+    <TextView
+        android:id="@+id/quest_dialog_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Пропустил пару лекций и решил попросить пару конспектов у одногруппника? Но ты не ожидал, что почерк будет настолько непонятным!"
+        android:textAlignment="textStart"
+        android:textSize="16sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Введите код"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:textColorLink="@android:color/holo_blue_dark"
+        android:backgroundTint="@color/edittext_tin_indigo"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/quest_dialog_edit_code" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/check_button"
+            android:text="Назад"
+            android:background="@android:color/transparent"
+            android:textColor="@color/edittext_tin_indigo" />
+
+        <Button
+            android:id="@+id/check_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:text="Проверить"
+            android:background="@android:color/transparent"
+            android:textColor="@color/edittext_tin_indigo"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -24,9 +24,9 @@ public class AboutOrganisationActivity extends AppCompatActivity {
         OrganisationContacts = (TextView) this.findViewById(R.id.OrganisationContacts);
 
         Intent intent = getIntent();
-        OrganisationTitle.setText(intent.getIntExtra("OrganisationName", 1));
-        OrganisationInformation.setText(intent.getIntExtra("OrganisationInformation", 1));
-        OrganisationContacts.setText(intent.getIntExtra("OrganisationContacts", 1));
+        OrganisationTitle.setText(String.valueOf(intent.getIntExtra("OrganisationName", 1)));
+        OrganisationInformation.setText(String.valueOf(intent.getIntExtra("OrganisationInformation", 1)));
+        OrganisationContacts.setText(String.valueOf(intent.getIntExtra("OrganisationContacts", 1)));
 
         switch(intent.getIntExtra("OrganisationImage", 1)){
             case 0: OrganisationImage.setImageResource(R.drawable.organisation_image_1);break;

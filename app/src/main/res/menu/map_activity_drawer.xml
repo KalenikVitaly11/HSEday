@@ -4,19 +4,24 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_map"
-            android:title="@string/navigation_map" />
-        <item
-            android:id="@+id/nav_faculties"
-            android:title="@string/navigation_faculties" />
-        <item
-            android:id="@+id/nav_organisations"
-            android:title="@string/navigation_organisations" />
-        <item
-            android:id="@+id/nav_aboutHSE"
-            android:title="@string/navigation_aboutHSE" />
+            android:title="@string/navigation_map"
+            android:icon="@drawable/ic_map_black_24dp" />
         <item
             android:id="@+id/nav_posvyashenie"
-            android:title="@string/navigation_posvyashenie" />
+            android:title="@string/navigation_posvyashenie"
+            android:icon="@drawable/ic_person_black_24dp" />
+        <item
+            android:id="@+id/nav_faculties"
+            android:title="@string/navigation_faculties"
+            android:icon="@drawable/ic_school_black_24dp" />
+        <item
+            android:id="@+id/nav_organisations"
+            android:title="@string/navigation_organisations"
+            android:icon="@drawable/ic_group_black_24dp" />
+        <item
+            android:id="@+id/nav_aboutHSE"
+            android:title="@string/navigation_aboutHSE"
+            android:icon="@drawable/ic_info_black_24dp" />
     </group>
 
 </menu>

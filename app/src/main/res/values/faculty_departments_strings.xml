@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="faculty_departments_1">Факультет коммуникаций, медиа и дизайна</string>
-    <string name="faculty_departments_2">Факультет гуманитарных наук</string>
-    <string name="faculty_departments_3"></string>
-    <string name="faculty_departments_4"></string>
-    <string name="faculty_departments_5"></string>
-    <string name="faculty_departments_6"></string>
-    <string name="faculty_departments_7"></string>
-    <string name="faculty_departments_8"></string>
-    <string name="faculty_departments_9"></string>
-    <string name="faculty_departments_10"></string>
-    <string name="faculty_departments_11"></string>
-    <string name="faculty_departments_12"></string>
-    <string name="faculty_departments_13"></string>
-    <string name="faculty_departments_14"></string>
-    <string name="faculty_departments_15"></string>
-    <string name="faculty_departments_16"></string>
+    <string name="faculty_departments_1">Реклама и связи с общественностью \nЖурналистика  \nМедиакоммуникации \nДизайн</string>
+    <string name="faculty_departments_2">Филология \nФундаментальная и компьютерная лингвистика \nИстория \nИстория искусств \nКультурология
+         \nФилософия \nИностранные языки и межкультурная коммуникация</string>
+    <string name="faculty_departments_3">Экономика \nЭкономика и статистика \nСовместная программа по экономике НИУ ВШЭ и РЭШ</string>
+    <string name="faculty_departments_4">Направлений нет</string>
+    <string name="faculty_departments_5">Юриспруденция</string>
+    <string name="faculty_departments_6">Международные отношения \nМировая экономика \nСовместная программа двух дипломов НИУ ВШЭ и Лондонского университета “Международные отношения”
+         \nВостоковедение </string>
+    <string name="faculty_departments_7">Государственное и муниципальное управление \nСоциология \nПолитология \nПсихология</string>
+    <string name="faculty_departments_8">Направлений нет</string>
+    <string name="faculty_departments_9">Направлений нет</string>
+    <string name="faculty_departments_10">Логистика и управление цепями поставок \nБизнес-информатика \nМенеджмент</string>
+    <string name="faculty_departments_11">Прикладная математика и информатика \nПрограммная инженерия</string>
+    <string name="faculty_departments_12">Математика</string>
+    <string name="faculty_departments_13">Информатика и вычислительная техника \nКомпьютерная безопасность \nИнфокоммуникационные технологии и системы связи \nПрикладная математика</string>
+    <string name="faculty_departments_14">Направлений нет</string>
+    <string name="faculty_departments_15">Направлений нет</string>
+    <string name="faculty_departments_16">Направлений нет</string>
 </resources>

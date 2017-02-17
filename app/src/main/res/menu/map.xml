@@ -2,8 +2,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/map_quest_mark"
+        android:title="@string/map_menu_quest"
+        android:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/map_ball"
+        android:title="@string/map_menu_ball"
+        android:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/map_tent"
+        android:title="@string/map_menu_tent"
+        android:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/map_paper"
+        android:title="@string/map_menu_paper"
+        android:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/map_microphone"
+        android:title="@string/map_menu_microphone"
+        android:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"
         app:showAsAction="never" />
 </menu>

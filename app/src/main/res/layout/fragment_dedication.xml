@@ -28,7 +28,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/actionBarbackground"
+            android:background="@android:color/transparent"
             android:text="@string/previous"
             android:textColor="@android:color/background_light"
             android:id="@+id/previous_crow"
@@ -52,7 +52,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/actionBarbackground"
+            android:background="@android:color/transparent"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:text="@string/next"
@@ -69,7 +69,7 @@
         android:src="@drawable/crow"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_height="330dp" />
+        android:layout_height="265dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -78,10 +78,11 @@
         android:layout_below="@+id/crow"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        android:textSize="26sp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:textSize="24sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:textAlignment="center"
-        android:id="@+id/DedicationWords" />
+        android:id="@+id/DedicationWords"
+        android:textColor="@color/secondary_text" />
 
 </RelativeLayout>

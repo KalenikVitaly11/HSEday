@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="faculty_contacts_1">Факультет коммуникаций, медиа и дизайна</string>
-    <string name="faculty_contacts_2">Факультет гуманитарных наук</string>
-    <string name="faculty_contacts_3"></string>
-    <string name="faculty_contacts_4"></string>
-    <string name="faculty_contacts_5"></string>
-    <string name="faculty_contacts_6"></string>
-    <string name="faculty_contacts_7"></string>
-    <string name="faculty_contacts_8"></string>
-    <string name="faculty_contacts_9"></string>
-    <string name="faculty_contacts_10"></string>
-    <string name="faculty_contacts_11"></string>
-    <string name="faculty_contacts_12"></string>
-    <string name="faculty_contacts_13"></string>
-    <string name="faculty_contacts_14"></string>
-    <string name="faculty_contacts_15"></string>
-    <string name="faculty_contacts_16"></string>
+    <string name="faculty_contacts_1">https://www.hse.ru/ba/ad \nhttps://www.hse.ru/ba/media \nhttps://www.hse.ru/ba/bak</string>
+    <string name="faculty_contacts_2">https://www.hse.ru/ba/lang \nhttps://www.hse.ru/ba/cultural \nhttps://www.hse.ru/ba/hist \nhttps://www.hse.ru/ba/histart
+        \nhttps://www.hse.ru/ba/philology \nhttps://www.hse.ru/ba/ling \nhttps://www.hse.ru/ba/phil</string>
+    <string name="faculty_contacts_3">https://www.hse.ru/ba/economics \nhttps://www.hse.ru/ba/stat \nhttps://www.hse.ru/ba/nes </string>
+    <string name="faculty_contacts_4">Контактов нет</string>
+    <string name="faculty_contacts_5">Контактов нет</string>
+    <string name="faculty_contacts_6">https://www.hse.ru/ba/we/ \nhttps://www.hse.ru/ba/ia/ \nhttps://www.hse.ru/ba/oriental/ \nhttps://www.hse.ru/ba/ir/ </string>
+    <string name="faculty_contacts_7">https://www.hse.ru/ba/political/ \nhttps://www.hse.ru/ba/soc/ \nhttps://www.hse.ru/ba/psy/ \nhttps://www.hse.ru/ba/gmu/</string>
+    <string name="faculty_contacts_8">Контактов нет</string>
+    <string name="faculty_contacts_9">Контактов нет</string>
+    <string name="faculty_contacts_10">Контактов нет</string>
+    <string name="faculty_contacts_11">Контактов нет</string>
+    <string name="faculty_contacts_12">Контактов нет</string>
+    <string name="faculty_contacts_13">Контактов нет</string>
+    <string name="faculty_contacts_14">Контактов нет</string>
+    <string name="faculty_contacts_15">Контактов нет</string>
+    <string name="faculty_contacts_16">https://www.hse.ru/</string>
 </resources>

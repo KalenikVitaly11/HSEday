@@ -47,10 +47,11 @@ public class AboutFacultyActivity extends AppCompatActivity {
             case 16: FacultyImage.setImageResource(R.drawable.faculty_16);break;
 
         }
+        setTitle(intent.getIntExtra("FacultyName", 1));
         FacultyTitle.setText(intent.getIntExtra("FacultyName", 1));
         FacultyInformation.setText(intent.getIntExtra("FacultyInformation", 1));
         FacultyContancts.setText(intent.getIntExtra("FacultyContacts", 1));
-        FacultyDepartments.setText(intent.getIntExtra("FacultyContacts", 1));
+        FacultyDepartments.setText(intent.getIntExtra("FacultyDepartments", 1));
 
     }
 

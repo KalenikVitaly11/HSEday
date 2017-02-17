@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,7 +19,7 @@ import com.example.hseday.MainActivity;
 import com.example.hseday.R;
 
 
-public class FragmentDedication extends android.app.Fragment implements View.OnClickListener{
+public class FragmentDedication extends android.support.v4.app.Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -57,12 +59,13 @@ public class FragmentDedication extends android.app.Fragment implements View.OnC
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         Count = 0;
-
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity) getActivity()).setActionBarTitle("Посвящение");
+
         View view = inflater.inflate(R.layout.fragment_dedication, container, false);
         DedicationText = (TextView) view.findViewById(R.id.DedicationWords);
         Crow = (ImageView) view.findViewById(R.id.crow);
@@ -81,6 +84,15 @@ public class FragmentDedication extends android.app.Fragment implements View.OnC
         return view;
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.map_quest_mark).setVisible(false);
+        menu.findItem(R.id.map_ball).setVisible(false);
+        menu.findItem(R.id.map_tent).setVisible(false);
+        menu.findItem(R.id.map_paper).setVisible(false);
+        menu.findItem(R.id.map_microphone).setVisible(false);
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -91,6 +103,7 @@ public class FragmentDedication extends android.app.Fragment implements View.OnC
     @Override
     public void onDetach() {
         super.onDetach();
+        setMenuVisibility(true);
         ProgressBar.setProgress(0);
         mListener = null;
     }
@@ -153,7 +166,6 @@ public class FragmentDedication extends android.app.Fragment implements View.OnC
         }
 
     }
-
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

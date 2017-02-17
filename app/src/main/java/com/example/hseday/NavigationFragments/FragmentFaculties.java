@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,11 +19,12 @@ import com.example.hseday.RecyclerViewAdapters.RecyclerViewAdapterFaculties;
 import java.util.List;
 
 
-public class FragmentFaculties extends Fragment {
+public class FragmentFaculties extends android.support.v4.app.Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapterFaculties mAdapter;
     private String[] mList;
     private StaggeredGridLayoutManager mGridLayoutManager;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -50,16 +52,14 @@ public class FragmentFaculties extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu(true);
 
-
-        //RVAdapterInitiation(mRecyclerView, mGridLayoutManager, mAdapter);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity) getActivity()).setActionBarTitle("Факультеты");
-
         View view = inflater.inflate(R.layout.fragment_faculties, container, false);
 
         mList = getResources().getStringArray(R.array.faculties);
@@ -86,5 +86,14 @@ public class FragmentFaculties extends Fragment {
     }
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.map_quest_mark).setVisible(false);
+        menu.findItem(R.id.map_ball).setVisible(false);
+        menu.findItem(R.id.map_tent).setVisible(false);
+        menu.findItem(R.id.map_paper).setVisible(false);
+        menu.findItem(R.id.map_microphone).setVisible(false);
     }
 }

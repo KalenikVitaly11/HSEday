@@ -1,49 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_about_faculty"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.hseday.AboutFacultyActivity"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/activity_about_faculty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:id="@+id/Faculty"/>
+        android:orientation="vertical"
 
-    <TextView
-        android:text="@string/faculty_contacts_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/FacultyTitle" />
+        tools:context="com.example.hseday.AboutFacultyActivity">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/FacultyInformation" />
 
-    <TextView
-        android:text="@string/departments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/FacultyDepartments"/>
+        <ImageView
+            android:id="@+id/Faculty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
-    <TextView
-        android:text="@string/contancts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="normal|bold"/>
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/FacultyContacts"/>
-</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/FacultyTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/FacultyInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Информация"
+                android:textColor="@color/secondary_text"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/departments"
+                android:textColor="@color/third_text"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/FacultyDepartments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/third_text"
+                android:text="TextView" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/contancts"
+                android:textColor="@color/third_text"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/FacultyContacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/third_text"
+                android:text="TextView" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
