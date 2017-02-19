@@ -21,6 +21,7 @@ import com.example.hseday.DialogFragments.ActivityLection;
 import com.example.hseday.DialogFragments.DialogQuest;
 import com.example.hseday.MainActivity;
 import com.example.hseday.R;
+import com.squareup.picasso.Picasso;
 
 
 public class FragmentMap extends android.support.v4.app.Fragment implements View.OnClickListener {
@@ -74,11 +75,10 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         MapImage = (ImageView) view.findViewById(R.id.map_image);
         DialogQuest = new DialogQuest();
-        Glide
-                .with(this)
-                .load(R.drawable.map_park)
-                .into(MapImage);
 
+        Glide.with(this).load(R.drawable.map_park).into(MapImage);
+        //MapImage.setImageResource(R.drawable.map_park);
+        //Picasso.with(getContext()).load(R.drawable.map_park).into(MapImage);
 
         vScroll = (ScrollView) view.findViewById(R.id.vScroll);
         hScroll = (HorizontalScrollView) view.findViewById(R.id.hScroll);
@@ -168,9 +168,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
 
     public boolean onTouchEvent(MotionEvent event) {
         float curX, curY;
-
         switch (event.getAction()) {
-
             case MotionEvent.ACTION_DOWN:
                 mx = event.getX();
                 my = event.getY();
@@ -190,7 +188,6 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
                 hScroll.scrollBy((int) (mx - curX), (int) (my - curY));
                 break;
         }
-
         return true;
     }
 }
