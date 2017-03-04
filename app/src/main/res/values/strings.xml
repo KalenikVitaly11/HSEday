@@ -1,8 +1,10 @@
 <resources>
+    <integer name="com_vk_sdk_AppId">5907069</integer>
     <string name="app_name">HSE day</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_login_vk">Войти</string>
     <string name="navigation_map">КАРТА</string>
     <string name="navigation_faculties">ФАКУЛЬТЕТЫ</string>
     <string name="navigation_organisations">ОРГАНИЗАЦИИ</string>
