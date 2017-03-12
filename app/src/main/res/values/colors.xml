@@ -4,8 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="actionBarbackground">#25484c</color>
-    <color name="edittext_tin_indigo">#847eff</color>
+    <color name="dialog_button_color_blue">#4285f4</color>
     <color name="recycler_view_backgroung_grey">#e9e9e9</color>
     <color name="secondary_text">#c8000000</color>
     <color name="third_text">#a0000000</color>
+    <color name="vk_logo_color">#597da3</color>
 </resources>

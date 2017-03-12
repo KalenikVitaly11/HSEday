@@ -3,9 +3,11 @@ package com.example.hseday;
 
 import android.accounts.Account;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -23,11 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.hseday.DialogFragments.DialogLogin;
+import com.example.hseday.DialogFragments.DialogQuest;
 import com.example.hseday.NavigationFragments.FragmentAboutHSE;
 import com.example.hseday.NavigationFragments.FragmentDedication;
 import com.example.hseday.NavigationFragments.FragmentFaculties;
 import com.example.hseday.NavigationFragments.FragmentMap;
 import com.example.hseday.NavigationFragments.FragmentOrganisations;
+import com.facebook.AccessToken;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
@@ -56,8 +61,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentAboutHSE FragmentAboutHSE;
     FragmentDedication FragmentDedication;
     FragmentMap FragmentMap;
-    TextView UserName;
-    ImageView UserImage;
+    public static TextView UserName;
+    public static ImageView UserImage;
+    DialogLogin DialogLogin;
     private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS};
 
     @Override
@@ -67,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.navigation_window);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        DialogLogin = new DialogLogin();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -89,6 +94,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentDedication = new FragmentDedication();
         FragmentMap = new FragmentMap();
 
+
+        if(isLoggedIn() || VKSdk.isLoggedIn()){
+            navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
+            if(VKSdk.isLoggedIn()){
+                UserName.setText("Вошел через Facebook");
+                VKRequest profileInfo = VKApi.users().get();
+                profileInfo.executeWithListener(new VKRequest.VKRequestListener()
+                {
+                    @Override
+                    public void onComplete(VKResponse response) {
+                        super.onComplete(response);
+                        VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
+                        VKApiUser user = userList.get(0);
+                        UserName.setText(user.first_name + " " + user.last_name);
+                        UserImage.getLayoutParams().height = 220;
+                        UserImage.getLayoutParams().width = 220;
+                        Glide.with(getApplicationContext()).load(user.photo_50).into(UserImage);
+
+                    }
+                });
+            }
+            else{
+                UserName.setText("Вошел через ВК");
+            }
+        }
+
+
+
         //VKSdk.initialize(sdkListener, R.integer.com_vk_sdk_AppId);
         //VKUIHelper.onCreate(this);
         //VKSdk.login(this, scope);
@@ -98,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
@@ -105,16 +140,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onResult(VKAccessToken res) {
                 // Пользователь успешно авторизовался
                 //VKRequest request = VKApi.
-                Toast.makeText(getApplicationContext(), "NICE", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
                 //String userId = VKSdk.getAccessToken().userId;
             }
             @Override
             public void onError(VKError error) {
                 // Произошла ошибка авторизации (например, пользователь запретил авторизацию)
-                Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         })) {
             super.onActivityResult(requestCode, resultCode, data);
+
+
         }
     }
 
@@ -139,6 +176,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.map_quest_mark && item.isChecked() == true)Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
@@ -153,11 +197,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        item.setChecked(true);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_map) {
@@ -171,28 +214,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_posvyashenie) {
             transaction.replace(R.id.content_map, FragmentDedication);
         } else if (id == R.id.nav_login_vk) {
-            VKSdk.login(this, scope);
-            VKRequest profileInfo = VKApi.users().get();
-            profileInfo.executeWithListener(new VKRequest.VKRequestListener()
-            {
-                @Override
-                public void onComplete(VKResponse response) {
-                    super.onComplete(response);
-                    VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
-                    VKApiUser user = userList.get(0);
-                    UserName.setText(user.first_name + " " + user.last_name);
-                    UserImage.getLayoutParams().height = 200;
-                    UserImage.getLayoutParams().width = 200;
-                    Glide.with(getApplicationContext()).load(user.photo_50).into(UserImage);
-                    Toast.makeText(getApplicationContext(),user.first_name + " " + user.last_name, Toast.LENGTH_SHORT).show();
-
-                }
-            });
+            Intent intent = new Intent(this, ActivityLogin.class);
+            this.startActivity(intent);
         }
+
         transaction.addToBackStack(null);
         transaction.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
     }
 }

@@ -1,6 +1,10 @@
 <resources>
     <integer name="com_vk_sdk_AppId">5907069</integer>
+    <string name="facebook_app_id">104720850045534</string>
     <string name="app_name">HSE day</string>
+    <string name="continue_with_vk">Продолжить с VK</string>
+    <string name="or">OR</string>
+    <string name="login_back">Назад</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -52,5 +56,9 @@
     <string name="tent_title_1">Веранда нетворкинга</string>
     <string name="tent_text_1">&#8211;Игра от Бизнес-инкубатора НИУ ВШЭ \n В игре может участвовать любое количество человек. Она займет полчаса, в течение которых  люди с идеями попытаются найти все
      необходимые ресурсы, заручиться нужной поддержкой и гордо выйти со своим стартапом на IPO. \n &#8211; Консультанты Бизнес-инкубатора \n &#8211; Библиотека</string>
+
+    <string name="open_comments">Комментарии</string>
+    <string name="why_login">Войди в приложение, используя Facebook или ВКонтакте, чтобы иметь возможность комментирования событий.</string>
+    <string name="title_activity_comments">ActivityComments</string>
 
 </resources>

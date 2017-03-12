@@ -43,7 +43,7 @@
         android:gravity="center_vertical|center_horizontal"
         android:layout_gravity="center_horizontal"
         android:textColorLink="@android:color/holo_blue_dark"
-        android:backgroundTint="@color/edittext_tin_indigo"
+        android:backgroundTint="@color/dialog_button_color_blue"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:id="@+id/quest_dialog_edit_code" />
@@ -60,7 +60,7 @@
             android:layout_toStartOf="@+id/check_button"
             android:text="Назад"
             android:background="@android:color/transparent"
-            android:textColor="@color/edittext_tin_indigo" />
+            android:textColor="@color/dialog_button_color_blue" />
 
         <Button
             android:id="@+id/check_button"
@@ -70,7 +70,7 @@
             android:layout_alignParentEnd="true"
             android:text="Проверить"
             android:background="@android:color/transparent"
-            android:textColor="@color/edittext_tin_indigo"
+            android:textColor="@color/dialog_button_color_blue"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="5dp" />
     </RelativeLayout>
