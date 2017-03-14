@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         DialogLogin = new DialogLogin();
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -139,9 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onResult(VKAccessToken res) {
                 // Пользователь успешно авторизовался
-                //VKRequest request = VKApi.
                 Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-                //String userId = VKSdk.getAccessToken().userId;
             }
             @Override
             public void onError(VKError error) {
