@@ -144,7 +144,9 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                         finish();
                     }
                 });
-                break;
+
+            break;
+
         }
     }
 

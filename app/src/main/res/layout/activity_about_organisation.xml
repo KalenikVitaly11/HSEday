@@ -9,16 +9,16 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/OrganisationImage"
+        android:id="@+id/organisation_image"
         android:adjustViewBounds="true" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/OrganisationTitle"/>
+        android:id="@+id/organisation_title"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/OrganisationInformation"/>
+        android:id="@+id/organisation_information"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,5 +26,5 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/OrganisationContacts"/>
+        android:id="@+id/organisation_contancts"/>
 </LinearLayout>

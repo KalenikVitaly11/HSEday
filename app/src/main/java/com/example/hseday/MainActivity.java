@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.hseday.DialogFragments.DialogLogin;
 import com.example.hseday.DialogFragments.DialogQuest;
 import com.example.hseday.NavigationFragments.FragmentAboutHSE;
 import com.example.hseday.NavigationFragments.FragmentDedication;
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentMap FragmentMap;
     public static TextView UserName;
     public static ImageView UserImage;
-    DialogLogin DialogLogin;
     private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS};
 
     @Override
@@ -73,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.navigation_window);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DialogLogin = new DialogLogin();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

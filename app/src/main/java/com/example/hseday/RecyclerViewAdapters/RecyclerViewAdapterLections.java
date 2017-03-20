@@ -7,10 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hseday.AboutOrganisationActivity;
+import com.example.hseday.ActivityComments;
+import com.example.hseday.DialogFragments.ActivityLection;
 import com.example.hseday.ItemClickListener;
 import com.example.hseday.R;
 
@@ -45,9 +49,11 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if (isLongClick) {
-
+                    Intent intent = new Intent(mContext, ActivityComments.class);
+                    mContext.startActivity(intent);
                 } else {
-
+                    Intent intent = new Intent(mContext, ActivityComments.class);
+                    mContext.startActivity(intent);
                 }
             }
         });
@@ -63,6 +69,7 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
         private TextView LectionTime;
         private TextView LectionContacts;
         private TextView LectionPerson;
+        private Button OpenComments;
 
         private ItemClickListener clickListener;
 
@@ -72,11 +79,14 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
             LectionTime = (TextView) itemView.findViewById(R.id.lection_time);
             LectionTitle = (TextView) itemView.findViewById(R.id.lection_title);
             LectionPerson = (TextView) itemView.findViewById(R.id.lection_person);
+            OpenComments = (Button) itemView.findViewById(R.id.button_open_comments);
 
 
             itemView.setTag(itemView);
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
+            OpenComments.setOnClickListener(this);
+
+            //itemView.setOnClickListener(this);
+            //itemView.setOnLongClickListener(this);
         }
 
         public void setClickListener(ItemClickListener itemClickListener) {

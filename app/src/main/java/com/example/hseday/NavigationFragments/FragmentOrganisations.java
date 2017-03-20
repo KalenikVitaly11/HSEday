@@ -22,8 +22,8 @@ public class FragmentOrganisations extends android.support.v4.app.Fragment {
     private List<FacultiesListElement> faculties;
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapterOrganisations mAdapter;
-    private String[] mList;
     private StaggeredGridLayoutManager mGridLayoutManager;
+    private String[] mList;
 
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
