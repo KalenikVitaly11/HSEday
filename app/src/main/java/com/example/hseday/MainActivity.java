@@ -3,6 +3,7 @@ package com.example.hseday;
 
 import android.accounts.Account;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.graphics.Color;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestListener;
 import com.example.hseday.DialogFragments.DialogQuest;
 import com.example.hseday.NavigationFragments.FragmentAboutHSE;
 import com.example.hseday.NavigationFragments.FragmentDedication;
@@ -32,6 +34,7 @@ import com.example.hseday.NavigationFragments.FragmentFaculties;
 import com.example.hseday.NavigationFragments.FragmentMap;
 import com.example.hseday.NavigationFragments.FragmentOrganisations;
 import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
@@ -60,9 +63,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentAboutHSE FragmentAboutHSE;
     FragmentDedication FragmentDedication;
     FragmentMap FragmentMap;
+    public static NavigationView navigationView;
     public static TextView UserName;
     public static ImageView UserImage;
+    VKRequest.VKRequestListener mRequestListener;
+    private Handler mHandler = new Handler();
     private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS};
+    private final static String FIELDS = "photo, photo_50, photo_100, photo_200";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,54 +86,107 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
         View hView = navigationView.getHeaderView(0);
 
         UserName = (TextView) hView.findViewById(R.id.user_name);
-        UserImage  = (ImageView)hView.findViewById(R.id.user_image);
+        UserImage = (ImageView) hView.findViewById(R.id.user_image);
 
         FragmentFaculties = new FragmentFaculties();
         FragmentOrganisations = new FragmentOrganisations();
         FragmentAboutHSE = new FragmentAboutHSE();
         FragmentDedication = new FragmentDedication();
         FragmentMap = new FragmentMap();
+        if(VKSdk.isLoggedIn()){
+            Toast.makeText(getApplicationContext(), "Есть контакт 4", Toast.LENGTH_SHORT).show();
+        }
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_map, FragmentMap);
+        transaction.commit();
+    }
 
-        if(isLoggedIn() || VKSdk.isLoggedIn()){
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Toast.makeText(getApplicationContext(), "onStart", Toast.LENGTH_SHORT).show();
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                fillNameIfLoggedIn();
+            }
+        }, 2300);
+    }
+
+    public void fillNameIfLoggedIn(){
+        if (isLoggedIn() || VKSdk.isLoggedIn()) {
             navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
-            if(VKSdk.isLoggedIn()){
-                UserName.setText("Вошел через Facebook");
-                VKRequest profileInfo = VKApi.users().get();
-                profileInfo.executeWithListener(new VKRequest.VKRequestListener()
-                {
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+            if (VKSdk.isLoggedIn()) {
+
+                VKCallback<VKAccessToken> mCallback = new VKCallback<VKAccessToken>() {
+                    @Override
+                    public void onResult(VKAccessToken res) {
+                        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, FIELDS));
+                        request.executeWithListener(mRequestListener);
+                    }
+
+                    @Override
+                    public void onError(VKError error) {
+
+                    }
+                };
+                Toast.makeText(getApplicationContext(), "fillNameIfLoggedIn", Toast.LENGTH_SHORT).show();
+                UserName.setText("Вошел через VK");
+                VKRequest profileInfo = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "photo_50, photo_100, photo_200"));
+
+                /*VKRequest.VKRequestListener mRequestListener = new VKRequest.VKRequestListener() {
+                    @Override
+                    public void onComplete(VKResponse response) {
+                        try {
+                            VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
+                            VKApiUser user = userList.get(0);
+                            UserName.setText(user.first_name + " " + user.last_name);
+                            Toast.makeText(getApplicationContext(), "123123", Toast.LENGTH_SHORT).show();
+                            //UserImage.getLayoutParams().height = 220;
+                            //UserImage.getLayoutParams().width = 220;
+                            Glide.with(getApplicationContext()).load(user.photo_50).into(UserImage);
+                        } catch (Exception e) {
+
+                        }
+                    }
+                };*/
+
+               profileInfo.executeWithListener(new VKRequest.VKRequestListener() {
                     @Override
                     public void onComplete(VKResponse response) {
                         super.onComplete(response);
                         VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
                         VKApiUser user = userList.get(0);
                         UserName.setText(user.first_name + " " + user.last_name);
-                        UserImage.getLayoutParams().height = 220;
-                        UserImage.getLayoutParams().width = 220;
-                        Glide.with(getApplicationContext()).load(user.photo_50).into(UserImage);
+                        String photo = null;
+                        if (!user.photo_200.equals("http://vk.com/images/camera_a.gif"))
+                            photo = user.photo_200;
+                        else if (!user.photo_100.equals("http://vk.com/images/camera_b.gif"))
+                            photo = user.photo_100;
+                        else
+                            photo = user.photo_50;
+                        //UserImage.getLayoutParams().height = 220;
+                        //UserImage.getLayoutParams().width = 220;
+                        Glide.with(getApplicationContext()).load(photo).into(UserImage);
+
 
                     }
                 });
+            } else {
+                UserName.setText("Вошел через Facebook");
             }
-            else{
-                UserName.setText("Вошел через ВК");
-            }
+
+        } else {
+            UserName.setText("День вышки");
+            UserImage.setImageResource(0);
         }
-
-
-
-        //VKSdk.initialize(sdkListener, R.integer.com_vk_sdk_AppId);
-        //VKUIHelper.onCreate(this);
-        //VKSdk.login(this, scope);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_map, FragmentMap);
-        transaction.commit();
     }
 
 
@@ -139,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // Пользователь успешно авторизовался
                 Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onError(VKError error) {
                 // Произошла ошибка авторизации (например, пользователь запретил авторизацию)
@@ -181,12 +242,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.map_quest_mark && item.isChecked() == true)Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
+        if (id == R.id.map_quest_mark && item.isChecked() == true)
+            Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
         else Toast.makeText(this, "False", Toast.LENGTH_SHORT).show();
-        if(item.isChecked()){
+        if (item.isChecked()) {
             item.setChecked(false);
-        }
-        else{
+        } else {
             item.setChecked(true);
         }
 
@@ -212,7 +273,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_login_vk) {
             Intent intent = new Intent(this, ActivityLogin.class);
             this.startActivity(intent);
+        } else if (id == R.id.nav_logout) {
+            VKSdk.logout();
+            LoginManager.getInstance().logOut();
+            if (!isLoggedIn() && !VKSdk.isLoggedIn()) {
+                Toast.makeText(this, "Logged out succesfully", Toast.LENGTH_SHORT).show();
+                navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(true);
+                UserName.setText("День вышки");
+                UserImage.setImageResource(0);
+            }
         }
+
 
         transaction.addToBackStack(null);
         transaction.commit();

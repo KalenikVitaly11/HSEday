@@ -1,6 +1,7 @@
 package com.example.hseday;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.facebook.login.widget.ProfilePictureView;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUser;
@@ -37,7 +39,7 @@ import java.util.Arrays;
 import static com.example.hseday.MainActivity.UserImage;
 import static com.vk.sdk.VKUIHelper.getApplicationContext;
 
-public class ActivityLogin extends AppCompatActivity implements View.OnClickListener{
+public class ActivityLogin extends AppCompatActivity implements View.OnClickListener {
 
     private LoginButton FacebookLoginButton;
     private Button VKLoginButton;
@@ -47,6 +49,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     private TextView email;
     private TextView gender;
     private TextView facebookName;
+    private Handler mHandler = new Handler();
 
     private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS};
 
@@ -61,7 +64,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
         VKLoginButton = (Button) findViewById(R.id.login_vk_button);
         VKLoginButton.setOnClickListener(this);
 
-        FacebookLoginButton = (LoginButton)findViewById(R.id.login_facebook_button);
+        FacebookLoginButton = (LoginButton) findViewById(R.id.login_facebook_button);
 
         FacebookLoginButton.setReadPermissions(Arrays.asList("public_profile, email, user_birthday"));
         callbackManager = CallbackManager.Factory.create();
@@ -111,6 +114,8 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
             MainActivity.UserName.setText(jsonObject.getString("name"));
             MainActivity.UserImage.getLayoutParams().height = 200;
             MainActivity.UserImage.getLayoutParams().width = 200;
+            MainActivity.navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
+            MainActivity.navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
 
             //profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
             //MainActivity.UserImage.setProfileId(jsonObject.getString("id"));
@@ -123,35 +128,62 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        //finish();
+        if (VKSdk.isLoggedIn()) {
+            Toast.makeText(getApplicationContext(), "Есть контакт 1", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.login_vk_button:
                 VKSdk.login(this, scope);
                 VKRequest profileInfo = VKApi.users().get();
-                profileInfo.executeWithListener(new VKRequest.VKRequestListener()
-                {
+                if (VKSdk.isLoggedIn()) {
+                    Toast.makeText(getApplicationContext(), "Есть контакт 5", Toast.LENGTH_SHORT).show();
+                }
+                profileInfo.executeWithListener(new VKRequest.VKRequestListener() {
                     @Override
                     public void onComplete(VKResponse response) {
                         super.onComplete(response);
-                        VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
-                        VKApiUser user = userList.get(0);
-                        MainActivity.UserName.setText(user.first_name + " " + user.last_name);
-                        MainActivity.UserImage.getLayoutParams().height = 200;
-                        MainActivity.UserImage.getLayoutParams().width = 200;
-                        Glide.with(getApplicationContext()).load(user.photo_50).into(UserImage);
-                        Toast.makeText(getApplicationContext(),user.first_name + " " + user.last_name, Toast.LENGTH_SHORT).show();
+                        if (VKSdk.isLoggedIn()) {
+                            Toast.makeText(getApplicationContext(), "Есть контакт 2", Toast.LENGTH_SHORT).show();
+                            VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
+                            VKApiUser user = userList.get(0);
+                            MainActivity.UserName.setText(user.first_name + " " + user.last_name);
+                            MainActivity.UserImage.getLayoutParams().height = 200;
+                            MainActivity.UserImage.getLayoutParams().width = 200;
+                            Glide.with(getApplicationContext()).load(user.photo_50).into(UserImage);
+                            Toast.makeText(getApplicationContext(), "Пользователь - " + user.first_name + " " + user.last_name, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Успех", Toast.LENGTH_SHORT).show();
+                            MainActivity.navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
+                            MainActivity.navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
 
-                        finish();
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(VKError error) {
+                        super.onError(error);
+                        Toast.makeText(getApplicationContext(), "Ошибка", Toast.LENGTH_SHORT).show();
                     }
                 });
+                if (VKSdk.isLoggedIn()) {
+                    Toast.makeText(getApplicationContext(), "Есть контакт 3", Toast.LENGTH_SHORT).show();
+                }
 
-            break;
+                finish();
+                break;
 
         }
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;

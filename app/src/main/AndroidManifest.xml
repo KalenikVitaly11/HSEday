@@ -4,6 +4,8 @@
     package="com.example.hseday">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Application"
@@ -26,7 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity" android:theme="@style/VK.Transparent" />
+        <activity
+            android:name="com.vk.sdk.VKServiceActivity"
+            android:label="ServiceActivity"
+            android:theme="@style/VK.Transparent" />
         <activity
             android:name=".AboutFacultyActivity"
             android:screenOrientation="portrait" />
@@ -47,7 +52,11 @@
         <activity android:name=".ActivityLogin" />
         <activity
             android:name=".ActivityComments"
-            android:label="@string/title_activity_comments"></activity>
+            android:label="@string/title_activity_comments"
+            />
+        <activity
+            android:name=".ActivityAddComment"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

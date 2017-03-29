@@ -31,6 +31,10 @@
             android:id="@+id/nav_aboutHSE"
             android:title="@string/navigation_aboutHSE"
             android:icon="@drawable/ic_info_black_24dp" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/nav_logout"
+            android:icon="@drawable/ic_info_black_24dp" />
     </group>
 
 </menu>

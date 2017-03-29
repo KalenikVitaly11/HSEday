@@ -1,5 +1,6 @@
 package com.example.hseday;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.hseday.RecyclerViewAdapters.RecyclerViewAdapterComments;
 import com.example.hseday.RecyclerViewAdapters.RecyclerViewAdapterOrganisations;
@@ -38,11 +40,14 @@ public class ActivityComments extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mAdapter.setHasStableIds(true);
         mRecyclerView.setAdapter(mAdapter);
+
+
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy)
             {
-                if (floatingActionButton.isShown()) {
+                if (dy > 0 ||dy<0 && floatingActionButton.isShown())
+                {
                     floatingActionButton.hide();
                 }
             }
@@ -54,7 +59,15 @@ public class ActivityComments extends AppCompatActivity {
                 {
                     floatingActionButton.show();
                 }
+
                 super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ActivityAddComment.class);
+                v.getContext().startActivity(intent);
             }
         });
     }

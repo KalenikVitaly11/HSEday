@@ -28,7 +28,7 @@ public class AboutFacultyActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        switch(intent.getIntExtra("facultyImage", 1)){
+        switch(intent.getIntExtra("FacultyImage", 1)){
             case 1: facultyImage.setImageResource(R.drawable.faculty_1);break;
             case 2: facultyImage.setImageResource(R.drawable.faculty_2);break;
             case 3: facultyImage.setImageResource(R.drawable.faculty_3);break;
@@ -49,9 +49,9 @@ public class AboutFacultyActivity extends AppCompatActivity {
         }
         setTitle(intent.getIntExtra("FacultyName", 1));
         facultyTitle.setText(intent.getIntExtra("FacultyName", 1));
-        facultyInformation.setText(intent.getIntExtra("facultyInformation", 1));
+        facultyInformation.setText(intent.getIntExtra("FacultyInformation", 1));
         facultyContancts.setText(intent.getIntExtra("FacultyContacts", 1));
-        facultyDepartments.setText(intent.getIntExtra("facultyDepartments", 1));
+        facultyDepartments.setText(intent.getIntExtra("FacultyDepartments", 1));
 
     }
 

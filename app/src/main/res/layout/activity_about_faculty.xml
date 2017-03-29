@@ -2,15 +2,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context="com.example.hseday.AboutFacultyActivity"
+    tools:ignore="ContentDescription">
 
     <LinearLayout
         android:id="@+id/activity_about_faculty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-        tools:context="com.example.hseday.AboutFacultyActivity">
+        android:orientation="vertical" >
 
 
         <ImageView
@@ -30,7 +30,7 @@
                 android:id="@+id/faculty_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Title"
+                android:text="@string/faculty_title"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Информация"
+                android:text="@string/faculty_information"
                 android:textColor="@color/secondary_text"
                 android:textSize="18sp" />
 
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/third_text"
-                android:text="TextView" />
+                android:text="@string/departments" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -73,8 +73,8 @@
                 android:id="@+id/faculty_contacts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/third_text"
-                android:text="TextView" />
+                android:text="@string/contancts"
+                android:textColor="@color/third_text" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

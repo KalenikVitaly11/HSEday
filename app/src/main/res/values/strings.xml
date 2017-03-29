@@ -5,6 +5,13 @@
     <string name="continue_with_vk">Продолжить с VK</string>
     <string name="or">OR</string>
     <string name="login_back">Назад</string>
+    <string name="comment_textview_hint">Что происходит?</string>
+    <string name="nav_logout">Выйти</string>
+    <string name="faculty_title">Title</string>
+    <string name="faculty_information">Information</string>
+    <string name="from_camera">Камера</string>
+    <string name="from_gallery">Галерея</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

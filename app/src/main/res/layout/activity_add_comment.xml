@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_comment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.hseday.ActivityAddComment">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="12"
+        android:hint="@string/comment_textview_hint"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:inputType="textCapSentences|textMultiLine"
+        android:gravity="top|left"
+        android:backgroundTint="@android:drawable/screen_background_light_transparent"
+        android:textColor="@color/add_comment_text_color"
+        android:textColorLink="@color/my_orange"
+        android:textCursorDrawable="@drawable/edittext_cursor_color" />
+    <ImageView
+        android:id="@+id/comment_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:background="@color/actionBarbackground"
+        android:layout_height="55dp">
+
+        <Button
+            android:id="@+id/button_add_photo"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/button_send_comment"
+            android:background="@android:drawable/ic_menu_camera"
+            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:textColorLink="@color/my_orange"
+            android:textCursorDrawable="@drawable/edittext_cursor_color" />
+
+        <Button
+            android:id="@+id/button_send_comment"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/ic_menu_send"
+            android:layout_width="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:id="@+id/add_image_from_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/from_gallery"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/add_image_from_camera"
+            android:background="@drawable/add_image_to_comment_button"
+            android:textColor="@color/my_orange"
+            android:alpha="0"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/add_image_from_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/from_camera"
+            android:background="@drawable/add_image_to_comment_button"
+            android:textColor="@color/my_orange"
+            android:alpha="0"
+            android:visibility="invisible"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/button_send_comment" />
+
+    </RelativeLayout>
+</LinearLayout>

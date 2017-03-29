@@ -95,6 +95,43 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
         MapImageTent1 = (ImageView) view.findViewById(R.id.map_tent_1);
         MapImageTent1.setOnClickListener(this);
 
+        hScroll.setOnTouchListener(new View.OnTouchListener() { //inner scroll listener
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+        vScroll.setOnTouchListener(new View.OnTouchListener() { //outer scroll listener
+            private float mx, my, curX, curY;
+            private boolean started = false;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                curX = event.getX();
+                curY = event.getY();
+                int dx = (int) (mx - curX);
+                int dy = (int) (my - curY);
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        if (started) {
+                            vScroll.scrollBy(0, dy);
+                            hScroll.scrollBy(dx, 0);
+                        } else {
+                            started = true;
+                        }
+                        mx = curX;
+                        my = curY;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        vScroll.scrollBy(0, dy);
+                        hScroll.scrollBy(dx, 0);
+                        started = false;
+                        break;
+                }
+                return false;
+            }
+
+        });
         return view;
     }
 
