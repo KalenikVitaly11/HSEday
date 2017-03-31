@@ -1,6 +1,7 @@
 package com.example.hseday;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,7 +37,6 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-import static com.example.hseday.MainActivity.UserImage;
 import static com.vk.sdk.VKUIHelper.getApplicationContext;
 
 public class ActivityLogin extends AppCompatActivity implements View.OnClickListener {
@@ -44,12 +44,6 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     private LoginButton FacebookLoginButton;
     private Button VKLoginButton;
     private CallbackManager callbackManager;
-    private ProfilePictureView profilePictureView;
-    private LinearLayout infoLayout;
-    private TextView email;
-    private TextView gender;
-    private TextView facebookName;
-    private Handler mHandler = new Handler();
 
     private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS};
 
@@ -71,7 +65,6 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
 
         // Callback registration
         FacebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
             @Override
             public void onSuccess(LoginResult loginResult) {
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -108,18 +101,13 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void setProfileToView(JSONObject jsonObject) {
+    private void setProfileToView(JSONObject jsonObject) { // Facebook
         try {
-
-            MainActivity.UserName.setText(jsonObject.getString("name"));
-            MainActivity.UserImage.getLayoutParams().height = 200;
-            MainActivity.UserImage.getLayoutParams().width = 200;
-            MainActivity.navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
-            MainActivity.navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
-
-            //profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
-            //MainActivity.UserImage.setProfileId(jsonObject.getString("id"));
-            Glide.with(getApplicationContext()).load("https://graph.facebook.com/" + jsonObject.getString("id") + "/picture?type=large").into(UserImage);
+            SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("FBname", jsonObject.getString("name"));
+            editor.putString("FBavatar", "https://graph.facebook.com/" + jsonObject.getString("id") + "/picture?type=large");
+            editor.apply();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -131,54 +119,15 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     protected void onStop() {
         super.onStop();
         //finish();
-        if (VKSdk.isLoggedIn()) {
-            Toast.makeText(getApplicationContext(), "Есть контакт 1", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_vk_button:
+            case R.id.login_vk_button: // VK
                 VKSdk.login(this, scope);
-                VKRequest profileInfo = VKApi.users().get();
-                if (VKSdk.isLoggedIn()) {
-                    Toast.makeText(getApplicationContext(), "Есть контакт 5", Toast.LENGTH_SHORT).show();
-                }
-                profileInfo.executeWithListener(new VKRequest.VKRequestListener() {
-                    @Override
-                    public void onComplete(VKResponse response) {
-                        super.onComplete(response);
-                        if (VKSdk.isLoggedIn()) {
-                            Toast.makeText(getApplicationContext(), "Есть контакт 2", Toast.LENGTH_SHORT).show();
-                            VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
-                            VKApiUser user = userList.get(0);
-                            MainActivity.UserName.setText(user.first_name + " " + user.last_name);
-                            MainActivity.UserImage.getLayoutParams().height = 200;
-                            MainActivity.UserImage.getLayoutParams().width = 200;
-                            Glide.with(getApplicationContext()).load(user.photo_50).into(UserImage);
-                            Toast.makeText(getApplicationContext(), "Пользователь - " + user.first_name + " " + user.last_name, Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getApplicationContext(), "Успех", Toast.LENGTH_SHORT).show();
-                            MainActivity.navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
-                            MainActivity.navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
-
-
-                        }
-                    }
-
-                    @Override
-                    public void onError(VKError error) {
-                        super.onError(error);
-                        Toast.makeText(getApplicationContext(), "Ошибка", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                if (VKSdk.isLoggedIn()) {
-                    Toast.makeText(getApplicationContext(), "Есть контакт 3", Toast.LENGTH_SHORT).show();
-                }
-
                 finish();
                 break;
-
         }
     }
 

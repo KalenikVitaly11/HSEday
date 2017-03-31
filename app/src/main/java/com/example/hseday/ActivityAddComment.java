@@ -42,8 +42,8 @@ public class ActivityAddComment extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_add_comment);
         addPhotoButton = (Button) findViewById(R.id.button_add_photo);
-        addPhotoButton.setOnClickListener(this);
-    }
+    addPhotoButton.setOnClickListener(this);
+}
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

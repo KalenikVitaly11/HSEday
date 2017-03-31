@@ -3,6 +3,7 @@ package com.example.hseday;
 
 import android.accounts.Account;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -63,10 +64,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentAboutHSE FragmentAboutHSE;
     FragmentDedication FragmentDedication;
     FragmentMap FragmentMap;
-    public static NavigationView navigationView;
-    public static TextView UserName;
-    public static ImageView UserImage;
+    NavigationView navigationView;
+    TextView UserName;
+    ImageView UserImage;
     VKRequest.VKRequestListener mRequestListener;
+    SharedPreferences sPref;
     private Handler mHandler = new Handler();
     private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS};
     private final static String FIELDS = "photo, photo_50, photo_100, photo_200";
@@ -99,9 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentAboutHSE = new FragmentAboutHSE();
         FragmentDedication = new FragmentDedication();
         FragmentMap = new FragmentMap();
-        if(VKSdk.isLoggedIn()){
-            Toast.makeText(getApplicationContext(), "Есть контакт 4", Toast.LENGTH_SHORT).show();
-        }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_map, FragmentMap);
@@ -109,62 +108,63 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        Toast.makeText(getApplicationContext(), "onStart", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(new Runnable() {
             public void run() {
-                fillNameIfLoggedIn();
+                SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
+                if (VKSdk.isLoggedIn()) {
+                    if(sharedPref.getString("VKname", "").equals("")){
+                        Toast.makeText(getApplicationContext(), "fillNameIfLoggedIn", Toast.LENGTH_SHORT).show();
+                        mHandler.postDelayed(new Runnable() {
+                            public void run() {
+                                fillNameIfLoggedIn();
+                            }
+                        }, 2300);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "sharedPreferences", Toast.LENGTH_SHORT).show();
+                        UserName.setText(sharedPref.getString("VKname", ""));
+                        Glide.with(getApplicationContext()).load(sharedPref.getString("VKavatar", "")).into(UserImage);
+                        navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
+                        navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+                    }
+                }
+                else if(isLoggedIn()){
+                    if(sharedPref.getString("FBname", "").equals("")){
+                        Toast.makeText(getApplicationContext(), "fillNameIfLoggedIn", Toast.LENGTH_SHORT).show();
+                        mHandler.postDelayed(new Runnable() {
+                            public void run() {
+                                fillNameIfLoggedIn();
+                            }
+                        }, 1500);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "sharedPreferences", Toast.LENGTH_SHORT).show();
+                        UserName.setText(sharedPref.getString("FBname", ""));
+                        Glide.with(getApplicationContext()).load(sharedPref.getString("FBavatar", "")).into(UserImage);
+                        navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
+                        navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+                    }
+                }
             }
-        }, 2300);
+        }, 1);
     }
 
-    public void fillNameIfLoggedIn(){
-        if (isLoggedIn() || VKSdk.isLoggedIn()) {
+    public void fillNameIfLoggedIn() {
+        if (VKSdk.isLoggedIn()) {
             navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
             navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
             if (VKSdk.isLoggedIn()) {
-
-                VKCallback<VKAccessToken> mCallback = new VKCallback<VKAccessToken>() {
-                    @Override
-                    public void onResult(VKAccessToken res) {
-                        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, FIELDS));
-                        request.executeWithListener(mRequestListener);
-                    }
-
-                    @Override
-                    public void onError(VKError error) {
-
-                    }
-                };
-                Toast.makeText(getApplicationContext(), "fillNameIfLoggedIn", Toast.LENGTH_SHORT).show();
-                UserName.setText("Вошел через VK");
                 VKRequest profileInfo = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "photo_50, photo_100, photo_200"));
-
-                /*VKRequest.VKRequestListener mRequestListener = new VKRequest.VKRequestListener() {
-                    @Override
-                    public void onComplete(VKResponse response) {
-                        try {
-                            VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
-                            VKApiUser user = userList.get(0);
-                            UserName.setText(user.first_name + " " + user.last_name);
-                            Toast.makeText(getApplicationContext(), "123123", Toast.LENGTH_SHORT).show();
-                            //UserImage.getLayoutParams().height = 220;
-                            //UserImage.getLayoutParams().width = 220;
-                            Glide.with(getApplicationContext()).load(user.photo_50).into(UserImage);
-                        } catch (Exception e) {
-
-                        }
-                    }
-                };*/
-
-               profileInfo.executeWithListener(new VKRequest.VKRequestListener() {
+                profileInfo.executeWithListener(new VKRequest.VKRequestListener() {
                     @Override
                     public void onComplete(VKResponse response) {
                         super.onComplete(response);
                         VKList<VKApiUser> userList = (VKList<VKApiUser>) response.parsedModel;
                         VKApiUser user = userList.get(0);
                         UserName.setText(user.first_name + " " + user.last_name);
+
                         String photo = null;
                         if (!user.photo_200.equals("http://vk.com/images/camera_a.gif"))
                             photo = user.photo_200;
@@ -172,42 +172,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             photo = user.photo_100;
                         else
                             photo = user.photo_50;
-                        //UserImage.getLayoutParams().height = 220;
-                        //UserImage.getLayoutParams().width = 220;
+
                         Glide.with(getApplicationContext()).load(photo).into(UserImage);
 
-
+                        SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("VKname", user.first_name + " " +  user.last_name);
+                        editor.putString("VKavatar", photo);
+                        editor.apply();
                     }
                 });
-            } else {
-                UserName.setText("Вошел через Facebook");
             }
-
-        } else {
-            UserName.setText("День вышки");
-            UserImage.setImageResource(0);
-        }
-    }
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
-            @Override
-            public void onResult(VKAccessToken res) {
-                // Пользователь успешно авторизовался
-                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(VKError error) {
-                // Произошла ошибка авторизации (например, пользователь запретил авторизацию)
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        })) {
-            super.onActivityResult(requestCode, resultCode, data);
-
 
         }
     }
@@ -283,6 +258,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 UserName.setText("День вышки");
                 UserImage.setImageResource(0);
             }
+            SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.clear();
+            editor.commit();
         }
 
 
