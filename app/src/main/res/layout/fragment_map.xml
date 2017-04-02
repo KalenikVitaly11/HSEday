@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <RelativeLayout
+            android:id="@+id/map_relative_layout"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:fillViewport="true">

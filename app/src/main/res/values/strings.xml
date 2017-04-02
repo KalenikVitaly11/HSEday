@@ -6,7 +6,6 @@
     <string name="or">OR</string>
     <string name="login_back">Назад</string>
     <string name="comment_textview_hint">Что происходит?</string>
-    <string name="nav_logout">Выйти</string>
     <string name="faculty_title">Title</string>
     <string name="faculty_information">Information</string>
     <string name="from_camera">Камера</string>
@@ -15,7 +14,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_login_vk">Войти</string>
+    <string name="navigation_login">ВОЙТИ</string>
+    <string name="navigation_logout">ВЫЙТИ</string>
     <string name="navigation_map">КАРТА</string>
     <string name="navigation_faculties">ФАКУЛЬТЕТЫ</string>
     <string name="navigation_organisations">ОРГАНИЗАЦИИ</string>

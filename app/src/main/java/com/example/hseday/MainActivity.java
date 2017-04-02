@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     TextView UserName;
     ImageView UserImage;
+
     VKRequest.VKRequestListener mRequestListener;
     SharedPreferences sPref;
     private Handler mHandler = new Handler();
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.navigation_window);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.map);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         UserName = (TextView) hView.findViewById(R.id.user_name);
         UserImage = (ImageView) hView.findViewById(R.id.user_image);
+
 
         FragmentFaculties = new FragmentFaculties();
         FragmentOrganisations = new FragmentOrganisations();
@@ -214,20 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.map_quest_mark && item.isChecked() == true)
-            Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
-        else Toast.makeText(this, "False", Toast.LENGTH_SHORT).show();
-        if (item.isChecked()) {
-            item.setChecked(false);
-        } else {
-            item.setChecked(true);
-        }
 
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

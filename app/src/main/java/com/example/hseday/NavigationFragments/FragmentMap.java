@@ -6,7 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +49,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
     ImageView MapImageQuest1;
     ImageView MapImageTent1;
     ImageView MapImageMicrophone1;
+    ImageView quest1;
 
     public FragmentMap() {
     }
@@ -67,6 +71,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -75,6 +80,10 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         MapImage = (ImageView) view.findViewById(R.id.map_image);
         DialogQuest = new DialogQuest();
+
+        //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        //toolbar.inflateMenu(R.menu.map);
 
         Glide.with(this).load(R.drawable.map_park).into(MapImage);
         //MapImage.setImageResource(R.drawable.map_park);
@@ -150,6 +159,57 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (item.isChecked()) {
+            item.setChecked(false);
+        } else{
+            item.setChecked(true);
+        }
+
+        switch(id){
+            case R.id.map_quest_mark:
+                if (item.isChecked()) {
+                    MapImageQuest1.setVisibility(View.VISIBLE);
+                } else{
+                    MapImageQuest1.setVisibility(View.INVISIBLE);
+                }
+                break;
+            case R.id.map_ball:
+                if (item.isChecked()) {
+                    MapImageBall1.setVisibility(View.VISIBLE);
+                } else{
+                    MapImageBall1.setVisibility(View.INVISIBLE);
+                }
+                break;
+            case R.id.map_paper:
+                if (item.isChecked()) {
+                    //MapImageTent1.setVisibility(View.VISIBLE);
+                } else{
+                    //MapImageTent1.setVisibility(View.INVISIBLE);
+                }
+                break;
+            case R.id.map_tent:
+                if (item.isChecked()) {
+                    MapImageTent1.setVisibility(View.VISIBLE);
+                } else{
+                    MapImageTent1.setVisibility(View.INVISIBLE);
+                }
+                break;
+            case R.id.map_microphone:
+                if (item.isChecked()) {
+                    MapImageMicrophone1.setVisibility(View.VISIBLE);
+                } else{
+                    MapImageMicrophone1.setVisibility(View.INVISIBLE);
+                }
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

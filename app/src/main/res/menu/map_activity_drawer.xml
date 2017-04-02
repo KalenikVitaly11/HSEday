@@ -5,7 +5,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_login_vk"
-            android:title="@string/navigation_login_vk"
+            android:title="@string/navigation_login"
             android:icon="@drawable/ic_login_50" />
         <item
             android:id="@+id/nav_map"
@@ -33,7 +33,7 @@
             android:icon="@drawable/ic_info_black_24dp" />
         <item
             android:id="@+id/nav_logout"
-            android:title="@string/nav_logout"
+            android:title="@string/navigation_logout"
             android:icon="@drawable/ic_logout_50" />
     </group>
 
