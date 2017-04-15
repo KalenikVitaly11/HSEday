@@ -5,21 +5,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/vScroll"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
     <HorizontalScrollView
         android:id="@+id/hScroll"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
         <RelativeLayout
             android:id="@+id/map_relative_layout"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:fillViewport="true">
             <ImageView
                 android:id="@+id/map_image"
-                android:layout_width="4028px"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="center" />
+                android:scaleType="fitXY" />
             <ImageView
                 android:id="@+id/map_microphone_1"
                 android:layout_width="wrap_content"

@@ -81,13 +81,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
         MapImage = (ImageView) view.findViewById(R.id.map_image);
         DialogQuest = new DialogQuest();
 
-        //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        //toolbar.inflateMenu(R.menu.map);
-
         Glide.with(this).load(R.drawable.map_park).into(MapImage);
-        //MapImage.setImageResource(R.drawable.map_park);
-        //Picasso.with(getContext()).load(R.drawable.map_park).into(MapImage);
 
         vScroll = (ScrollView) view.findViewById(R.id.vScroll);
         hScroll = (HorizontalScrollView) view.findViewById(R.id.hScroll);

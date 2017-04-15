@@ -137,6 +137,7 @@ public class RecyclerViewAdapterFaculties extends RecyclerView.Adapter<RecyclerV
                             break;
                     }
                     mContext.startActivity(intent);
+
                 } else {
                     Intent intent = new Intent(mContext, AboutFacultyActivity.class);
 

@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     VKRequest.VKRequestListener mRequestListener;
     SharedPreferences sPref;
     private Handler mHandler = new Handler();
-    private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS};
+    private String[] scope = new String[]{};
     private final static String FIELDS = "photo, photo_50, photo_100, photo_200";
 
     @Override
@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.clear();
-            editor.commit();
+            editor.apply();
         }
 
 

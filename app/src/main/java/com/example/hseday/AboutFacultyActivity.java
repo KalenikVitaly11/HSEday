@@ -59,8 +59,14 @@ public class AboutFacultyActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case android.R.id.home:
                 finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
