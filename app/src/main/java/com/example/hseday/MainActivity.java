@@ -4,6 +4,8 @@ package com.example.hseday;
 import android.accounts.Account;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Point;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +19,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,6 +108,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentAboutHSE = new FragmentAboutHSE();
         FragmentDedication = new FragmentDedication();
         FragmentMap = new FragmentMap();
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        Toast.makeText(this, width + " " + height, Toast.LENGTH_LONG).show();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_map, FragmentMap);

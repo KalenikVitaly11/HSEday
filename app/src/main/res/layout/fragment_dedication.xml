@@ -85,4 +85,19 @@
         android:id="@+id/DedicationWords"
         android:textColor="@color/secondary_text" />
 
+    <EditText
+        android:id="@+id/edit_text_enter_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="76dp"
+        android:hint="Вводить сюда"
+        android:textSize="14sp"
+        android:textColorLink="@android:color/transparent"
+        android:textCursorDrawable="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:layout_above="@+id/DedicationWords"
+        android:layout_centerHorizontal="true"
+        android:inputType="number"
+        android:textAlignment="center" />
+
 </RelativeLayout>

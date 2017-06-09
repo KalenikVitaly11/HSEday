@@ -2,6 +2,7 @@ package com.example.hseday.NavigationFragments;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,8 @@ import com.example.hseday.DialogFragments.DialogQuest;
 import com.example.hseday.MainActivity;
 import com.example.hseday.R;
 import com.squareup.picasso.Picasso;
+
+import static com.example.hseday.R.id.toolbar;
 
 
 public class FragmentMap extends android.support.v4.app.Fragment implements View.OnClickListener {
@@ -81,10 +84,11 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
         MapImage = (ImageView) view.findViewById(R.id.map_image);
         DialogQuest = new DialogQuest();
 
+
         Glide.with(this).load(R.drawable.map_park).into(MapImage);
 
-        vScroll = (ScrollView) view.findViewById(R.id.vScroll);
-        hScroll = (HorizontalScrollView) view.findViewById(R.id.hScroll);
+        vScroll = (ScrollView) view.findViewById(R.id.v_scroll);
+        hScroll = (HorizontalScrollView) view.findViewById(R.id.h_scroll);
 
         MapImageBall1 = (ImageView) view.findViewById(R.id.map_ball_1);
         MapImageBall1.setOnClickListener(this);

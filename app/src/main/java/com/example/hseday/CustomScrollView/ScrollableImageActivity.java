@@ -21,8 +21,8 @@ public class ScrollableImageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_map);
 
-        vScroll = (ScrollView) findViewById(R.id.vScroll);
-        hScroll = (HorizontalScrollView) findViewById(R.id.hScroll);
+        vScroll = (ScrollView) findViewById(R.id.v_scroll);
+        hScroll = (HorizontalScrollView) findViewById(R.id.h_scroll);
 
     }
 

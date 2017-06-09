@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class FragmentDedication extends android.support.v4.app.Fragment implemen
     Button NextCrow;
     Button PreviousCrow;
     Button StartDedication;
+    EditText enterCode;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,6 +75,7 @@ public class FragmentDedication extends android.support.v4.app.Fragment implemen
         PreviousCrow = (Button) view.findViewById(R.id.previous_crow);
         ProgressBar = (ProgressBar) view.findViewById(R.id.dedication_progress);
         StartDedication = (Button) view.findViewById(R.id.start_dedication);
+        enterCode = (EditText) view.findViewById(R.id.edit_text_enter_code);
 
         StartDedication.setOnClickListener(this);
         NextCrow.setOnClickListener(this);
@@ -132,6 +135,8 @@ public class FragmentDedication extends android.support.v4.app.Fragment implemen
                 Count++;
                 StartDedication.setEnabled(false);
                 StartDedication.setVisibility(View.GONE);
+                enterCode.setEnabled(false);
+                enterCode.setVisibility(View.GONE);
                 NextCrow.setEnabled(true);
                 NextCrow.setVisibility(View.VISIBLE);
                 ProgressBar.setVisibility(View.VISIBLE);
