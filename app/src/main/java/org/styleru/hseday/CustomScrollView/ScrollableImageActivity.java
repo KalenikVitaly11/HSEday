@@ -19,8 +19,8 @@ public class ScrollableImageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(org.styleru.hseday.R.layout.fragment_map);
 
-        vScroll = (ScrollView) findViewById(org.styleru.hseday.R.id.v_scroll);
-        hScroll = (HorizontalScrollView) findViewById(org.styleru.hseday.R.id.h_scroll);
+        //vScroll = (ScrollView) findViewById(org.styleru.hseday.R.id.v_scroll);
+        //hScroll = (HorizontalScrollView) findViewById(org.styleru.hseday.R.id.h_scroll);
 
     }
 

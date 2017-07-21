@@ -1,8 +1,10 @@
 package org.styleru.hseday;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Point;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +14,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.Menu;
@@ -28,6 +32,8 @@ import org.styleru.hseday.NavigationFragments.FragmentDedication;
 import org.styleru.hseday.NavigationFragments.FragmentFaculties;
 import org.styleru.hseday.NavigationFragments.FragmentMap;
 import org.styleru.hseday.NavigationFragments.FragmentOrganisations;
+import org.styleru.hseday.RecyclerViewAdapters.RecyclerViewAdapterOrganisations;
+
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.vk.sdk.VKSdk;
@@ -39,14 +45,25 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     FragmentFaculties FragmentFaculties;
     FragmentOrganisations FragmentOrganisations;
     org.styleru.hseday.NavigationFragments.FragmentAboutHSE FragmentAboutHSE;
+
     FragmentDedication FragmentDedication;
     FragmentMap FragmentMap;
     NavigationView navigationView;
+    public ArrayList<ApiOrganisations> dataOrganisations;
+    public ArrayList<ApiFaculties> dataFaculties;
     TextView UserName;
+    DataBaseHelper dbHelper;
     ImageView UserImage;
 
     VKRequest.VKRequestListener mRequestListener;
@@ -86,16 +103,70 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentDedication = new FragmentDedication();
         FragmentMap = new FragmentMap();
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        Toast.makeText(this, width + " " + height, Toast.LENGTH_LONG).show();
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_map, FragmentMap);
         transaction.commit();
+
+        dbHelper = new DataBaseHelper(this);
+        // Запрос к ресурсу организаций
+        dataOrganisations = new ArrayList<ApiOrganisations>();
+        HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
+        Call<List<ApiOrganisations>> callOrganisations = hseDayApi.getOrganisations();
+        callOrganisations.enqueue(new Callback<List<ApiOrganisations>>() {
+            @Override
+            public void onResponse(Call<List<ApiOrganisations>> call, Response<List<ApiOrganisations>> response) {
+                Toast.makeText(getApplicationContext(), "Запрос успешно сделан", Toast.LENGTH_LONG).show();
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+                database.delete(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null);
+                dataOrganisations.addAll(response.body());  // Список с инфой с сервера
+                Toast.makeText(getApplicationContext(), dataOrganisations.get(0).getName(), Toast.LENGTH_LONG).show();
+
+                for (int i = 0; i < dataOrganisations.size(); i++) {  // Загоняем список с инфой с сервера в базу данных
+                    ContentValues myContent = new ContentValues();
+                    myContent.put(DataBaseHelper.ORGANISATION_NAME, dataOrganisations.get(i).getName());
+                    myContent.put(DataBaseHelper.ORGANISATION_DESCRIPTION, dataOrganisations.get(i).getDescription());
+                    myContent.put(DataBaseHelper.ORGANISATION_CONTACTS, dataOrganisations.get(i).getContacts());
+                    myContent.put(DataBaseHelper.ORGANISATION_IMAGE_URL, dataOrganisations.get(i).getImageurl());
+                    database.insert(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, myContent);
+                    myContent.clear();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ApiOrganisations>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "ОШИБКА В ЗАПРОСЕ", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        // Запрос к ресурсу факультетов
+        /*dataFaculties = new ArrayList<ApiFaculties>();
+        //HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
+        Call<List<ApiFaculties>> callFaculties = hseDayApi.getFaculties();
+        callFaculties.enqueue(new Callback<List<ApiFaculties>>() { // Запрос к серверу
+            @Override
+            public void onResponse(Call<List<ApiFaculties>> call, Response<List<ApiFaculties>> response) {
+                //Toast.makeText(getApplicationContext(), "Запрос успешно сделан", Toast.LENGTH_LONG).show();
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+                //database.delete(DataBaseHelper.TABLE_FACULTIES_NAME, null, null);
+                dataFaculties.addAll(response.body());  // Список с инфой с сервера
+
+                for (int i = 0; i < dataFaculties.size(); i++) {  // Загоняем список с инфой с сервера в базу данных
+                    ContentValues myContent = new ContentValues();
+                    myContent.put(DataBaseHelper.FACULTIES_NAME, dataFaculties.get(i).name);
+                    myContent.put(DataBaseHelper.FACULTIES_DESCRIPTION, dataFaculties.get(i).description);
+                    myContent.put(DataBaseHelper.FACULTIES_CONTACTS, dataFaculties.get(i).contacts);
+                    myContent.put(DataBaseHelper.FACULTIES_IMAGE_URL, dataFaculties.get(i).imageurl);
+                    database.insert(DataBaseHelper.TABLE_FACULTIES_NAME, null, myContent);
+                    myContent.clear();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ApiFaculties>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "ОШИБКА В ЗАПРОСЕ", Toast.LENGTH_LONG).show();
+            }
+        });*/
     }
 
     @Override
@@ -105,32 +176,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void run() {
                 SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
                 if (VKSdk.isLoggedIn()) {
-                    if(sharedPref.getString("VKname", "").equals("")){
+                    if (sharedPref.getString("VKname", "").equals("")) {
                         Toast.makeText(getApplicationContext(), "fillNameIfLoggedIn", Toast.LENGTH_SHORT).show();
                         mHandler.postDelayed(new Runnable() {
                             public void run() {
                                 fillNameIfLoggedIn();
                             }
                         }, 2300);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "sharedPreferences", Toast.LENGTH_SHORT).show();
                         UserName.setText(sharedPref.getString("VKname", ""));
                         Glide.with(getApplicationContext()).load(sharedPref.getString("VKavatar", "")).into(UserImage);
                         navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
                         navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
                     }
-                }
-                else if(isLoggedIn()){
-                    if(sharedPref.getString("FBname", "").equals("")){
+                } else if (isLoggedIn()) {
+                    if (sharedPref.getString("FBname", "").equals("")) {
                         Toast.makeText(getApplicationContext(), "fillNameIfLoggedIn", Toast.LENGTH_SHORT).show();
                         mHandler.postDelayed(new Runnable() {
                             public void run() {
                                 fillNameIfLoggedIn();
                             }
                         }, 1500);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "sharedPreferences", Toast.LENGTH_SHORT).show();
                         UserName.setText(sharedPref.getString("FBname", ""));
                         Glide.with(getApplicationContext()).load(sharedPref.getString("FBavatar", "")).into(UserImage);
@@ -168,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("VKname", user.first_name + " " +  user.last_name);
+                        editor.putString("VKname", user.first_name + " " + user.last_name);
                         editor.putString("VKavatar", photo);
                         editor.apply();
                     }
@@ -206,7 +274,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -241,7 +308,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             editor.clear();
             editor.apply();
         }
-
 
         transaction.addToBackStack(null);
         transaction.commit();

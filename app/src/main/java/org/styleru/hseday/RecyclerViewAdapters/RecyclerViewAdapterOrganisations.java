@@ -8,9 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.api.Api;
 
 import org.styleru.hseday.AboutOrganisationActivity;
+import org.styleru.hseday.ApiOrganisations;
 import org.styleru.hseday.ItemClickListener;
+
+import java.util.ArrayList;
 
 /**
  * Created by Виталий on 31.01.2017.
@@ -18,23 +24,27 @@ import org.styleru.hseday.ItemClickListener;
 
 public class RecyclerViewAdapterOrganisations extends RecyclerView.Adapter<RecyclerViewAdapterOrganisations.ViewHolder> {
     Context mContext;
-    private String[] mList;
+    private ArrayList<ApiOrganisations> organisationsList;
 
-    public RecyclerViewAdapterOrganisations(Context contexts, String[] list) {
+    public RecyclerViewAdapterOrganisations(Context contexts, ArrayList<ApiOrganisations> organisationsList) {
         this.mContext = contexts;
-        this.mList = list;
+        this.organisationsList = organisationsList;
+        //Toast.makeText(mContext, "размер1111 = " + String.valueOf(organisationsList.size()), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(org.styleru.hseday.R.layout.cardview_organisation, viewGroup, false);
         ViewHolder cvh = new ViewHolder(v);
+        //Toast.makeText(mContext, "123", Toast.LENGTH_LONG).show();
         return cvh;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.OrganisationName.setText(mList[position].toString());
+        holder.OrganisationName.setText(organisationsList.get(position).getName());
+        //Toast.makeText(mContext, organisationsList.get(position).toString(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext, "123", Toast.LENGTH_LONG).show();
         switch (position){
             case 0:holder.OrganisationIcon.setImageResource(org.styleru.hseday.R.drawable.organisation_image_1);
                 break;
@@ -102,8 +112,12 @@ public class RecyclerViewAdapterOrganisations extends RecyclerView.Adapter<Recyc
                     mContext.startActivity(intent);
                 } else {
                     Intent intent = new Intent(mContext, AboutOrganisationActivity.class);
+                    intent.putExtra("organisationName", organisationsList.get(position).getName());
+                    mContext.startActivity(intent);
 
-                    switch(position){
+
+
+                    /*switch(position){
                         case 0:
                             intent.putExtra("OrganisationName", org.styleru.hseday.R.string.organisation_name_1);
                             intent.putExtra("OrganisationInformation", org.styleru.hseday.R.string.organisation_information_1);
@@ -266,8 +280,7 @@ public class RecyclerViewAdapterOrganisations extends RecyclerView.Adapter<Recyc
                             intent.putExtra("OrganisationContacts", org.styleru.hseday.R.string.organisation_contacts_27);
                             intent.putExtra("OrganisationImage", 26);
                             break;
-                    }
-                    mContext.startActivity(intent);
+                    }*/
                 }
             }
         });
@@ -275,7 +288,7 @@ public class RecyclerViewAdapterOrganisations extends RecyclerView.Adapter<Recyc
 
     @Override
     public int getItemCount() {
-        return mList.length;
+        return organisationsList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{

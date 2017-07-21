@@ -17,15 +17,31 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.styleru.hseday.DialogFragments.ActivityTent;
 import org.styleru.hseday.DialogFragments.ActivityLection;
 import org.styleru.hseday.DialogFragments.DialogQuest;
 import org.styleru.hseday.MainActivity;
+import org.styleru.hseday.R;
 
 
 public class FragmentMap extends android.support.v4.app.Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    MapView mMapView;
+    private GoogleMap googleMap;
+
 
     private float mx, my;
     private float curX, curY;
@@ -74,65 +90,79 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity) getActivity()).setActionBarTitle("Карта");
         View view = inflater.inflate(org.styleru.hseday.R.layout.fragment_map, container, false);
-        MapImage = (ImageView) view.findViewById(org.styleru.hseday.R.id.map_image);
-        DialogQuest = new DialogQuest();
+        mMapView = (MapView) view.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
 
+        mMapView.onResume(); // needed to get the map to display immediately
 
-        Glide.with(this).load(org.styleru.hseday.R.drawable.map_park).into(MapImage);
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        vScroll = (ScrollView) view.findViewById(org.styleru.hseday.R.id.v_scroll);
-        hScroll = (HorizontalScrollView) view.findViewById(org.styleru.hseday.R.id.h_scroll);
-
-        MapImageBall1 = (ImageView) view.findViewById(org.styleru.hseday.R.id.map_ball_1);
-        MapImageBall1.setOnClickListener(this);
-
-        MapImageQuest1 = (ImageView) view.findViewById(org.styleru.hseday.R.id.map_quest_1);
-        MapImageQuest1.setOnClickListener(this);
-
-        MapImageMicrophone1 = (ImageView) view.findViewById(org.styleru.hseday.R.id.map_microphone_1);
-        MapImageMicrophone1.setOnClickListener(this);
-
-        MapImageTent1 = (ImageView) view.findViewById(org.styleru.hseday.R.id.map_tent_1);
-        MapImageTent1.setOnClickListener(this);
-
-        hScroll.setOnTouchListener(new View.OnTouchListener() { //inner scroll listener
+        mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+
+
+                // For dropping a marker at a point on the Map
+                LatLng sydney = new LatLng(0, 0);
+                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+
+                // For zooming automatically to the location of the marker
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(3).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+                        .image(BitmapDescriptorFactory.fromResource(R.drawable.map_park2))
+                        .position(new LatLng(0, 0), 27000000f, 9000000f);
+                googleMap.addGroundOverlay(newarkMap);
+                LatLngBounds ADELAIDE = new LatLngBounds(
+                        new LatLng(-20, -100), new LatLng(20, 100));
+                googleMap.setLatLngBoundsForCameraTarget(ADELAIDE);
+                googleMap.setMinZoomPreference(2.5f);
+                googleMap.setMaxZoomPreference(4f);
+
+                /*LatLngBounds AUSTRALIA = new LatLngBounds(
+                        new LatLng(10000, 10000), new LatLng(30000, 30000));
+
+                LatLngBounds ADELAIDE = new LatLngBounds(
+                        new LatLng(-20, -20), new LatLng(20, 20));
+
+                googleMap.setMinZoomPreference(2.5f);
+                googleMap.setMaxZoomPreference(3.5f);
+                googleMap.setLatLngBoundsForCameraTarget(ADELAIDE);*/
             }
         });
-        vScroll.setOnTouchListener(new View.OnTouchListener() { //outer scroll listener
-            private float mx, my, curX, curY;
-            private boolean started = false;
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                curX = event.getX();
-                curY = event.getY();
-                int dx = (int) (mx - curX);
-                int dy = (int) (my - curY);
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        if (started) {
-                            vScroll.scrollBy(0, dy);
-                            hScroll.scrollBy(dx, 0);
-                        } else {
-                            started = true;
-                        }
-                        mx = curX;
-                        my = curY;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        vScroll.scrollBy(0, dy);
-                        hScroll.scrollBy(dx, 0);
-                        started = false;
-                        break;
-                }
-                return false;
-            }
-
-        });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 
 
@@ -156,7 +186,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (item.isChecked()) {
+        /*if (item.isChecked()) {
             item.setChecked(false);
         } else{
             item.setChecked(true);
@@ -198,7 +228,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
                     MapImageMicrophone1.setVisibility(View.INVISIBLE);
                 }
                 break;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -215,67 +245,8 @@ public class FragmentMap extends android.support.v4.app.Fragment implements View
         snackBar.setDuration(3000);
         snackBar.setActionTextColor(Color.rgb(255, 127, 0));
 
-        switch (view.getId()) {
-            case org.styleru.hseday.R.id.map_ball_1:
-                snackBar.setText("Мяч");
-                break;
-            case org.styleru.hseday.R.id.map_microphone_1:
-                snackBar.setText("Микрофон");
-                snackBar.setAction("ПОДРОБНЕЕ", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), ActivityLection.class);
-                        getActivity().startActivity(intent);
-                    }
-                });
-                break;
-            case org.styleru.hseday.R.id.map_quest_1:
-                snackBar.setText("Квест");
-                snackBar.setAction("ПОДРОБНЕЕ", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DialogQuest.show(getFragmentManager(), "dialogQuest");
-                    }
-                });
-                break;
-            case org.styleru.hseday.R.id.map_tent_1:
-                snackBar.setText("Шатер");
-                snackBar.setAction("ПОДРОБНЕЕ", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), ActivityTent.class);
-                        getActivity().startActivity(intent);
-                    }
-                });
-                break;
 
-
-        }
         snackBar.show();
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
-        float curX, curY;
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mx = event.getX();
-                my = event.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                curX = event.getX();
-                curY = event.getY();
-                vScroll.scrollBy((int) (mx - curX), (int) (my - curY));
-                hScroll.scrollBy((int) (mx - curX), (int) (my - curY));
-                mx = curX;
-                my = curY;
-                break;
-            case MotionEvent.ACTION_UP:
-                curX = event.getX();
-                curY = event.getY();
-                vScroll.scrollBy((int) (mx - curX), (int) (my - curY));
-                hScroll.scrollBy((int) (mx - curX), (int) (my - curY));
-                break;
-        }
-        return true;
-    }
 }

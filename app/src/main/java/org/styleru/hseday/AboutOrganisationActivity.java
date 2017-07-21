@@ -1,6 +1,8 @@
 package org.styleru.hseday;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ public class AboutOrganisationActivity extends AppCompatActivity {
     TextView organisationTitle;
     TextView organisationInformation;
     TextView organisationContacts;
+    DataBaseHelper dbHelper;
+    ApiOrganisations myOrganisation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +28,38 @@ public class AboutOrganisationActivity extends AppCompatActivity {
         organisationContacts = (TextView) this.findViewById(R.id.organisation_contancts);
 
         Intent intent = getIntent();
-        organisationTitle.setText(String.valueOf(intent.getIntExtra("OrganisationName", 1)));
-        organisationInformation.setText(String.valueOf(intent.getIntExtra("organisationInformation", 1)));
-        organisationContacts.setText(String.valueOf(intent.getIntExtra("organisationContacts", 1)));
+        myOrganisation = new ApiOrganisations();
+        myOrganisation.setName(String.valueOf(intent.getStringExtra("organisationName")));
+
+        dbHelper = new DataBaseHelper(this);
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        if (c.moveToFirst()) {
+            int nameIndex = c.getColumnIndex(DataBaseHelper.ORGANISATION_NAME);
+            int descriptionIndex = c.getColumnIndex(DataBaseHelper.ORGANISATION_DESCRIPTION);
+            int contactsIndex = c.getColumnIndex(DataBaseHelper.ORGANISATION_CONTACTS);
+            int imageIndex = c.getColumnIndex(DataBaseHelper.ORGANISATION_IMAGE_URL);
+
+            do {
+                if(c.getString(nameIndex).equals(myOrganisation.getName())){
+                    myOrganisation.setDescription(c.getString(descriptionIndex));
+                    myOrganisation.setContacts(c.getString(contactsIndex));
+                    myOrganisation.setImageurl(c.getString(imageIndex));
+                    break;
+                }
+            } while (c.moveToNext());
+        }
+        c.close();
+        //myOrganisation.setName("123123");
+
+        setTitle(myOrganisation.getName());
+        organisationTitle.setText(myOrganisation.getName());
+        organisationInformation.setText(myOrganisation.getDescription());
+        organisationContacts.setText(myOrganisation.getContacts());
+        //organisationImage;
+
 
         switch(intent.getIntExtra("organisationImage", 1)){
             case 0: organisationImage.setImageResource(R.drawable.organisation_image_1);break;

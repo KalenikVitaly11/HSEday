@@ -17,6 +17,9 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAZygfR-4KMkw83XvtRLof5tLQiNb_ubLg" />
         <activity
             android:name="org.styleru.hseday.MainActivity"
             android:label="@string/app_name"
