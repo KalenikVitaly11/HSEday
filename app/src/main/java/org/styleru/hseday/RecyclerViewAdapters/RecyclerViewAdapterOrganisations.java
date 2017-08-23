@@ -8,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.api.Api;
 
 import org.styleru.hseday.AboutOrganisationActivity;
-import org.styleru.hseday.ApiOrganisations;
+import org.styleru.hseday.ApiClasses.ApiOrganisations;
 import org.styleru.hseday.ItemClickListener;
 
 import java.util.ArrayList;

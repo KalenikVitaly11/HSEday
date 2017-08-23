@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.styleru.hseday.ApiClasses.ApiOrganisations;
+
 public class AboutOrganisationActivity extends AppCompatActivity {
     ImageView organisationImage;
     TextView organisationTitle;
@@ -34,8 +36,6 @@ public class AboutOrganisationActivity extends AppCompatActivity {
         dbHelper = new DataBaseHelper(this);
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         Cursor c = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
-        // ставим позицию курсора на первую строку выборки
-        // если в выборке нет строк, вернется false
         if (c.moveToFirst()) {
             int nameIndex = c.getColumnIndex(DataBaseHelper.ORGANISATION_NAME);
             int descriptionIndex = c.getColumnIndex(DataBaseHelper.ORGANISATION_DESCRIPTION);

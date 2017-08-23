@@ -1,11 +1,15 @@
 package org.styleru.hseday;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.styleru.hseday.ApiClasses.ApiFaculties;
 
 
 public class AboutFacultyActivity extends AppCompatActivity {
@@ -13,22 +17,49 @@ public class AboutFacultyActivity extends AppCompatActivity {
     TextView facultyTitle;
     TextView facultyInformation;
     TextView facultyDepartments;
-    TextView facultyContancts;
+    TextView facultyContacts;
+    ApiFaculties myFaculty;
+    DataBaseHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_faculty);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         facultyImage = (ImageView) this.findViewById(R.id.faculty);
         facultyTitle = (TextView) this.findViewById(R.id.faculty_title);
         facultyInformation = (TextView) this.findViewById(R.id.faculty_information);
         facultyDepartments = (TextView) this.findViewById(R.id.faculty_departments);
-        facultyContancts = (TextView) this.findViewById(R.id.faculty_contacts);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        facultyContacts = (TextView) this.findViewById(R.id.faculty_contacts);
         Intent intent = getIntent();
+        myFaculty = new ApiFaculties();
+        myFaculty.setName(String.valueOf(intent.getStringExtra("facultyName")));
+        setTitle(myFaculty.getName());
+
+        dbHelper = new DataBaseHelper(this);
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+
+        Cursor c = database.query(DataBaseHelper.TABLE_FACULTIES_NAME, null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            int nameIndex = c.getColumnIndex(DataBaseHelper.FACULTIES_NAME);
+            int descriptionIndex = c.getColumnIndex(DataBaseHelper.FACULTIES_DESCRIPTION);
+            int contactsIndex = c.getColumnIndex(DataBaseHelper.FACULTIES_CONTACTS);
+            int imageIndex = c.getColumnIndex(DataBaseHelper.FACULTIES_IMAGE_URL);
+
+            do {
+                if(c.getString(nameIndex).equals(myFaculty.getName())){
+                    myFaculty.setDescription(c.getString(descriptionIndex));
+                    myFaculty.setContacts(c.getString(contactsIndex));
+                    myFaculty.setImageurl(c.getString(imageIndex));
+                    break;
+                }
+            } while (c.moveToNext());
+        }
+        c.close();
+        facultyTitle.setText(myFaculty.getName());
+        facultyInformation.setText(myFaculty.getDescription());
+        facultyContacts.setText(myFaculty.getContacts());
+
         switch(intent.getIntExtra("FacultyImage", 1)){
             case 1: facultyImage.setImageResource(R.drawable.faculty_1);break;
             case 2: facultyImage.setImageResource(R.drawable.faculty_2);break;
@@ -48,12 +79,6 @@ public class AboutFacultyActivity extends AppCompatActivity {
             case 16: facultyImage.setImageResource(R.drawable.faculty_16);break;
 
         }
-        setTitle(intent.getIntExtra("FacultyName", 1));
-        facultyTitle.setText(intent.getIntExtra("FacultyName", 1));
-        facultyInformation.setText(intent.getIntExtra("FacultyInformation", 1));
-        facultyContancts.setText(intent.getIntExtra("FacultyContacts", 1));
-        facultyDepartments.setText(intent.getIntExtra("FacultyDepartments", 1));
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item){

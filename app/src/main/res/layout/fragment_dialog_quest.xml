@@ -2,51 +2,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    tools:context="org.styleru.hseday.DialogFragments.DialogQuest"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_height="wrap_content">
+    tools:context="org.styleru.hseday.DialogFragments.DialogQuest">
 
     <ImageView
+        android:id="@+id/quest_dialog_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/quest_2"
         android:adjustViewBounds="true"
-        android:id="@+id/quest_dialog_image" />
+        android:src="@drawable/quest_2" />
 
     <TextView
         android:id="@+id/quest_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
         android:text="2. Лекция"
         android:textAlignment="textStart"
-        android:textSize="22sp"
         android:textColor="@android:color/black"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="13dp" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/quest_dialog_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:text="Пропустил пару лекций и решил попросить пару конспектов у одногруппника? Но ты не ожидал, что почерк будет настолько непонятным!"
         android:textAlignment="textStart"
-        android:textSize="16sp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
+        android:textSize="16sp" />
 
-    <EditText
+    <TextView
+        android:id="@+id/quests_passed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Введите код"
-        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="4dp"
+        android:text="Пройдено 11 из 20"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/quest_dialog_edit_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textColorLink="@android:color/holo_blue_dark"
-        android:backgroundTint="@color/dialog_button_color_blue"
-        android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:id="@+id/quest_dialog_edit_code" />
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/dialog_button_color_blue"
+        android:cursorVisible="false"
+        android:gravity="center_vertical|center_horizontal"
+        android:hint="Введи код"
+        android:inputType="numberDecimal"
+        android:textColorLink="@android:color/holo_blue_dark" />
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -58,21 +71,21 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/check_button"
-            android:text="Назад"
             android:background="@android:color/transparent"
+            android:text="Назад"
             android:textColor="@color/dialog_button_color_blue" />
 
         <Button
             android:id="@+id/check_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:text="Проверить"
-            android:background="@android:color/transparent"
-            android:textColor="@color/dialog_button_color_blue"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="5dp" />
+            android:background="@android:color/transparent"
+            android:text="Проверить"
+            android:textColor="@color/dialog_button_color_blue" />
     </RelativeLayout>
 
 </LinearLayout>

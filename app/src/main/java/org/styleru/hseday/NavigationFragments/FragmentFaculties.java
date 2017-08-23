@@ -1,5 +1,7 @@
 package org.styleru.hseday.NavigationFragments;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,15 +12,21 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.styleru.hseday.ApiClasses.ApiFaculties;
+import org.styleru.hseday.DataBaseHelper;
 import org.styleru.hseday.MainActivity;
 import org.styleru.hseday.RecyclerViewAdapters.RecyclerViewAdapterFaculties;
+
+import java.util.ArrayList;
 
 
 public class FragmentFaculties extends android.support.v4.app.Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapterFaculties mAdapter;
-    private String[] mList;
+    DataBaseHelper dbHelper;
     private StaggeredGridLayoutManager mGridLayoutManager;
+    ArrayList<ApiFaculties> dataFaculties;
+    ApiFaculties myFaculty;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -57,12 +65,37 @@ public class FragmentFaculties extends android.support.v4.app.Fragment {
         ((MainActivity) getActivity()).setActionBarTitle("Факультеты");
         View view = inflater.inflate(org.styleru.hseday.R.layout.fragment_faculties, container, false);
 
-        mList = getResources().getStringArray(org.styleru.hseday.R.array.faculties);
+
+
+
+        dbHelper = new DataBaseHelper(getContext());
+        dataFaculties = new ArrayList<ApiFaculties>();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+
+        Cursor c = database.query(DataBaseHelper.TABLE_FACULTIES_NAME, null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            int nameIndex = c.getColumnIndex(DataBaseHelper.FACULTIES_NAME);
+            int descriptionIndex = c.getColumnIndex(DataBaseHelper.FACULTIES_DESCRIPTION);
+            int contactsIndex = c.getColumnIndex(DataBaseHelper.FACULTIES_CONTACTS);
+            int imageIndex = c.getColumnIndex(DataBaseHelper.FACULTIES_IMAGE_URL);
+            do {
+                myFaculty = new ApiFaculties();
+                myFaculty.setName(c.getString(nameIndex));
+                myFaculty.setDescription(c.getString(descriptionIndex));
+                myFaculty.setContacts(c.getString(contactsIndex));
+                myFaculty.setImageurl(c.getString(imageIndex));
+                dataFaculties.add(myFaculty);
+            } while (c.moveToNext());
+        }
+        c.close();
+
+
+
         mRecyclerView = (RecyclerView)view.findViewById(org.styleru.hseday.R.id.faculty_recycler_view);
         mGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(mGridLayoutManager);
-        mAdapter = new RecyclerViewAdapterFaculties(getActivity(), mList);
+        mAdapter = new RecyclerViewAdapterFaculties(getActivity(), dataFaculties);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;

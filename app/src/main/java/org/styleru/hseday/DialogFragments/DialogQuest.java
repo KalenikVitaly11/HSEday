@@ -1,6 +1,11 @@
 package org.styleru.hseday.DialogFragments;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -11,22 +16,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
+import org.styleru.hseday.DataBaseHelper;
+import org.styleru.hseday.MainActivity;
 import org.styleru.hseday.R;
-public class DialogQuest extends DialogFragment implements View.OnClickListener{
+
+import static android.content.Context.MODE_PRIVATE;
+
+public class DialogQuest extends DialogFragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
+    DataBaseHelper dbHelper;
 
     Button CheckCodeButton;
     Button BackButton;
     EditText EditCodeText;
     TextView QuestTitle;
+    TextView QuestsPassed;
     TextView QuestText;
     ImageView QuestImage;
+    String passCode;
+    SharedPreferences sPref;
     private OnFragmentInteractionListener mListener;
 
     public DialogQuest() {
@@ -60,11 +76,40 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener{
         QuestText = (TextView) view.findViewById(R.id.quest_dialog_text);
         QuestTitle = (TextView) view.findViewById(R.id.quest_dialog_title);
         QuestImage = (ImageView) view.findViewById(R.id.quest_dialog_image);
+        QuestsPassed = (TextView) view.findViewById(R.id.quests_passed);
 
+
+
+        Bundle mArgs = getArguments();
+        passCode = mArgs.getString("passcode");
+        String imageUrl = mArgs.getString("imageurl");
         Glide
                 .with(this)
-                .load(R.drawable.quest_2)
+                .load("http://dayhse.styleru.net/docs/img/qst/sunlit.jpg")
                 .into(QuestImage);
+        QuestText.setText(mArgs.getString("description"));
+        QuestTitle.setText(mArgs.getString("name"));
+        sPref = getActivity().getPreferences(MODE_PRIVATE);
+        Integer questsPassedNumber = sPref.getInt("questsPassed", -1);
+        QuestsPassed.setText("Пройдено " + questsPassedNumber + " из " + MainActivity.questsNumber);
+
+
+        dbHelper = new DataBaseHelper(getContext());
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        Cursor cursorQuest = database.query(DataBaseHelper.TABLE_QUESTS_NAME, null, null, null, null, null, null);
+        if (cursorQuest.moveToFirst()) {
+            int passedIndex = cursorQuest.getColumnIndex(DataBaseHelper.QUESTS_PASSED);
+            int descriptionIndex = cursorQuest.getColumnIndex(DataBaseHelper.QUESTS_DESCRIPTION);
+            do {
+                if (cursorQuest.getString(descriptionIndex).equals(QuestText.getText().toString()) && cursorQuest.getInt(passedIndex) == 1) {
+                    EditCodeText.setHint("Пройдено");
+                    EditCodeText.setClickable(false);
+                    EditCodeText.setFocusable(false);
+                    EditCodeText.setFocusableInTouchMode(false);
+                }
+            } while (cursorQuest.moveToNext());
+        }
+
 
         CheckCodeButton.setOnClickListener(this);
         BackButton.setOnClickListener(this);
@@ -78,7 +123,6 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener{
     }
 
 
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -87,13 +131,57 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.back_button:
+                dismiss();
                 break;
             case R.id.check_button:
+                if (EditCodeText.getText().toString().equals("")) {
+                    if (EditCodeText.getHint().toString().equals("Пройдено")) {
+                        Toast.makeText(getContext(), "Эта точка уже пройдена", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Но ведь ты ничего не ввел", Toast.LENGTH_SHORT).show();
+                    }
+
+                    break;
+                }
+
+                if (EditCodeText.getText().toString().equals(passCode)) {
+                    Toast.makeText(getContext(), "Верно!", Toast.LENGTH_SHORT).show();
+                    dbHelper = new DataBaseHelper(getContext());
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    Cursor cursorQuest = database.query(DataBaseHelper.TABLE_QUESTS_NAME, null, null, null, null, null, null);
+                    if (cursorQuest.moveToFirst()) {
+                        int passedIndex = cursorQuest.getColumnIndex(DataBaseHelper.QUESTS_PASSED);
+                        int descriptionIndex = cursorQuest.getColumnIndex(DataBaseHelper.QUESTS_DESCRIPTION);
+                        int nameIndex = cursorQuest.getColumnIndex(DataBaseHelper.QUESTS_NAME);
+                        do {
+                            if (cursorQuest.getString(descriptionIndex).equals(QuestText.getText().toString()) && cursorQuest.getString(nameIndex).equals(QuestTitle.getText().toString())) {
+                                ContentValues cv = new ContentValues();
+                                cv.put(DataBaseHelper.QUESTS_PASSED, 1);
+                                database.update(DataBaseHelper.TABLE_QUESTS_NAME, cv, DataBaseHelper.QUESTS_NAME + "=?", new String[]{QuestTitle.getText().toString()});
+                                cv.clear();
+                                Toast.makeText(getContext(), cursorQuest.getString(descriptionIndex) + "   " + QuestText.getText().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        } while (cursorQuest.moveToNext());
+                    }
+
+                    sPref = getActivity().getPreferences(MODE_PRIVATE);
+                    Integer questsPassedNumber = sPref.getInt("questsPassed", -1) + 1;
+                    SharedPreferences.Editor ed = sPref.edit();
+                    ed.putInt("questsPassed", questsPassedNumber);
+                    ed.apply();
+
+
+                    MainActivity.questsPassed++;
+                    QuestsPassed.setText("Пройдено " + questsPassedNumber + " из " + MainActivity.questsNumber);
+                    dismiss();
+                } else {
+                    Toast.makeText(getContext(), "Неверно!", Toast.LENGTH_SHORT).show();
+                }
+                EditCodeText.setText("");
                 break;
         }
-        dismiss();
     }
 
     public void onDismiss(DialogInterface dialog) {

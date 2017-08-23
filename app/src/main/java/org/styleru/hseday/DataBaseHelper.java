@@ -16,8 +16,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String ORGANISATION_ID = "id";
     public static final String ORGANISATION_NAME = "organisation_name";
     public static final String ORGANISATION_DESCRIPTION = "organisation_description";
-    public static final String ORGANISATION_IMAGE_URL= "organisation_image_url";
-    public static final String ORGANISATION_CONTACTS= "organisation_contacts";
+    public static final String ORGANISATION_IMAGE_URL = "organisation_image_url";
+    public static final String ORGANISATION_CONTACTS = "organisation_contacts";
 
     private static final String CREATE_TABLE_ORGANISATIONS = "create table "
             + TABLE_ORGANISATIONS_NAME
@@ -36,8 +36,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String FACULTIES_ID = "id";
     public static final String FACULTIES_NAME = "faculty_name";
     public static final String FACULTIES_DESCRIPTION = "faculty_description";
-    public static final String FACULTIES_IMAGE_URL= "faculty_image_url";
-    public static final String FACULTIES_CONTACTS= "faculty_contacts";
+    public static final String FACULTIES_IMAGE_URL = "faculty_image_url";
+    public static final String FACULTIES_CONTACTS = "faculty_contacts";
 
     private static final String CREATE_TABLE_FACULTIES = "create table "
             + TABLE_FACULTIES_NAME
@@ -46,6 +46,114 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + FACULTIES_DESCRIPTION + " text,"
             + FACULTIES_IMAGE_URL + " text,"
             + FACULTIES_CONTACTS + " text"
+            + ");";
+
+
+    // База данных квестов
+    public static final String TABLE_QUESTS_NAME = "quests";
+    public static final int TABLE_QUESTS_VERSION = 1;
+
+    public static final String QUESTS_ID = "id";
+    public static final String QUESTS_NAME = "quests_name";
+    public static final String QUESTS_DESCRIPTION = "quests_description";
+    public static final String QUESTS_NUMBER = "quests_number";
+    public static final String QUESTS_PASSCODE = "quests_passcode";
+    public static final String QUESTS_PASSED = "quests_passed";
+    public static final String QUESTS_IMAGE_URL = "quest_image_url";
+    public static final String QUESTS_XCOORDINATE = "quests_xcoordinate";
+    public static final String QUESTS_YCOORDINATE = "quests_ycoordinate";
+
+    public static final String CREATE_TABLE_QUESTS = "create table "
+            + TABLE_QUESTS_NAME
+            + " (" + QUESTS_ID + " integer primary key autoincrement,"
+            + QUESTS_NUMBER + " text,"
+            + QUESTS_NAME + " text,"
+            + QUESTS_DESCRIPTION + " text,"
+            + QUESTS_PASSCODE + " text,"
+            + QUESTS_IMAGE_URL + " text,"
+            + QUESTS_PASSED + " integer default 0,"
+            + QUESTS_XCOORDINATE + " real,"
+            + QUESTS_YCOORDINATE + " real"
+            + ");";
+
+
+    // База данных тентов
+    public static final String TABLE_TENTS_NAME = "tents";
+    public static final int TABLE_TENTS_VERSION = 1;
+
+    public static final String TENTS_ID = "id";
+    public static final String TENTS_NAME = "tents_name";
+    public static final String TENTS_DESCRIPTION = "tents_description";
+    public static final String TENTS_XCOORDINATE = "tents_xcoordinate";
+    public static final String TENTS_YCOORDINATE = "tents_ycoordinate";
+
+    public static final String CREATE_TABLE_TENTS = "create table "
+            + TABLE_TENTS_NAME
+            + " (" +  TENTS_ID + " integer primary key autoincrement,"
+            + TENTS_NAME + " text,"
+            + TENTS_DESCRIPTION + " text,"
+            + TENTS_XCOORDINATE + " real,"
+            + TENTS_YCOORDINATE + " real"
+            + ");";
+
+    // База данных спортивных мероприятий (мячей)
+    public static final String TABLE_SPORTS_NAME = "sports";
+    public static final int TABLE_SPORTS_VERSION = 1;
+
+    public static final String SPORTS_ID = "id";
+    public static final String SPORTS_NAME = "sports_name";
+    public static final String SPORTS_DESCRIPTION = "sports_description";
+    public static final String SPORTS_IMAGE_URL = "sports_image_url";
+    public static final String SPORTS_XCOORDINATE = "sports_xcoordinate";
+    public static final String SPORTS_YCOORDINATE = "sports_ycoordinate";
+
+    public static final String CREATE_TABLE_SPORTS = "create table "
+            + TABLE_SPORTS_NAME
+            + " (" + SPORTS_ID + " integer primary key autoincrement,"
+            + SPORTS_NAME + " text,"
+            + SPORTS_DESCRIPTION + " text,"
+            + SPORTS_IMAGE_URL + " text,"
+            + SPORTS_XCOORDINATE + " real,"
+            + SPORTS_YCOORDINATE + " real"
+            + ");";
+
+
+    // База данных лекций (желтых листочков)
+    public static final String TABLE_LECTIONS_NAME = "lections";
+    public static final int TABLE_LECTIONS_VERSION = 1;
+
+    public static final String LECTURES_ID = "id";
+    public static final String LECTURES_NAME = "lections_name";
+    public static final String LECTURES_DESCRIPTION = "lections_description";
+    public static final String LECTURES_XCOORDINATE = "lections_xcoordinate";
+    public static final String LECTURES_YCOORDINATE = "lections_ycoordinate";
+
+    public static final String CREATE_TABLE_LECTIONS = "create table "
+            + TABLE_LECTIONS_NAME
+            + " (" +  LECTURES_ID + " integer primary key autoincrement,"
+            + LECTURES_NAME + " text,"
+            + LECTURES_DESCRIPTION + " text,"
+            + LECTURES_XCOORDINATE + " real,"
+            + LECTURES_YCOORDINATE + " real"
+            + ");";
+
+    // Базы данных микрофонов
+    public static final String TABLE_MICROPHONES_NAME = "microphones";
+    public static final int TABLE_MICROPHONES_VERSION = 1;
+
+    public static final String MICROPHONES_ID = "id";
+    public static final String MICROPHONES_NAME = "microphones_name";
+    public static final String MICROPHONES_DESCRIPTION = "microphones_description";
+    public static final String MICROPHONES_XCOORDINATE = "microphones_xcoordinate";
+    public static final String MICROPHONES_YCOORDINATE = "microphones_ycoordinate";
+
+    public static final String CREATE_TABLE_MICROPHONES = "create table "
+            + TABLE_MICROPHONES_NAME
+            + " (" +  MICROPHONES_ID + " integer primary key autoincrement,"
+            + MICROPHONES_NAME + " text,"
+            + MICROPHONES_DESCRIPTION + " text,"
+            + MICROPHONES_XCOORDINATE + " real,"
+            + MICROPHONES_YCOORDINATE + " real"
             + ");";
 
 
@@ -58,7 +166,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_ORGANISATIONS);
-        //db.execSQL(CREATE_TABLE_FACULTIES);
+        db.execSQL(CREATE_TABLE_FACULTIES);
+        db.execSQL(CREATE_TABLE_QUESTS);
+        db.execSQL(CREATE_TABLE_TENTS);
+        db.execSQL(CREATE_TABLE_SPORTS);
+        db.execSQL(CREATE_TABLE_MICROPHONES);
     }
 
     @Override
