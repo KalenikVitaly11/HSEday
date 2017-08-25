@@ -10,16 +10,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Api;
+
 import org.styleru.hseday.ActivityComments;
+import org.styleru.hseday.ApiClasses.ApiEvents;
 import org.styleru.hseday.ItemClickListener;
+
+import java.util.ArrayList;
 
 public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerViewAdapterLections.ViewHolder> {
     Context mContext;
-    private String[] mList;
+    private ArrayList<ApiEvents> dataEvents;
 
-    public RecyclerViewAdapterLections(Context contexts, String[] list) {
+    public RecyclerViewAdapterLections(Context contexts, ArrayList<ApiEvents> dataEvents) {
         this.mContext = contexts;
-        this.mList = list;
+        this.dataEvents = dataEvents;
     }
 
     @Override
@@ -31,12 +36,11 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String[] parts = mList[position].split("#");
-        //holder.LectionTitle.setText(mContext.getResources().getText(R.string.cardview_title_string).toString().concat(parts[1].toString()));
-        holder.LectionTitle.setText(parts[1].toString());
-        holder.LectionTime.setText(parts[0].toString());
-        holder.LectionPerson.setText(mContext.getResources().getText(org.styleru.hseday.R.string.cardview_person_string).toString().concat(parts[2].toString()));
-        holder.LectionContacts.setText(mContext.getResources().getText(org.styleru.hseday.R.string.cardview_contacts_string).toString().concat(parts[3].toString()).concat(parts[4].toString()));
+
+        holder.LectionTitle.setText(dataEvents.get(position).getName());
+        holder.LectionTime.setText(dataEvents.get(position).getStarttime() + " - " + dataEvents.get(position).getEndtime());
+        holder.LectionPerson.setText(dataEvents.get(position).getDescription());
+        //holder.LectionContacts.setText(mContext.getResources().getText(org.styleru.hseday.R.string.cardview_contacts_string).toString().concat(parts[3].toString()).concat(parts[4].toString()));
 
         holder.setClickListener(new ItemClickListener() {
             @Override
@@ -54,7 +58,7 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public int getItemCount() {
-        return mList.length;
+        return dataEvents.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

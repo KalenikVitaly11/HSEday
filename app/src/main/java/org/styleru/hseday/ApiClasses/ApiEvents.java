@@ -5,6 +5,7 @@ package org.styleru.hseday.ApiClasses;
  */
 
 public class ApiEvents {
+    public Integer id;
     public String name;
     public String description;
     public String starttime;
@@ -12,35 +13,43 @@ public class ApiEvents {
     public String pointtype;
     public Integer pointid;
 
-    public String getName(){
+    public Integer getId() {
+        return this.id;
+    }
+
+    public String getName() {
         return this.name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 
-    public String getStarttime(){
+    public String getStarttime() {
         return this.starttime;
     }
 
-    public String getEndtime(){
+    public String getEndtime() {
         return this.endtime;
     }
 
-    public String getPointtype(){
+    public String getPointtype() {
         return this.pointtype;
     }
 
-    public Integer getPointid(){
+    public Integer getPointid() {
         return this.pointid;
     }
 
-    public void setName(String name){
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 

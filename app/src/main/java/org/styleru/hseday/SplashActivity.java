@@ -60,6 +60,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     for (int i = 0; i < dataOrganisations.size(); i++) {  // Загоняем список с инфой с сервера в базу данных организаций
                         ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.ORGANISATION_ID, dataOrganisations.get(i).getId());
                         myContent.put(DataBaseHelper.ORGANISATION_NAME, dataOrganisations.get(i).getName());
                         myContent.put(DataBaseHelper.ORGANISATION_DESCRIPTION, dataOrganisations.get(i).getDescription());
                         myContent.put(DataBaseHelper.ORGANISATION_CONTACTS, dataOrganisations.get(i).getContacts());
@@ -91,6 +92,7 @@ public class SplashActivity extends AppCompatActivity {
                     dataFaculties.addAll(response.body());  // Список с инфой с сервера
                     for (int i = 0; i < dataFaculties.size(); i++) {  // Загоняем список с инфой с сервера в базу данных факультетов
                         ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.FACULTIES_ID, dataFaculties.get(i).getId());
                         myContent.put(DataBaseHelper.FACULTIES_NAME, dataFaculties.get(i).getName());
                         myContent.put(DataBaseHelper.FACULTIES_DESCRIPTION, dataFaculties.get(i).getDescription());
                         myContent.put(DataBaseHelper.FACULTIES_CONTACTS, dataFaculties.get(i).getContacts());
@@ -122,6 +124,7 @@ public class SplashActivity extends AppCompatActivity {
                     dataQuests.addAll(response.body());
                     for (int i = 0; i < dataQuests.size(); i++) {
                         ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.QUESTS_ID, dataQuests.get(i).getId());
                         myContent.put(DataBaseHelper.QUESTS_NUMBER, dataQuests.get(i).getNumber());
                         myContent.put(DataBaseHelper.QUESTS_NAME, dataQuests.get(i).getName());
                         myContent.put(DataBaseHelper.QUESTS_DESCRIPTION, dataQuests.get(i).getDescription());
@@ -156,6 +159,7 @@ public class SplashActivity extends AppCompatActivity {
                     dataTents.addAll(response.body());
                     for (int i = 0; i < dataTents.size(); i++) {
                         ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.TENTS_ID, dataTents.get(i).getId());
                         myContent.put(DataBaseHelper.TENTS_NAME, dataTents.get(i).getName());
                         myContent.put(DataBaseHelper.TENTS_DESCRIPTION, dataTents.get(i).getDescription());
                         myContent.put(DataBaseHelper.TENTS_XCOORDINATE, dataTents.get(i).getXposition());
@@ -186,6 +190,7 @@ public class SplashActivity extends AppCompatActivity {
                     dataSports.addAll(response.body());
                     for(int i = 0;i < dataSports.size(); i++){
                         ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.SPORTS_ID, dataSports.get(i).getId());
                         myContent.put(DataBaseHelper.SPORTS_NAME, dataSports.get(i).getName());
                         myContent.put(DataBaseHelper.SPORTS_DESCRIPTION, dataSports.get(i).getDescription());
                         myContent.put(DataBaseHelper.SPORTS_IMAGE_URL, dataSports.get(i).getImageurl());
@@ -216,6 +221,7 @@ public class SplashActivity extends AppCompatActivity {
                     dataLectures.addAll(response.body());
                     for(int i = 0; i < dataLectures.size(); i++){
                         ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.LECTURES_ID, dataLectures.get(i).getId());
                         myContent.put(DataBaseHelper.LECTURES_NAME, dataLectures.get(i).getName());
                         myContent.put(DataBaseHelper.LECTURES_DESCRIPTION, dataLectures.get(i).getDescription());
                         myContent.put(DataBaseHelper.LECTURES_XCOORDINATE, dataLectures.get(i).getXposition());
@@ -246,6 +252,7 @@ public class SplashActivity extends AppCompatActivity {
                     dataMics.addAll(response.body());
                     for(int i = 0;i < dataMics.size(); i++){
                         ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.MICROPHONES_ID, dataMics.get(i).getId());
                         myContent.put(DataBaseHelper.MICROPHONES_NAME, dataMics.get(i).getName());
                         myContent.put(DataBaseHelper.MICROPHONES_DESCRIPTION, dataMics.get(i).getDescription());
                         myContent.put(DataBaseHelper.MICROPHONES_XCOORDINATE, dataMics.get(i).getXposition());
@@ -276,6 +283,7 @@ public class SplashActivity extends AppCompatActivity {
                     dataEvents.addAll(response.body());
                     for(int i = 0;i < dataEvents.size(); i++){
                         ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.EVENTS_ID, dataEvents.get(i).getId());
                         myContent.put(DataBaseHelper.EVENTS_NAME, dataEvents.get(i).getName());
                         myContent.put(DataBaseHelper.EVENTS_DESCRIPTION, dataEvents.get(i).getDescription());
                         myContent.put(DataBaseHelper.EVENTS_STARTTIME, dataEvents.get(i).getStarttime());

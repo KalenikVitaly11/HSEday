@@ -5,6 +5,7 @@ package org.styleru.hseday.ApiClasses;
  */
 
 public class ApiQuest {
+    public Integer id;
     public String number;
     public String name;
     public String description;
@@ -12,6 +13,10 @@ public class ApiQuest {
     public String passcode;
     public Float xposition;
     public Float yposition;
+
+    public Integer getId() {
+        return this.id;
+    }
 
     public String getName() {
         return name;
@@ -41,25 +46,35 @@ public class ApiQuest {
         return yposition;
     }
 
-    public void setName(String name){
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
-    public void setNumber(String number){
+
+    public void setNumber(String number) {
         this.number = number;
     }
-    public void setDescription(String description){
+
+    public void setDescription(String description) {
         this.description = description;
     }
-    public void setImageurl(String imageurl){
+
+    public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
     }
-    public void setPasscode(String passcode){
+
+    public void setPasscode(String passcode) {
         this.passcode = passcode;
     }
-    public void setXposition(Float xposition){
+
+    public void setXposition(Float xposition) {
         this.xposition = xposition;
     }
-    public void setYposition(Float yposition){
+
+    public void setYposition(Float yposition) {
         this.yposition = yposition;
     }
 

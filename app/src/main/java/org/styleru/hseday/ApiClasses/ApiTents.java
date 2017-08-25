@@ -5,10 +5,15 @@ package org.styleru.hseday.ApiClasses;
  */
 
 public class ApiTents {
+    public Integer id;
     public String name;
     public String description;
     public Float xposition;
     public Float yposition;
+
+    public Integer getId() {
+        return this.id;
+    }
 
     public String getName() {
         return name;
@@ -26,16 +31,23 @@ public class ApiTents {
         return yposition;
     }
 
-    public void setName(String name){
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
-    public void setDescription(String description){
+
+    public void setDescription(String description) {
         this.description = description;
     }
-    public void setXposition(Float xposition){
+
+    public void setXposition(Float xposition) {
         this.xposition = xposition;
     }
-    public void setYposition(Float yposition){
+
+    public void setYposition(Float yposition) {
         this.yposition = yposition;
     }
 }

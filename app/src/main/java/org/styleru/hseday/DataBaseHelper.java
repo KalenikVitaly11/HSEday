@@ -21,7 +21,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_ORGANISATIONS = "create table "
             + TABLE_ORGANISATIONS_NAME
-            + " (" + ORGANISATION_ID + " integer primary key autoincrement,"
+            + " (" + ORGANISATION_ID + " integer,"
             + ORGANISATION_NAME + " text,"
             + ORGANISATION_DESCRIPTION + " text,"
             + ORGANISATION_IMAGE_URL + " text,"
@@ -41,7 +41,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_FACULTIES = "create table "
             + TABLE_FACULTIES_NAME
-            + " (" + FACULTIES_ID + " integer primary key autoincrement,"
+            + " (" + FACULTIES_ID + " integer,"
             + FACULTIES_NAME + " text,"
             + FACULTIES_DESCRIPTION + " text,"
             + FACULTIES_IMAGE_URL + " text,"
@@ -65,7 +65,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_QUESTS = "create table "
             + TABLE_QUESTS_NAME
-            + " (" + QUESTS_ID + " integer primary key autoincrement,"
+            + " (" + QUESTS_ID + " integer,"
             + QUESTS_NUMBER + " text,"
             + QUESTS_NAME + " text,"
             + QUESTS_DESCRIPTION + " text,"
@@ -89,7 +89,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_TENTS = "create table "
             + TABLE_TENTS_NAME
-            + " (" + TENTS_ID + " integer primary key autoincrement,"
+            + " (" + TENTS_ID + " integer,"
             + TENTS_NAME + " text,"
             + TENTS_DESCRIPTION + " text,"
             + TENTS_XCOORDINATE + " real,"
@@ -109,7 +109,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_SPORTS = "create table "
             + TABLE_SPORTS_NAME
-            + " (" + SPORTS_ID + " integer primary key autoincrement,"
+            + " (" + SPORTS_ID + " integer,"
             + SPORTS_NAME + " text,"
             + SPORTS_DESCRIPTION + " text,"
             + SPORTS_IMAGE_URL + " text,"
@@ -130,7 +130,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_LECTIONS = "create table "
             + TABLE_LECTIONS_NAME
-            + " (" + LECTURES_ID + " integer primary key autoincrement,"
+            + " (" + LECTURES_ID + " integer,"
             + LECTURES_NAME + " text,"
             + LECTURES_DESCRIPTION + " text,"
             + LECTURES_XCOORDINATE + " real,"
@@ -149,7 +149,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_MICROPHONES = "create table "
             + TABLE_MICROPHONES_NAME
-            + " (" + MICROPHONES_ID + " integer primary key autoincrement,"
+            + " (" + MICROPHONES_ID + " integer,"
             + MICROPHONES_NAME + " text,"
             + MICROPHONES_DESCRIPTION + " text,"
             + MICROPHONES_XCOORDINATE + " real,"
@@ -169,7 +169,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_EVENTS = "create table "
             + TABLE_EVENTS_NAME
-            + " (" + EVENTS_ID + " integer primary key autoincrement,"
+            + " (" + EVENTS_ID + " integer,"
             + EVENTS_NAME + " text,"
             + EVENTS_DESCRIPTION + " text,"
             + EVENTS_STARTTIME + " text,"
