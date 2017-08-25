@@ -89,7 +89,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_TENTS = "create table "
             + TABLE_TENTS_NAME
-            + " (" +  TENTS_ID + " integer primary key autoincrement,"
+            + " (" + TENTS_ID + " integer primary key autoincrement,"
             + TENTS_NAME + " text,"
             + TENTS_DESCRIPTION + " text,"
             + TENTS_XCOORDINATE + " real,"
@@ -130,7 +130,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_LECTIONS = "create table "
             + TABLE_LECTIONS_NAME
-            + " (" +  LECTURES_ID + " integer primary key autoincrement,"
+            + " (" + LECTURES_ID + " integer primary key autoincrement,"
             + LECTURES_NAME + " text,"
             + LECTURES_DESCRIPTION + " text,"
             + LECTURES_XCOORDINATE + " real,"
@@ -149,14 +149,34 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_MICROPHONES = "create table "
             + TABLE_MICROPHONES_NAME
-            + " (" +  MICROPHONES_ID + " integer primary key autoincrement,"
+            + " (" + MICROPHONES_ID + " integer primary key autoincrement,"
             + MICROPHONES_NAME + " text,"
             + MICROPHONES_DESCRIPTION + " text,"
             + MICROPHONES_XCOORDINATE + " real,"
             + MICROPHONES_YCOORDINATE + " real"
             + ");";
 
+    // Таблица всех событий
+    public static final String TABLE_EVENTS_NAME = "events";
+    public static final int TABLE_EVENTS_VERSION = 1;
+    public static final String EVENTS_ID = "id";
+    public static final String EVENTS_NAME = "events_name";
+    public static final String EVENTS_DESCRIPTION = "events_description";
+    public static final String EVENTS_STARTTIME = "events_starttime";
+    public static final String EVENTS_ENDTIME = "events_endtime";
+    public static final String EVENTS_POINTTYPE = "events_pointtype";
+    public static final String EVENTS_POINTID = "events_pointid";
 
+    public static final String CREATE_TABLE_EVENTS = "create table "
+            + TABLE_EVENTS_NAME
+            + " (" + EVENTS_ID + " integer primary key autoincrement,"
+            + EVENTS_NAME + " text,"
+            + EVENTS_DESCRIPTION + " text,"
+            + EVENTS_STARTTIME + " text,"
+            + EVENTS_ENDTIME + " text,"
+            + EVENTS_POINTTYPE + " text,"
+            + EVENTS_POINTID + " integer"
+            + ");";
 
     public DataBaseHelper(Context context) {
         // конструктор суперкласса
@@ -172,6 +192,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SPORTS);
         db.execSQL(CREATE_TABLE_MICROPHONES);
         db.execSQL(CREATE_TABLE_LECTIONS);
+        db.execSQL(CREATE_TABLE_EVENTS);
     }
 
     @Override
