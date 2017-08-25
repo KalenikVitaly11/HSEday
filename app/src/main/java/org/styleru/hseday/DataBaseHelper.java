@@ -171,6 +171,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TENTS);
         db.execSQL(CREATE_TABLE_SPORTS);
         db.execSQL(CREATE_TABLE_MICROPHONES);
+        db.execSQL(CREATE_TABLE_LECTIONS);
     }
 
     @Override

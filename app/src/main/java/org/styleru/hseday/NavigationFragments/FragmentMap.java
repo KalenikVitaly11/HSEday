@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.glidebitmappool.GlideBitmapFactory;
 import com.glidebitmappool.GlideBitmapPool;
+import com.google.android.gms.common.api.Api;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -39,6 +40,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.styleru.hseday.ApiClasses.ApiLectures;
+import org.styleru.hseday.ApiClasses.ApiMics;
 import org.styleru.hseday.ApiClasses.ApiQuest;
 import org.styleru.hseday.ApiClasses.ApiSports;
 import org.styleru.hseday.ApiClasses.ApiTents;
@@ -54,7 +57,6 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 
-
 public class FragmentMap extends android.support.v4.app.Fragment implements
         GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
@@ -64,8 +66,12 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     ArrayList<ApiQuest> dataQuests;
     ArrayList<ApiTents> dataTents;
     ArrayList<ApiSports> dataSports;
+    ArrayList<ApiMics> dataMics;
+    ArrayList<ApiLectures> dataLectures;
     ApiQuest myQuest;
+    ApiLectures myLecture;
     ApiTents myTent;
+    ApiMics myMic;
     ApiSports mySport;
     DataBaseHelper dbHelper;
 
@@ -206,7 +212,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         cursorQuests.close();
         String questName;
         String questDescription;
-        for(int i = 0; i < dataQuests.size(); i++){ // Отрисовка всех квестов на карте
+        for (int i = 0; i < dataQuests.size(); i++) { // Отрисовка всех квестов на карте
             questName = dataQuests.get(i).getName();
             questDescription = dataQuests.get(i).getDescription();
             LatLng quest = new LatLng(dataQuests.get(i).getXposition(), dataQuests.get(i).getYposition());
@@ -233,45 +239,94 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         cursorTent.close();
         String tentName;
         String tentDescription;
-        //Toast.makeText(getContext(), String.valueOf(dataTents.size()), Toast.LENGTH_SHORT).show();
-        for(int i = 0; i < dataTents.size(); i++){
+        for (int i = 0; i < dataTents.size(); i++) {
             tentName = dataTents.get(i).getName();
             tentDescription = dataTents.get(i).getDescription();
             LatLng tent = new LatLng(dataTents.get(i).getXposition(), dataTents.get(i).getYposition());
-            googleMap.addMarker(new MarkerOptions().position(tent).title("Шатер").snippet(tentDescription))
+            googleMap.addMarker(new MarkerOptions().position(tent).title(tentName).snippet(tentDescription))
                     .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_tent));
         }
 
         dataSports = new ArrayList<ApiSports>();
         Cursor cursorSports = database.query(DataBaseHelper.TABLE_SPORTS_NAME, null, null, null, null, null, null);
-        if(cursorSports.moveToFirst()){
+        if (cursorSports.moveToFirst()) {
             int nameIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_NAME);
             int descriptionIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_DESCRIPTION);
             int xcooordinateIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_XCOORDINATE);
             int ycoordinateIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_YCOORDINATE);
-            Toast.makeText(getContext(),"123123123", Toast.LENGTH_LONG).show();
-            do{
+            do {
                 mySport = new ApiSports();
                 mySport.setName(cursorSports.getString(nameIndex));
                 mySport.setDescription(cursorSports.getString(descriptionIndex));
                 mySport.setXposition(cursorSports.getFloat(xcooordinateIndex));
                 mySport.setYposition(cursorSports.getFloat(ycoordinateIndex));
                 dataSports.add(mySport);
-            } while(cursorSports.moveToNext());
-        } else {
-            Toast.makeText(getContext(),"444", Toast.LENGTH_LONG).show();
+            } while (cursorSports.moveToNext());
         }
         cursorSports.close();
         String sportName;
         String sportDescription;
-        Toast.makeText(getContext(), String.valueOf(dataSports.size()), Toast.LENGTH_LONG).show();
-        for(int i = 0;i < dataSports.size(); i++){
+        for (int i = 0; i < dataSports.size(); i++) {
             sportName = dataSports.get(i).getName();
             sportDescription = dataSports.get(i).getDescription();
             LatLng sport = new LatLng(dataSports.get(i).getXposition(), dataSports.get(i).getYposition());
-            Toast.makeText(getContext(), dataSports.get(i).getXposition().toString(), Toast.LENGTH_LONG).show();
             googleMap.addMarker(new MarkerOptions().position(sport).title(sportName).snippet(sportDescription))
                     .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_ball));
+        }
+
+        dataLectures = new ArrayList<ApiLectures>();
+        Cursor cursorLectures = database.query(DataBaseHelper.TABLE_LECTIONS_NAME, null, null, null, null, null, null);
+        if (cursorLectures.moveToFirst()) {
+            int nameIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_NAME);
+            int descriptionIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_DESCRIPTION);
+            int xcoordinateIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_XCOORDINATE);
+            int ycoordinateIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_YCOORDINATE);
+            do {
+                myLecture = new ApiLectures();
+                myLecture.setName(cursorLectures.getString(nameIndex));
+                myLecture.setDescription(cursorLectures.getString(descriptionIndex));
+                myLecture.setXposition(cursorLectures.getFloat(xcoordinateIndex));
+                myLecture.setYposition(cursorLectures.getFloat(ycoordinateIndex));
+                dataLectures.add(myLecture);
+            } while (cursorLectures.moveToNext());
+        }
+        cursorLectures.close();
+        String lectureName;
+        String lectureDescription;
+        for (int i = 0; i < dataLectures.size(); i++) {
+            lectureName = dataLectures.get(i).getName();
+            lectureDescription = dataLectures.get(i).getDescription();
+            LatLng lecture = new LatLng(dataLectures.get(i).getXposition(), dataLectures.get(i).getYposition());
+            googleMap.addMarker(new MarkerOptions().position(lecture).title(lectureName).snippet(lectureDescription))
+                    .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_list));
+        }
+
+        dataMics = new ArrayList<ApiMics>();
+        Cursor cursorMics = database.query(DataBaseHelper.TABLE_MICROPHONES_NAME, null, null, null, null, null, null);
+        if(cursorMics.moveToFirst()){
+            int nameIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_NAME);
+            int descriptionIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_DESCRIPTION);
+            int xcoordinateIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_XCOORDINATE);
+            int ycoordinateIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_YCOORDINATE);
+            do{
+                myMic = new ApiMics();
+                myMic.setName(cursorMics.getString(nameIndex));
+                myMic.setDescription(cursorMics.getString(descriptionIndex));
+                myMic.setXposition(cursorMics.getFloat(xcoordinateIndex));
+                myMic.setYposition(cursorMics.getFloat(ycoordinateIndex));
+                dataMics.add(myMic);
+            }while(cursorMics.moveToNext());
+        }
+        Toast.makeText(getContext(), String.valueOf(dataMics.size()), Toast.LENGTH_SHORT).show();
+        cursorMics.close();
+        String micName;
+        String micDescription;
+        for(int i = 0;i < dataMics.size();i++){
+            micName = dataMics.get(i).getName();
+            micDescription = dataMics.get(i).getDescription();
+            LatLng mic = new LatLng(dataMics.get(i).getXposition(), dataMics.get(i).getYposition());
+            googleMap.addMarker(new MarkerOptions().position(mic).title(micName).snippet(micDescription))
+                    .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_microphone));
         }
     }
 
@@ -290,8 +345,8 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             case "Квест":
                 Bundle args = new Bundle();
                 args.putString("description", marker.getSnippet());
-                for(int i = 0;i < dataQuests.size(); i++){
-                    if(dataQuests.get(i).getDescription().equals(marker.getSnippet())){
+                for (int i = 0; i < dataQuests.size(); i++) {
+                    if (dataQuests.get(i).getDescription().equals(marker.getSnippet())) {
                         args.putString("passcode", dataQuests.get(i).getPasscode());
                         args.putString("name", dataQuests.get(i).getName());
                         args.putString("imageurl", dataQuests.get(i).getImageurl());
@@ -324,7 +379,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
+        //mMapView.onDestroy();
     }
 
     @Override

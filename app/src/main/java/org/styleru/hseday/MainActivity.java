@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import org.styleru.hseday.ApiClasses.ApiFaculties;
+import org.styleru.hseday.ApiClasses.ApiLectures;
+import org.styleru.hseday.ApiClasses.ApiMics;
 import org.styleru.hseday.ApiClasses.ApiOrganisations;
 import org.styleru.hseday.ApiClasses.ApiQuest;
 import org.styleru.hseday.ApiClasses.ApiSports;
@@ -66,9 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public ArrayList<ApiFaculties> dataFaculties;
     public ArrayList<ApiQuest> dataQuests;
     public ArrayList<ApiTents> dataTents;
+    public ArrayList<ApiMics> dataMics;
     public ArrayList<ApiSports> dataSports;
-    TextView UserName;
+    public ArrayList<ApiLectures> dataLectures;
     DataBaseHelper dbHelper;
+    TextView UserName;
     ImageView UserImage;
 
     public static Integer questsPassed = 0;
@@ -105,14 +109,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         UserName = (TextView) hView.findViewById(R.id.user_name);
         UserImage = (ImageView) hView.findViewById(R.id.user_image);
 
+        Intent intent = new Intent(this, SplashActivity.class);
+        startActivity(intent);
+
 
         FragmentFaculties = new FragmentFaculties();
         FragmentOrganisations = new FragmentOrganisations();
         FragmentAboutHSE = new FragmentAboutHSE();
         FragmentDedication = new FragmentDedication();
         FragmentMap = new FragmentMap();
-
-
 
 
         sPref = getPreferences(MODE_PRIVATE);
@@ -128,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Cursor organisationsCursor = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
         organisationsCursor.moveToFirst();
         if (!organisationsCursor.moveToFirst()) { // Проверяем пустоту базы данных
-            //Toast.makeText(getApplicationContext(), "Запрос организаций успешно сделан", Toast.LENGTH_LONG).show();
             // Запрос к ресурсу организаций
             dataOrganisations = new ArrayList<ApiOrganisations>();
             HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
@@ -161,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Cursor facultyCursor = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
         facultyCursor.moveToFirst();
         if (!facultyCursor.moveToFirst()) {  // Проверяем пустоту базы данных
-            //Toast.makeText(getApplicationContext(), "Запрос факультетов успешно сделан", Toast.LENGTH_LONG).show();
             // Запрос к ресурсу факультетов
             dataFaculties = new ArrayList<ApiFaculties>();
             //HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
@@ -170,11 +173,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             callFaculties.enqueue(new Callback<List<ApiFaculties>>() { // Запрос к серверу
                 @Override
                 public void onResponse(Call<List<ApiFaculties>> call, Response<List<ApiFaculties>> response) {
-                    //Toast.makeText(getApplicationContext(), "Запрос успешно сделан", Toast.LENGTH_LONG).show();
                     SQLiteDatabase database = dbHelper.getWritableDatabase();
-                    //database.delete(DataBaseHelper.TABLE_FACULTIES_NAME, null, null);
                     dataFaculties.addAll(response.body());  // Список с инфой с сервера
-
                     for (int i = 0; i < dataFaculties.size(); i++) {  // Загоняем список с инфой с сервера в базу данных факультетов
                         ContentValues myContent = new ContentValues();
                         myContent.put(DataBaseHelper.FACULTIES_NAME, dataFaculties.get(i).getName());
@@ -197,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Cursor questCursor = database.query(DataBaseHelper.TABLE_QUESTS_NAME, null, null, null, null, null, null); ////// ЗАПРОС К КВЕСТАМ
         questCursor.moveToFirst();
         if (!questCursor.moveToFirst()) {
-            //Toast.makeText(getApplicationContext(), "Запрос квестов успешно сделан", Toast.LENGTH_LONG).show();
             dataQuests = new ArrayList<ApiQuest>();
             HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
             Call<List<ApiQuest>> callQuests = hseDayApi.getQuests();
@@ -215,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         myContent.put(DataBaseHelper.QUESTS_PASSCODE, dataQuests.get(i).getPasscode());
                         myContent.put(DataBaseHelper.QUESTS_IMAGE_URL, dataQuests.get(i).getImageurl());
                         myContent.put(DataBaseHelper.QUESTS_XCOORDINATE, dataQuests.get(i).getXposition());
-                        Toast.makeText(getApplicationContext(), "ТРИ ТРИ ТРИ", Toast.LENGTH_LONG).show();
                         myContent.put(DataBaseHelper.QUESTS_YCOORDINATE, dataQuests.get(i).getYposition());
                         database.insert(DataBaseHelper.TABLE_QUESTS_NAME, null, myContent);
                         myContent.clear();
@@ -233,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Cursor tentsCursor = database.query(DataBaseHelper.TABLE_TENTS_NAME, null, null, null, null, null, null); ////// ЗАПРОС К ТЕНТАМ
         tentsCursor.moveToFirst();
         if (!tentsCursor.moveToFirst()) {
-            //Toast.makeText(getApplicationContext(), "Запрос тентов успешно сделан", Toast.LENGTH_LONG).show();
             dataTents = new ArrayList<ApiTents>();
             HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
             Call<List<ApiTents>> callTents = hseDayApi.getTents();
@@ -246,11 +243,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     for (int i = 0; i < dataTents.size(); i++) {
                         ContentValues myContent = new ContentValues();
                         myContent.put(DataBaseHelper.TENTS_NAME, dataTents.get(i).getName());
-                        //Toast.makeText(getApplicationContext(), dataTents.get(i).getDescription(), Toast.LENGTH_SHORT).show();
                         myContent.put(DataBaseHelper.TENTS_DESCRIPTION, dataTents.get(i).getDescription());
                         myContent.put(DataBaseHelper.TENTS_XCOORDINATE, dataTents.get(i).getXposition());
                         myContent.put(DataBaseHelper.TENTS_YCOORDINATE, dataTents.get(i).getYposition());
-                        Toast.makeText(getApplicationContext(), "ДВА ДВА ДВА ", Toast.LENGTH_LONG).show();
                         database.insert(DataBaseHelper.TABLE_TENTS_NAME, null, myContent);
                         myContent.clear();
                     }
@@ -282,7 +277,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         myContent.put(DataBaseHelper.SPORTS_IMAGE_URL, dataSports.get(i).getImageurl());
                         myContent.put(DataBaseHelper.SPORTS_XCOORDINATE, dataSports.get(i).getXposition());
                         myContent.put(DataBaseHelper.SPORTS_YCOORDINATE, dataSports.get(i).getYposition());
-                        Toast.makeText(getApplicationContext(), "РАЗ ДВА ТРИ", Toast.LENGTH_LONG).show();
                         database.insert(DataBaseHelper.TABLE_SPORTS_NAME, null, myContent);
                         myContent.clear();
                     }
@@ -295,9 +289,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
         }
 
+        Cursor lecturesCursor = database.query(DataBaseHelper.TABLE_LECTIONS_NAME, null, null, null, null, null, null);
+        lecturesCursor.moveToFirst();
+        if(!lecturesCursor.moveToFirst()){
+            dataLectures = new ArrayList<ApiLectures>();
+            HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
+            Call<List<ApiLectures>> callLectures = hseDayApi.getLectures();
+            callLectures.enqueue(new Callback<List<ApiLectures>>() {
+                @Override
+                public void onResponse(Call<List<ApiLectures>> call, Response<List<ApiLectures>> response) {
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    dataLectures.addAll(response.body());
+                    for(int i = 0; i < dataLectures.size(); i++){
+                        ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.LECTURES_NAME, dataLectures.get(i).getName());
+                        myContent.put(DataBaseHelper.LECTURES_DESCRIPTION, dataLectures.get(i).getDescription());
+                        myContent.put(DataBaseHelper.LECTURES_XCOORDINATE, dataLectures.get(i).getXposition());
+                        myContent.put(DataBaseHelper.LECTURES_YCOORDINATE, dataLectures.get(i).getYposition());
+                        database.insert(DataBaseHelper.TABLE_LECTIONS_NAME, null, myContent);
+                        myContent.clear();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<ApiLectures>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "ОШИБКА ЛЕКЦИЙ", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+
+        Cursor micsCursor = database.query(DataBaseHelper.TABLE_MICROPHONES_NAME, null, null, null, null, null, null);
+        micsCursor.moveToFirst();
+        if(!micsCursor.moveToFirst()){
+            dataMics = new ArrayList<ApiMics>();
+            HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
+            Call<List<ApiMics>> callMics = hseDayApi.getMics();
+            callMics.enqueue(new Callback<List<ApiMics>>() {
+                @Override
+                public void onResponse(Call<List<ApiMics>> call, Response<List<ApiMics>> response) {
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    Toast.makeText(getApplicationContext(), "ЗАПРОС", Toast.LENGTH_SHORT).show();
+                    dataMics.addAll(response.body());
+                    for(int i = 0;i < dataMics.size(); i++){
+                        ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.MICROPHONES_NAME, dataMics.get(i).getName());
+                        myContent.put(DataBaseHelper.MICROPHONES_DESCRIPTION, dataMics.get(i).getDescription());
+                        myContent.put(DataBaseHelper.MICROPHONES_XCOORDINATE, dataMics.get(i).getXposition());
+                        myContent.put(DataBaseHelper.MICROPHONES_YCOORDINATE, dataMics.get(i).getYposition());
+                        database.insert(DataBaseHelper.TABLE_MICROPHONES_NAME, null, myContent);
+                        myContent.clear();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<ApiMics>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "ОШИБКА МИКРОФОНОВ", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_map, FragmentMap);
         transaction.commit();
+
     }
 
     @Override
@@ -447,7 +503,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
-        }, 350);
+        }, 3500);
         return true;
     }
 
