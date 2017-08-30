@@ -21,19 +21,17 @@ import java.util.ArrayList;
 
 
 public class FragmentOrganisations extends android.support.v4.app.Fragment {
-    private RecyclerView mRecyclerView;
-    private RecyclerViewAdapterOrganisations mAdapter;
-    private StaggeredGridLayoutManager mGridLayoutManager;
+     RecyclerView mRecyclerView;
+     RecyclerViewAdapterOrganisations mAdapter;
+     StaggeredGridLayoutManager mGridLayoutManager;
     ArrayList<ApiOrganisations> dataOrganisations;
     DataBaseHelper dbHelper;
     ApiOrganisations myOrganisation;
     String result;
 
-    // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -42,7 +40,6 @@ public class FragmentOrganisations extends android.support.v4.app.Fragment {
     public FragmentOrganisations() {
     }
 
-    // TODO: Rename and change types and number of parameters
     public static FragmentOrganisations newInstance(String param1, String param2) {
         FragmentOrganisations fragment = new FragmentOrganisations();
         Bundle args = new Bundle();
@@ -115,7 +112,6 @@ public class FragmentOrganisations extends android.support.v4.app.Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

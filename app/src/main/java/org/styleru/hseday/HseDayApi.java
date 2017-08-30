@@ -1,6 +1,7 @@
 package org.styleru.hseday;
 
 import org.styleru.hseday.ApiClasses.ApiAboutHSE;
+import org.styleru.hseday.ApiClasses.ApiDepartment;
 import org.styleru.hseday.ApiClasses.ApiEvents;
 import org.styleru.hseday.ApiClasses.ApiFaculties;
 import org.styleru.hseday.ApiClasses.ApiLectures;
@@ -44,6 +45,9 @@ public interface HseDayApi {
 
     @GET("/api/general")
     Call<List<ApiAboutHSE>> getAboutHSE();
+
+    @GET("/api/eduprogrammes")
+    Call<List<ApiDepartment>> getDepartments();
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://dayhse.styleru.net/")

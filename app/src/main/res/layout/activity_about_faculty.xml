@@ -57,15 +57,12 @@
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
-            <TextView
-                android:id="@+id/faculty_departments"
-                android:layout_width="match_parent"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/departments_recyclerview"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-light"
-                android:text="@string/departments"
-                android:textColor="@color/third_text"
-                android:textStyle="normal" />
+                android:clickable="true"
+                android:layout_marginBottom="5dp"/>
 
             <TextView
                 android:layout_width="match_parent"

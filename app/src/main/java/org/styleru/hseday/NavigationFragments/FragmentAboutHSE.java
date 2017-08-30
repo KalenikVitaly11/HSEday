@@ -18,8 +18,6 @@ import org.styleru.hseday.DataBaseHelper;
 import org.styleru.hseday.MainActivity;
 import org.styleru.hseday.R;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 
 public class FragmentAboutHSE extends android.support.v4.app.Fragment {
@@ -87,6 +85,7 @@ public class FragmentAboutHSE extends android.support.v4.app.Fragment {
                 aboutHSE.setCode(cursorAboutHSE.getString(codeIndex));
             } while (cursorAboutHSE.moveToNext());
         }
+        cursorAboutHSE.close();
         name.setText(aboutHSE.getName());
         description.setText(aboutHSE.getDescription());
         contacts.setText(aboutHSE.getContacts());

@@ -5,32 +5,22 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.ScrollView;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.glidebitmappool.GlideBitmapFactory;
-import com.glidebitmappool.GlideBitmapPool;
-import com.google.android.gms.common.api.Api;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
@@ -46,15 +36,12 @@ import org.styleru.hseday.ApiClasses.ApiSports;
 import org.styleru.hseday.ApiClasses.ApiTents;
 import org.styleru.hseday.CustomMarkerTag;
 import org.styleru.hseday.DataBaseHelper;
-import org.styleru.hseday.DialogFragments.ActivityTent;
 import org.styleru.hseday.DialogFragments.ActivityLection;
 import org.styleru.hseday.DialogFragments.DialogQuest;
 import org.styleru.hseday.MainActivity;
 import org.styleru.hseday.R;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 
 public class FragmentMap extends android.support.v4.app.Fragment implements
@@ -80,13 +67,8 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     public String tagQuest = "quest";
     public String tagTent = "tent";
     public String tagLecture = "lecture";
-    public  String tagSport = "sport";
+    public String tagSport = "sport";
 
-    private float mx, my;
-    private float curX, curY;
-
-    private ScrollView vScroll;
-    private HorizontalScrollView hScroll;
 
     DialogQuest DialogQuest;
 
@@ -94,12 +76,6 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     private String mParam2;
     private OnFragmentInteractionListener mListener;
 
-    ImageView MapImage;
-    ImageView MapImageBall1;
-    ImageView MapImageQuest1;
-    ImageView MapImageTent1;
-    ImageView MapImageMicrophone1;
-    ImageView quest1;
 
     public FragmentMap() {
     }
@@ -437,21 +413,23 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         int id = item.getItemId();
 
 
-
-        switch(id){
+        switch (id) {
             case org.styleru.hseday.R.id.map_quest_mark:
                 if (item.isChecked()) {
-                    for(int i = 0;i < listMarker.size(); i++){
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagQuest)){
+
+                        if (myTag.getPointType().equals(tagQuest)) {
                             listMarker.get(i).setVisible(false);
                         }
+
+
                     }
                     item.setChecked(false);
-                } else{
-                    for(int i = 0;i < listMarker.size(); i++){
+                } else {
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagQuest)){
+                        if (myTag.getPointType().equals(tagQuest)) {
                             listMarker.get(i).setVisible(true);
                         }
                     }
@@ -460,17 +438,17 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 break;
             case org.styleru.hseday.R.id.map_ball:
                 if (item.isChecked()) {
-                    for(int i = 0;i < listMarker.size(); i++){
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagSport)){
+                        if (myTag.getPointType().equals(tagSport)) {
                             listMarker.get(i).setVisible(false);
                         }
                     }
                     item.setChecked(false);
-                } else{
-                    for(int i = 0;i < listMarker.size(); i++){
+                } else {
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagSport)){
+                        if (myTag.getPointType().equals(tagSport)) {
                             listMarker.get(i).setVisible(true);
                         }
                     }
@@ -479,17 +457,17 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 break;
             case org.styleru.hseday.R.id.map_paper:
                 if (item.isChecked()) {
-                    for(int i = 0;i < listMarker.size(); i++){
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagLecture)){
+                        if (myTag.getPointType().equals(tagLecture)) {
                             listMarker.get(i).setVisible(false);
                         }
                     }
                     item.setChecked(false);
-                } else{
-                    for(int i = 0;i < listMarker.size(); i++){
+                } else {
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagLecture)){
+                        if (myTag.getPointType().equals(tagLecture)) {
                             listMarker.get(i).setVisible(true);
                         }
                     }
@@ -498,17 +476,17 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 break;
             case org.styleru.hseday.R.id.map_tent:
                 if (item.isChecked()) {
-                    for(int i = 0;i < listMarker.size(); i++){
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagTent)){
+                        if (myTag.getPointType().equals(tagTent)) {
                             listMarker.get(i).setVisible(false);
                         }
                     }
                     item.setChecked(false);
-                } else{
-                    for(int i = 0;i < listMarker.size(); i++){
+                } else {
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagTent)){
+                        if (myTag.getPointType().equals(tagTent)) {
                             listMarker.get(i).setVisible(true);
                         }
                     }
@@ -517,17 +495,17 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 break;
             case org.styleru.hseday.R.id.map_microphone:
                 if (item.isChecked()) {
-                    for(int i = 0;i < listMarker.size(); i++){
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagMicrophone)){
+                        if (myTag.getPointType().equals(tagMicrophone)) {
                             listMarker.get(i).setVisible(false);
                         }
                     }
                     item.setChecked(false);
-                } else{
-                    for(int i = 0;i < listMarker.size(); i++){
+                } else {
+                    for (int i = 0; i < listMarker.size(); i++) {
                         CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
-                        if(myTag.getPointType().equals(tagMicrophone)){
+                        if (myTag.getPointType().equals(tagMicrophone)) {
                             listMarker.get(i).setVisible(true);
                         }
                     }

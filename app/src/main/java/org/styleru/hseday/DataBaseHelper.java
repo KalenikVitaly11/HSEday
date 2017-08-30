@@ -197,6 +197,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + ABOUT_HSE_CODE + " text"
             + ");";
 
+    public static final String TABLE_DEPARTMENTS_NAME = "departments";
+    public static final int TABLE_DEPARTMENTS_VERSION = 1;
+    public static final String DEPARTMENTS_ID = "department_id";
+    public static final String DEPARTMENTS_NAME = "department_name";
+    public static final String DEPARTMENTS_FACULTY_ID = "department_faculty_id";
+
+    public static final String CREATE_TABLE_DEPARTMENTS = "create table "
+            + TABLE_DEPARTMENTS_NAME
+            + " (" + DEPARTMENTS_ID + " integer,"
+            + DEPARTMENTS_NAME + " text,"
+            + DEPARTMENTS_FACULTY_ID + " integer"
+            + ");";
     public DataBaseHelper(Context context) {
         // конструктор суперкласса
         super(context, "myDB", null, 1);
@@ -213,6 +225,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_LECTIONS);
         db.execSQL(CREATE_TABLE_EVENTS);
         db.execSQL(CREATE_TABLE_ABOUT_HSE);
+        db.execSQL(CREATE_TABLE_DEPARTMENTS);
     }
 
     @Override

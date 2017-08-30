@@ -5,18 +5,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
-import android.provider.ContactsContract;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
-import com.github.ybq.android.spinkit.style.Pulse;
 
 import org.styleru.hseday.ApiClasses.ApiAboutHSE;
+import org.styleru.hseday.ApiClasses.ApiDepartment;
 import org.styleru.hseday.ApiClasses.ApiEvents;
 import org.styleru.hseday.ApiClasses.ApiFaculties;
 import org.styleru.hseday.ApiClasses.ApiLectures;
@@ -35,7 +30,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
-    FragmentMap FragmentMap;
     public ArrayList<ApiOrganisations> dataOrganisations;
     public ArrayList<ApiFaculties> dataFaculties;
     public ArrayList<ApiQuest> dataQuests;
@@ -45,6 +39,7 @@ public class SplashActivity extends AppCompatActivity {
     public ArrayList<ApiSports> dataSports;
     public ArrayList<ApiLectures> dataLectures;
     public ArrayList<ApiAboutHSE> dataAboutHSE;
+    public ArrayList<ApiDepartment> dataDepartments;
     DataBaseHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +82,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+        organisationsCursor.close();
         Cursor facultyCursor = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
         facultyCursor.moveToFirst();
         if (!facultyCursor.moveToFirst()) {  // Проверяем пустоту базы данных
@@ -118,6 +114,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+        facultyCursor.close();
 
 
         Cursor questCursor = database.query(DataBaseHelper.TABLE_QUESTS_NAME, null, null, null, null, null, null); ////// ЗАПРОС К КВЕСТАМ
@@ -154,6 +151,7 @@ public class SplashActivity extends AppCompatActivity {
             });
 
         }
+        questCursor.close();
 
         Cursor tentsCursor = database.query(DataBaseHelper.TABLE_TENTS_NAME, null, null, null, null, null, null); ////// ЗАПРОС К ТЕНТАМ
         tentsCursor.moveToFirst();
@@ -185,6 +183,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+        tentsCursor.close();
 
 
         Cursor sportsCursor = database.query(DataBaseHelper.TABLE_SPORTS_NAME, null, null, null, null, null, null);
@@ -217,6 +216,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+        sportsCursor.close();
 
         Cursor lecturesCursor = database.query(DataBaseHelper.TABLE_LECTIONS_NAME, null, null, null, null, null, null);
         lecturesCursor.moveToFirst();
@@ -248,6 +248,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+        lecturesCursor.close();
 
         final Cursor micsCursor = database.query(DataBaseHelper.TABLE_MICROPHONES_NAME, null, null, null, null, null, null);
         micsCursor.moveToFirst();
@@ -278,6 +279,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+        micsCursor.close();
 
         Cursor eventsCursor = database.query(DataBaseHelper.TABLE_EVENTS_NAME, null, null, null, null, null, null);
         eventsCursor.moveToFirst();
@@ -310,6 +312,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+        eventsCursor.close();
 
         Cursor abouthseCursor = database.query(DataBaseHelper.TABLE_ABOUT_HSE_NAME, null, null, null, null, null, null);
         abouthseCursor.moveToFirst();
@@ -340,6 +343,36 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+
+        Cursor departmentsCursor = database.query(DataBaseHelper.TABLE_DEPARTMENTS_NAME, null, null, null, null, null, null);
+        departmentsCursor.moveToFirst();
+        if(!departmentsCursor.moveToFirst()){
+            dataDepartments = new ArrayList<ApiDepartment>();
+            HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
+            Call<List<ApiDepartment>> callDepartments = hseDayApi.getDepartments();
+            callDepartments.enqueue(new Callback<List<ApiDepartment>>() {
+                @Override
+                public void onResponse(Call<List<ApiDepartment>> call, Response<List<ApiDepartment>> response) {
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    dataDepartments.addAll(response.body());
+                    for(int i = 0;i < dataDepartments.size(); i++){
+                        ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.DEPARTMENTS_ID, dataDepartments.get(i).getId());
+                        myContent.put(DataBaseHelper.DEPARTMENTS_NAME, dataDepartments.get(i).getName());
+                        Toast.makeText(getApplicationContext(), String.valueOf(dataDepartments.get(i).getFacultyId()), Toast.LENGTH_LONG).show();
+                        myContent.put(DataBaseHelper.DEPARTMENTS_FACULTY_ID, dataDepartments.get(i).getFacultyId());
+                        database.insert(DataBaseHelper.TABLE_DEPARTMENTS_NAME, null, myContent);
+                        myContent.clear();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<ApiDepartment>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        abouthseCursor.close();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
