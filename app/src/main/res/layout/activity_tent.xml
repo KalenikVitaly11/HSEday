@@ -19,6 +19,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="15dp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="normal"
         android:paddingRight="15dp">
 
         <TextView
@@ -27,7 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-condensed"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="normal"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:text="Title" />
@@ -38,7 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:layout_marginTop="0dp"
-            android:fontFamily="sans-serif-condensed"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="normal"
             android:textColor="@android:color/black"
             android:textSize="21sp"
             android:text="Time"/>
@@ -50,7 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
-            android:fontFamily="sans-serif-condensed"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="normal"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:text="Text"/>

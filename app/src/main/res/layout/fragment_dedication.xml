@@ -2,102 +2,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.styleru.hseday.NavigationFragments.FragmentDedication"
+    android:background="@color/cardview_light_background"
     android:orientation="vertical"
-    android:background="@color/cardview_light_background">
+    tools:context="org.styleru.hseday.NavigationFragments.FragmentDedication">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ДАЛЕЕ"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@color/actionBarbackground"
+        android:orientation="horizontal"
+        android:text="ДАЛЕЕ"
         android:textColor="@android:color/background_light"
-        android:textSize="20sp"
-        android:orientation="horizontal">
+        android:textSize="20sp">
+
         <Button
+            android:id="@+id/start_dedication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/actionBarbackground"
             android:text="@string/start_dedication"
             android:textColor="@android:color/background_light"
-            android:textSize="18sp"
-            android:id="@+id/start_dedication"
-            />
+            android:textSize="18sp" />
+
         <Button
+            android:id="@+id/previous_crow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:clickable="false"
+            android:drawableLeft="@drawable/ic_keyboard_arrow_left_black_24dp"
             android:text="@string/previous"
             android:textColor="@android:color/background_light"
-            android:id="@+id/previous_crow"
-            android:drawableLeft="@drawable/ic_keyboard_arrow_left_black_24dp"
-            android:visibility="invisible"
-            android:clickable="false" />
+            android:visibility="invisible" />
 
         <ProgressBar
+            android:id="@+id/dedication_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
             android:indeterminate="false"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:max="7"
             android:progress="1"
-            android:layout_width="120dp"
-            android:id="@+id/dedication_progress"
             android:visibility="invisible" />
 
         <Button
+            android:id="@+id/next_crow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:text="@string/next"
             android:textColor="@android:color/background_light"
-            android:id="@+id/next_crow"
-            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-            android:visibility="invisible"
-            android:clickable="false" />
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/crow"
         android:layout_width="match_parent"
-        android:src="@drawable/crow"
-        android:layout_alignParentTop="true"
+        android:layout_height="265dp"
         android:layout_alignParentStart="true"
-        android:layout_height="265dp" />
+        android:layout_alignParentTop="true"
+        android:src="@drawable/crow" />
 
     <TextView
+        android:id="@+id/DedicationWords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/crow_0"
-        android:layout_below="@+id/crow"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:textSize="24sp"
+        android:layout_below="@+id/crow"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/crow_0"
         android:textAlignment="center"
-        android:id="@+id/DedicationWords"
-        android:textColor="@color/secondary_text" />
+        android:textColor="@color/secondary_text"
+        android:textSize="24sp"
+        android:textStyle="normal" />
 
     <EditText
         android:id="@+id/edit_text_enter_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
-        android:hint="Вводить сюда"
-        android:textSize="14sp"
-        android:textColorLink="@android:color/transparent"
-        android:textCursorDrawable="@android:color/transparent"
-        android:background="@android:color/transparent"
         android:layout_above="@+id/DedicationWords"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="76dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="sans-serif-light"
+        android:hint="Вводить сюда"
         android:inputType="number"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColorLink="@android:color/transparent"
+        android:textCursorDrawable="@android:color/transparent"
+        android:textSize="14sp"
+        android:textStyle="normal" />
 
 </RelativeLayout>

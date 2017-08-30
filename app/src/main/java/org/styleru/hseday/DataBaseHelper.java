@@ -178,6 +178,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + EVENTS_POINTID + " integer"
             + ");";
 
+    public static final String TABLE_ABOUT_HSE_NAME = "about_hse";
+    public static final int TABLE_ABOUT_HSE_VERSION = 1;
+    public static final String ABOUT_HSE_ID = "about_hse_id";
+    public static final String ABOUT_HSE_NAME = "about_hse_name";
+    public static final String ABOUT_HSE_DESCRIPTION = "about_hse_description";
+    public static final String ABOUT_HSE_IMAGE_URL = "about_hse_image_url";
+    public static final String ABOUT_HSE_CONTACTS = "about_hse_contacts";
+    public static final String ABOUT_HSE_CODE =  "about_hse_code";
+
+    public static final String CREATE_TABLE_ABOUT_HSE = "create table "
+            + TABLE_ABOUT_HSE_NAME
+            + " (" + ABOUT_HSE_ID + " integer,"
+            + ABOUT_HSE_NAME + " text,"
+            + ABOUT_HSE_DESCRIPTION + " text,"
+            + ABOUT_HSE_CONTACTS + " text,"
+            + ABOUT_HSE_IMAGE_URL + " text,"
+            + ABOUT_HSE_CODE + " text"
+            + ");";
+
     public DataBaseHelper(Context context) {
         // конструктор суперкласса
         super(context, "myDB", null, 1);
@@ -193,6 +212,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MICROPHONES);
         db.execSQL(CREATE_TABLE_LECTIONS);
         db.execSQL(CREATE_TABLE_EVENTS);
+        db.execSQL(CREATE_TABLE_ABOUT_HSE);
     }
 
     @Override

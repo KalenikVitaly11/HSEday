@@ -5,11 +5,18 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.github.ybq.android.spinkit.style.Pulse;
+
+import org.styleru.hseday.ApiClasses.ApiAboutHSE;
 import org.styleru.hseday.ApiClasses.ApiEvents;
 import org.styleru.hseday.ApiClasses.ApiFaculties;
 import org.styleru.hseday.ApiClasses.ApiLectures;
@@ -37,6 +44,7 @@ public class SplashActivity extends AppCompatActivity {
     public ArrayList<ApiEvents> dataEvents;
     public ArrayList<ApiSports> dataSports;
     public ArrayList<ApiLectures> dataLectures;
+    public ArrayList<ApiAboutHSE> dataAboutHSE;
     DataBaseHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         dbHelper = new DataBaseHelper(this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+
         Cursor organisationsCursor = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
         organisationsCursor.moveToFirst();
         if (!organisationsCursor.moveToFirst()) { // Проверяем пустоту базы данных
@@ -73,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<ApiOrganisations>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "ОШИБКА В ЗАПРОСЕ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -104,7 +114,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<ApiFaculties>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "ОШИБКА В ЗАПРОСЕ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -139,7 +149,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<ApiQuest>> call, Throwable t) {
-
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -171,7 +181,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<ApiTents>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Запрос тентов не удался", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -203,7 +213,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<ApiSports>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Запрос спортов не удался", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -233,7 +243,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<ApiLectures>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "ОШИБКА ЛЕКЦИЙ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись, пожалуйста, и перезапусти приложение", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -264,8 +274,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<ApiMics>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "ОШИБКА МИКРОФОНОВ", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -297,7 +306,37 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<ApiEvents>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
+        Cursor abouthseCursor = database.query(DataBaseHelper.TABLE_ABOUT_HSE_NAME, null, null, null, null, null, null);
+        abouthseCursor.moveToFirst();
+        if(!abouthseCursor.moveToFirst()){
+            dataAboutHSE = new ArrayList<ApiAboutHSE>();
+            HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
+            Call<List<ApiAboutHSE>> callAboutHSE = hseDayApi.getAboutHSE();
+            callAboutHSE.enqueue(new Callback<List<ApiAboutHSE>>() {
+                @Override
+                public void onResponse(Call<List<ApiAboutHSE>> call, Response<List<ApiAboutHSE>> response) {
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    dataAboutHSE.addAll(response.body());
+                    for(int i = 0;i < dataAboutHSE.size(); i++){
+                        ContentValues myContent = new ContentValues();
+                        myContent.put(DataBaseHelper.ABOUT_HSE_NAME, dataAboutHSE.get(i).getName());
+                        myContent.put(DataBaseHelper.ABOUT_HSE_DESCRIPTION, dataAboutHSE.get(i).getDescription());
+                        myContent.put(DataBaseHelper.ABOUT_HSE_CONTACTS, dataAboutHSE.get(i).getContacts());
+                        myContent.put(DataBaseHelper.ABOUT_HSE_IMAGE_URL, dataAboutHSE.get(i).getImageurl());
+                        myContent.put(DataBaseHelper.ABOUT_HSE_CODE, dataAboutHSE.get(i).getCode());
+                        database.insert(DataBaseHelper.TABLE_ABOUT_HSE_NAME, null, myContent);
+                        myContent.clear();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<ApiAboutHSE>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
                 }
             });
         }

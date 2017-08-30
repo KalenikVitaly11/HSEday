@@ -81,12 +81,9 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener 
 
 
         Bundle mArgs = getArguments();
+       // Glide.with(this).load("http://dayhse.styleru.net/docs/img/qst/sunlit.jpg").into(QuestImage);
         passCode = mArgs.getString("passcode");
         String imageUrl = mArgs.getString("imageurl");
-        Glide
-                .with(this)
-                .load("http://dayhse.styleru.net/docs/img/qst/sunlit.jpg")
-                .into(QuestImage);
         QuestText.setText(mArgs.getString("description"));
         QuestTitle.setText(mArgs.getString("name"));
         sPref = getActivity().getPreferences(MODE_PRIVATE);
@@ -161,7 +158,6 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener 
                                 cv.put(DataBaseHelper.QUESTS_PASSED, 1);
                                 database.update(DataBaseHelper.TABLE_QUESTS_NAME, cv, DataBaseHelper.QUESTS_NAME + "=?", new String[]{QuestTitle.getText().toString()});
                                 cv.clear();
-                                Toast.makeText(getContext(), cursorQuest.getString(descriptionIndex) + "   " + QuestText.getText().toString(), Toast.LENGTH_SHORT).show();
                             }
                         } while (cursorQuest.moveToNext());
                     }

@@ -21,10 +21,12 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-light"
         android:text="2. Лекция"
         android:textAlignment="textStart"
         android:textColor="@android:color/black"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:textStyle="normal" />
 
     <TextView
         android:id="@+id/quest_dialog_text"
@@ -32,9 +34,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:fontFamily="sans-serif-light"
         android:text="Пропустил пару лекций и решил попросить пару конспектов у одногруппника? Но ты не ожидал, что почерк будет настолько непонятным!"
         android:textAlignment="textStart"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="normal" />
 
     <TextView
         android:id="@+id/quests_passed"
@@ -43,8 +47,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif-light"
         android:text="Пройдено 11 из 20"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="normal" />
 
     <EditText
         android:id="@+id/quest_dialog_edit_code"
@@ -55,10 +61,12 @@
         android:layout_marginTop="15dp"
         android:backgroundTint="@color/dialog_button_color_blue"
         android:cursorVisible="false"
+        android:fontFamily="sans-serif-light"
         android:gravity="center_vertical|center_horizontal"
         android:hint="Введи код"
         android:inputType="numberDecimal"
-        android:textColorLink="@android:color/holo_blue_dark" />
+        android:textColorLink="@android:color/holo_blue_dark"
+        android:textStyle="normal" />
 
 
     <RelativeLayout

@@ -1,7 +1,7 @@
 <resources>
     <integer name="com_vk_sdk_AppId">5907069</integer>
     <string name="facebook_app_id">104720850045534</string>
-    <string name="app_name">HSE day</string>
+    <string name="app_name">День Вышки 2017</string>
     <string name="continue_with_vk">Продолжить с VK</string>
     <string name="or">OR</string>
     <string name="login_back">Назад</string>

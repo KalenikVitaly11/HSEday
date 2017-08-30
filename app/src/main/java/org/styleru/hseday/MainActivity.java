@@ -1,13 +1,9 @@
 package org.styleru.hseday;
 
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -21,17 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import org.styleru.hseday.ApiClasses.ApiFaculties;
-import org.styleru.hseday.ApiClasses.ApiLectures;
-import org.styleru.hseday.ApiClasses.ApiMics;
-import org.styleru.hseday.ApiClasses.ApiOrganisations;
-import org.styleru.hseday.ApiClasses.ApiQuest;
-import org.styleru.hseday.ApiClasses.ApiSports;
-import org.styleru.hseday.ApiClasses.ApiTents;
 import org.styleru.hseday.NavigationFragments.FragmentAboutHSE;
 import org.styleru.hseday.NavigationFragments.FragmentDedication;
 import org.styleru.hseday.NavigationFragments.FragmentFaculties;
@@ -49,12 +37,6 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     FragmentFaculties FragmentFaculties;
@@ -64,26 +46,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentDedication FragmentDedication;
     FragmentMap FragmentMap;
     NavigationView navigationView;
-    public ArrayList<ApiOrganisations> dataOrganisations;
-    public ArrayList<ApiFaculties> dataFaculties;
-    public ArrayList<ApiQuest> dataQuests;
-    public ArrayList<ApiTents> dataTents;
-    public ArrayList<ApiMics> dataMics;
-    public ArrayList<ApiSports> dataSports;
-    public ArrayList<ApiLectures> dataLectures;
-    DataBaseHelper dbHelper;
     TextView UserName;
     ImageView UserImage;
 
     public static Integer questsPassed = 0;
     public static Integer questsNumber = 20;
-    SharedPreferences questCount;
 
-    VKRequest.VKRequestListener mRequestListener;
     SharedPreferences sPref;
     private Handler mHandler = new Handler();
-    private String[] scope = new String[]{};
-    private final static String FIELDS = "photo, photo_50, photo_100, photo_200";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,14 +106,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
                 if (VKSdk.isLoggedIn()) {
                     if (sharedPref.getString("VKname", "").equals("")) {
-                        Toast.makeText(getApplicationContext(), "fillNameIfLoggedIn", Toast.LENGTH_SHORT).show();
                         mHandler.postDelayed(new Runnable() {
                             public void run() {
                                 fillNameIfLoggedIn();
                             }
                         }, 2300);
                     } else {
-                        Toast.makeText(getApplicationContext(), "sharedPreferences", Toast.LENGTH_SHORT).show();
                         UserName.setText(sharedPref.getString("VKname", ""));
                         Glide.with(getApplicationContext()).load(sharedPref.getString("VKavatar", "")).into(UserImage);
                         navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
@@ -151,14 +119,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 } else if (isLoggedIn()) {
                     if (sharedPref.getString("FBname", "").equals("")) {
-                        Toast.makeText(getApplicationContext(), "fillNameIfLoggedIn", Toast.LENGTH_SHORT).show();
                         mHandler.postDelayed(new Runnable() {
                             public void run() {
                                 fillNameIfLoggedIn();
                             }
                         }, 1500);
                     } else {
-                        Toast.makeText(getApplicationContext(), "sharedPreferences", Toast.LENGTH_SHORT).show();
                         UserName.setText(sharedPref.getString("FBname", ""));
                         Glide.with(getApplicationContext()).load(sharedPref.getString("FBavatar", "")).into(UserImage);
                         navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(false);
@@ -240,15 +206,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_map) {
-            transaction.replace(R.id.content_map, FragmentMap);
+            transaction.remove(FragmentFaculties);
+            transaction.remove(FragmentOrganisations);
+            transaction.remove(FragmentAboutHSE);
+            transaction.remove(FragmentDedication);
+            setActionBarTitle("Карта");
+            //transaction.replace(R.id.content_map, FragmentMap);
         } else if (id == R.id.nav_faculties) {
-            transaction.replace(R.id.content_map, FragmentFaculties);
+            transaction.remove(FragmentFaculties);
+            transaction.remove(FragmentOrganisations);
+            transaction.remove(FragmentAboutHSE);
+            transaction.remove(FragmentDedication);
+            transaction.add(R.id.content_map, FragmentFaculties);
         } else if (id == R.id.nav_organisations) {
-            transaction.replace(R.id.content_map, FragmentOrganisations);
+            transaction.remove(FragmentFaculties);
+            transaction.remove(FragmentOrganisations);
+            transaction.remove(FragmentAboutHSE);
+            transaction.remove(FragmentDedication);
+            transaction.add(R.id.content_map, FragmentOrganisations);
         } else if (id == R.id.nav_aboutHSE) {
-            transaction.replace(R.id.content_map, FragmentAboutHSE);
+            transaction.remove(FragmentFaculties);
+            transaction.remove(FragmentOrganisations);
+            transaction.remove(FragmentAboutHSE);
+            transaction.remove(FragmentDedication);
+            transaction.add(R.id.content_map, FragmentAboutHSE);
         } else if (id == R.id.nav_posvyashenie) {
-            transaction.replace(R.id.content_map, FragmentDedication);
+            transaction.remove(FragmentFaculties);
+            transaction.remove(FragmentOrganisations);
+            transaction.remove(FragmentAboutHSE);
+            transaction.remove(FragmentDedication);
+            transaction.add(R.id.content_map, FragmentDedication);
         } else if (id == R.id.nav_login_vk) {
             Intent intent = new Intent(this, ActivityLogin.class);
             this.startActivity(intent);
@@ -256,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             VKSdk.logout();
             LoginManager.getInstance().logOut();
             if (!isLoggedIn() && !VKSdk.isLoggedIn()) {
-                Toast.makeText(this, "Logged out succesfully", Toast.LENGTH_SHORT).show();
                 navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
                 navigationView.getMenu().findItem(R.id.nav_login_vk).setVisible(true);
                 UserName.setText("День вышки");
@@ -275,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
-        }, 3500);
+        }, 500);
         return true;
     }
 

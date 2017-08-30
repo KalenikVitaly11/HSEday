@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_login_vk"
-            android:title="@string/navigation_login"
-            android:icon="@drawable/ic_login_50" />
+            android:fontFamily="sans-serif-light"
+            android:icon="@drawable/ic_login_50"
+            android:textStyle="normal"
+            android:title="@string/navigation_login" />
         <item
             android:id="@+id/nav_map"
-            android:title="@string/navigation_map"
+            android:checked="true"
+            android:fontFamily="sans-serif-light"
             android:icon="@drawable/ic_map_black_24dp"
-            android:checked="true"/>
+            android:textStyle="normal"
+            android:title="@string/navigation_map" />
         <item
             android:id="@+id/nav_posvyashenie"
-            android:title="@string/navigation_posvyashenie"
-            android:icon="@drawable/ic_person_black_24dp" />
+            android:fontFamily="sans-serif-light"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:textStyle="normal"
+            android:title="@string/navigation_posvyashenie" />
     </group>
-    <group
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_faculties"
-            android:title="@string/navigation_faculties"
-            android:icon="@drawable/ic_school_black_24dp" />
+            android:fontFamily="sans-serif-light"
+            android:icon="@drawable/ic_school_black_24dp"
+            android:textStyle="normal"
+            android:title="@string/navigation_faculties" />
         <item
             android:id="@+id/nav_organisations"
-            android:title="@string/navigation_organisations"
-            android:icon="@drawable/ic_group_black_24dp" />
+            android:fontFamily="sans-serif-light"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:textStyle="normal"
+            android:title="@string/navigation_organisations" />
         <item
             android:id="@+id/nav_aboutHSE"
-            android:title="@string/navigation_aboutHSE"
-            android:icon="@drawable/ic_info_black_24dp" />
+            android:fontFamily="sans-serif-light"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:textStyle="normal"
+            android:title="@string/navigation_aboutHSE" />
         <item
             android:id="@+id/nav_logout"
-            android:title="@string/navigation_logout"
-            android:icon="@drawable/ic_logout_50" />
+            android:fontFamily="sans-serif-light"
+            android:icon="@drawable/ic_logout_50"
+            android:textStyle="normal"
+            android:title="@string/navigation_logout" />
     </group>
 
 </menu>

@@ -20,7 +20,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.glidebitmappool.GlideBitmapFactory;
@@ -69,6 +68,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     ArrayList<ApiSports> dataSports;
     ArrayList<ApiMics> dataMics;
     ArrayList<ApiLectures> dataLectures;
+    ArrayList<Marker> listMarker;
     ApiQuest myQuest;
     ApiLectures myLecture;
     ApiTents myTent;
@@ -76,7 +76,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     ApiSports mySport;
     DataBaseHelper dbHelper;
 
-    public String tagMicrophone = "microphone";
+    public String tagMicrophone = "mic";
     public String tagQuest = "quest";
     public String tagTent = "tent";
     public String tagLecture = "lecture";
@@ -151,11 +151,9 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         googleMap.setMapType(GoogleMap.MAP_TYPE_NONE);
 
         Bitmap myMap = BitmapFactory.decodeResource(getResources(), R.drawable.map3);
-
         GroundOverlayOptions newarkMap = new GroundOverlayOptions() // Загрузка картинки в карту
                 .position(new LatLng(0, 0), 27000000f, 12735849f)
                 .image(BitmapDescriptorFactory.fromBitmap(myMap));
-
         googleMap.addGroundOverlay(newarkMap);
 
         LatLng start = new LatLng(0, 0);
@@ -165,15 +163,15 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
 
         LatLngBounds cameraBorder = new LatLngBounds(  //  Границы движения камеры
                 new LatLng(-24, -89), new LatLng(24, 89));
-        //googleMap.setLatLngBoundsForCameraTarget(cameraBorder);
+        googleMap.setLatLngBoundsForCameraTarget(cameraBorder);
 
-        //googleMap.setMinZoomPreference(3f);  // Ограничения по зуму
-        //googleMap.setMaxZoomPreference(3.5f);
+        googleMap.setMinZoomPreference(3f);  // Ограничения по зуму
+        googleMap.setMaxZoomPreference(3.5f);
 
         googleMap.getUiSettings().setMapToolbarEnabled(false); // Выключить кнопки, которые вылезают сбоку при нажатии на метку
         googleMap.setOnInfoWindowClickListener(this);
 
-
+        listMarker = new ArrayList<Marker>();
         dbHelper = new DataBaseHelper(getContext());
         SQLiteDatabase database = dbHelper.getReadableDatabase();
 
@@ -207,7 +205,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataQuests.size(); i++) { // Отрисовка всех квестов на карте
             questName = dataQuests.get(i).getName();
             questDescription = dataQuests.get(i).getDescription();
-            LatLng quest = new LatLng(dataQuests.get(i).getXposition(), dataQuests.get(i).getYposition());
+            LatLng quest = new LatLng(dataQuests.get(i).getYposition(), dataQuests.get(i).getXposition());
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(quest).title("Квест").snippet(questDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_quest));
@@ -215,6 +213,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             markerTag.setPointType(tagQuest);
             markerTag.setPointId(dataQuests.get(i).getId());
             marker.setTag(markerTag);
+            listMarker.add(marker);
         }
 
 
@@ -242,7 +241,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataTents.size(); i++) {
             tentName = dataTents.get(i).getName();
             tentDescription = dataTents.get(i).getDescription();
-            LatLng tent = new LatLng(dataTents.get(i).getXposition(), dataTents.get(i).getYposition());
+            LatLng tent = new LatLng(dataTents.get(i).getYposition(), dataTents.get(i).getXposition());
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(tent).title(tentName).snippet(tentDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_tent));
@@ -251,6 +250,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             markerTag.setPointType(tagTent);
             markerTag.setPointId(dataTents.get(i).getId());
             marker.setTag(markerTag);
+            listMarker.add(marker);
         }
 
         dataSports = new ArrayList<ApiSports>();
@@ -277,7 +277,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataSports.size(); i++) {
             sportName = dataSports.get(i).getName();
             sportDescription = dataSports.get(i).getDescription();
-            LatLng sport = new LatLng(dataSports.get(i).getXposition(), dataSports.get(i).getYposition());
+            LatLng sport = new LatLng(dataSports.get(i).getYposition(), dataSports.get(i).getXposition());
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(sport).title(sportName).snippet(sportDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_ball));
@@ -285,6 +285,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             markerTag.setPointType(tagSport);
             markerTag.setPointId(dataSports.get(i).getId());
             marker.setTag(markerTag);
+            listMarker.add(marker);
         }
 
         dataLectures = new ArrayList<ApiLectures>();
@@ -311,7 +312,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataLectures.size(); i++) {
             lectureName = dataLectures.get(i).getName();
             lectureDescription = dataLectures.get(i).getDescription();
-            LatLng lecture = new LatLng(dataLectures.get(i).getXposition(), dataLectures.get(i).getYposition());
+            LatLng lecture = new LatLng(dataLectures.get(i).getYposition(), dataLectures.get(i).getXposition());
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(lecture).title(lectureName).snippet(lectureDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_list));
@@ -320,6 +321,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             markerTag.setPointType(tagLecture);
             markerTag.setPointId(dataLectures.get(i).getId());
             marker.setTag(markerTag);
+            listMarker.add(marker);
         }
 
         dataMics = new ArrayList<ApiMics>();
@@ -346,7 +348,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataMics.size(); i++) {
             micName = dataMics.get(i).getName();
             micDescription = dataMics.get(i).getDescription();
-            LatLng mic = new LatLng(dataMics.get(i).getXposition(), dataMics.get(i).getYposition());
+            LatLng mic = new LatLng(dataMics.get(i).getYposition(), dataMics.get(i).getXposition());
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(mic).title(micName).snippet(micDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_microphone));
@@ -354,6 +356,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             markerTag.setPointType(tagMicrophone);
             markerTag.setPointId(dataMics.get(i).getId());
             marker.setTag(markerTag);
+            listMarker.add(marker);
         }
     }
 
@@ -433,49 +436,105 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        /*if (item.isChecked()) {
-            item.setChecked(false);
-        } else{
-            item.setChecked(true);
-        }
+
 
         switch(id){
             case org.styleru.hseday.R.id.map_quest_mark:
                 if (item.isChecked()) {
-                    MapImageQuest1.setVisibility(View.VISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagQuest)){
+                            listMarker.get(i).setVisible(false);
+                        }
+                    }
+                    item.setChecked(false);
                 } else{
-                    MapImageQuest1.setVisibility(View.INVISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagQuest)){
+                            listMarker.get(i).setVisible(true);
+                        }
+                    }
+                    item.setChecked(true);
                 }
                 break;
             case org.styleru.hseday.R.id.map_ball:
                 if (item.isChecked()) {
-                    MapImageBall1.setVisibility(View.VISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagSport)){
+                            listMarker.get(i).setVisible(false);
+                        }
+                    }
+                    item.setChecked(false);
                 } else{
-                    MapImageBall1.setVisibility(View.INVISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagSport)){
+                            listMarker.get(i).setVisible(true);
+                        }
+                    }
+                    item.setChecked(true);
                 }
                 break;
             case org.styleru.hseday.R.id.map_paper:
                 if (item.isChecked()) {
-                    //MapImageTent1.setVisibility(View.VISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagLecture)){
+                            listMarker.get(i).setVisible(false);
+                        }
+                    }
+                    item.setChecked(false);
                 } else{
-                    //MapImageTent1.setVisibility(View.INVISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagLecture)){
+                            listMarker.get(i).setVisible(true);
+                        }
+                    }
+                    item.setChecked(true);
                 }
                 break;
             case org.styleru.hseday.R.id.map_tent:
                 if (item.isChecked()) {
-                    MapImageTent1.setVisibility(View.VISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagTent)){
+                            listMarker.get(i).setVisible(false);
+                        }
+                    }
+                    item.setChecked(false);
                 } else{
-                    MapImageTent1.setVisibility(View.INVISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagTent)){
+                            listMarker.get(i).setVisible(true);
+                        }
+                    }
+                    item.setChecked(true);
                 }
                 break;
             case org.styleru.hseday.R.id.map_microphone:
                 if (item.isChecked()) {
-                    MapImageMicrophone1.setVisibility(View.VISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagMicrophone)){
+                            listMarker.get(i).setVisible(false);
+                        }
+                    }
+                    item.setChecked(false);
                 } else{
-                    MapImageMicrophone1.setVisibility(View.INVISIBLE);
+                    for(int i = 0;i < listMarker.size(); i++){
+                        CustomMarkerTag myTag = (CustomMarkerTag) listMarker.get(i).getTag();
+                        if(myTag.getPointType().equals(tagMicrophone)){
+                            listMarker.get(i).setVisible(true);
+                        }
+                    }
+                    item.setChecked(true);
                 }
                 break;
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
