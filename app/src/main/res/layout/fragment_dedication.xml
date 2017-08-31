@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
     android:orientation="vertical"
-    tools:context="org.styleru.hseday.NavigationFragments.FragmentDedication">
+    tools:context="org.styleru.hseday2017.NavigationFragments.FragmentDedication">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="org.styleru.hseday.DialogFragments.DialogQuest">
+    tools:context="org.styleru.hseday2017.DialogFragments.DialogQuest">
 
     <ImageView
         android:id="@+id/quest_dialog_image"
@@ -64,7 +64,7 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center_vertical|center_horizontal"
         android:hint="Введи код"
-        android:inputType="numberDecimal"
+        android:inputType="numberPassword"
         android:textColorLink="@android:color/holo_blue_dark"
         android:textStyle="normal" />
 

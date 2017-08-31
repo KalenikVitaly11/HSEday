@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.styleru.hseday">
+    package="org.styleru.hseday2017">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".Application"
+        android:name="org.styleru.hseday2017.Application"
         android:allowBackup="true"
         android:configChanges="keyboardHidden|orientation"
         android:hardwareAccelerated="true"
@@ -22,7 +22,7 @@
             android:value="AIzaSyAZygfR-4KMkw83XvtRLof5tLQiNb_ubLg" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="org.styleru.hseday2017.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -33,30 +33,30 @@
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
         <activity
-            android:name=".AboutFacultyActivity"
+            android:name="org.styleru.hseday2017.AboutFacultyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AboutOrganisationActivity"
+            android:name="org.styleru.hseday2017.AboutOrganisationActivity"
             android:label="@string/title_activity_about_organisation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DialogFragments.ActivityLection"
+            android:name="org.styleru.hseday2017.DialogFragments.ActivityLection"
             android:label="ActivityLection"
             android:screenOrientation="portrait" />
-        <activity android:name=".DialogFragments.ActivityTent" />
+        <activity android:name="org.styleru.hseday2017.DialogFragments.ActivityTent" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".ActivityLogin" />
+        <activity android:name="org.styleru.hseday2017.ActivityLogin" />
         <activity
-            android:name=".ActivityComments"
+            android:name="org.styleru.hseday2017.ActivityComments"
             android:label="@string/title_activity_comments" />
         <activity
-            android:name=".ActivityAddComment"
+            android:name="org.styleru.hseday2017.ActivityAddComment"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".SplashActivity"
+        <activity android:name="org.styleru.hseday2017.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
