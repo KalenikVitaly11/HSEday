@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.styleru.hseday2017.ActivityComments;
@@ -36,8 +37,15 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.LectionTitle.setText(dataEvents.get(position).getName());
-        holder.LectionTime.setText(dataEvents.get(position).getStarttime() + " - " + dataEvents.get(position).getEndtime());
-        holder.LectionPerson.setText(dataEvents.get(position).getDescription());
+        if (!dataEvents.get(position).getStarttime().equals("-10")) {
+            holder.LectionTime.setText(dataEvents.get(position).getStarttime() + " - " + dataEvents.get(position).getEndtime());
+        } else {
+            LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LayoutParams.setMargins(0, 0, 0, 0);
+            ((ViewGroup) holder.OpenComments.getParent()).removeView(holder.OpenComments);
+            ((ViewGroup) holder.LectionTime.getParent()).removeView(holder.LectionTime);
+        }
+        holder.LectionInfo.setText(dataEvents.get(position).getDescription());
         //holder.LectionContacts.setText(mContext.getResources().getText(org.styleru.hseday.R.string.cardview_contacts_string).toString().concat(parts[3].toString()).concat(parts[4].toString()));
 
         holder.setClickListener(new ItemClickListener() {
@@ -62,18 +70,16 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView LectionTitle;
         private TextView LectionTime;
-        private TextView LectionContacts;
-        private TextView LectionPerson;
+        private TextView LectionInfo;
         private Button OpenComments;
 
         private ItemClickListener clickListener;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            LectionContacts = (TextView) itemView.findViewById(org.styleru.hseday2017.R.id.lection_contacts);
             LectionTime = (TextView) itemView.findViewById(org.styleru.hseday2017.R.id.lection_time);
             LectionTitle = (TextView) itemView.findViewById(org.styleru.hseday2017.R.id.lection_title);
-            LectionPerson = (TextView) itemView.findViewById(org.styleru.hseday2017.R.id.lection_person);
+            LectionInfo = (TextView) itemView.findViewById(org.styleru.hseday2017.R.id.lection_info);
             OpenComments = (Button) itemView.findViewById(org.styleru.hseday2017.R.id.button_open_comments);
 
 

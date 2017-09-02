@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import org.styleru.hseday2017.ApiClasses.ApiEvents;
 import org.styleru.hseday2017.DataBaseHelper;
@@ -26,21 +28,36 @@ public class ActivityLection extends AppCompatActivity {
     DataBaseHelper dbHelper;
     ArrayList<ApiEvents> dataEvents;
     ApiEvents myEvent;
+    TextView lectureName;
+    TextView lectureInfo;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_lection);
+        setContentView(R.layout.activity_lection);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Лекция");
+        //lectureInfo = (TextView)findViewById(R.id.lection_info);
+        //lectureName = (TextView) findViewById(R.id.lection_title);
 
         Intent intent = getIntent();
         String pointType = intent.getStringExtra("pointtype");
         Integer pointId = intent.getIntExtra("pointid", 1);
         Log.d("tags", pointType + "   " + String.valueOf(pointId));
+        if(pointType.equals("tent")){
+            setTitle("Тент");
+        } else if(pointType.equals("lecture")){
+            setTitle("Лекция");
+        } else if(pointType.equals("mic")){
+            setTitle("Музыка");
+        }
 
         dataEvents = new ArrayList<ApiEvents>();
+        myEvent = new ApiEvents();
+        myEvent.setName(intent.getStringExtra("name"));
+        myEvent.setDescription(intent.getStringExtra("info"));
+        myEvent.setStarttime("-10");
+        dataEvents.add(myEvent);
         dbHelper = new DataBaseHelper(this);
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         Cursor cursorEvent = database.query(DataBaseHelper.TABLE_EVENTS_NAME, null, null, null, null, null, null);
@@ -63,7 +80,8 @@ public class ActivityLection extends AppCompatActivity {
                 Log.d("tags", cursorEvent.getString(nameIndex) + "   " + cursorEvent.getString(pointTypeIndex) + "  id =  " + String.valueOf(cursorEvent.getInt(pointIdIndex)));
             }while (cursorEvent.moveToNext());
         }
-
+        //lectureName.setText(intent.getStringExtra("name"));
+        //lectureInfo.setText(intent.getStringExtra("info"));
 
         mAdapter = new RecyclerViewAdapterLections(this, dataEvents);
         mRecyclerView = (RecyclerView) findViewById(R.id.lections_recycler_view);

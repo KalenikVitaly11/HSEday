@@ -4,6 +4,25 @@ package org.styleru.hseday2017;
 public class CustomMarkerTag {
     public String pointType;
     public Integer pointId;
+    public String lectureName;
+    public String lectureInfo;
+
+    public String getLectureInfo() {
+        return lectureInfo;
+    }
+
+    public String getLectureName() {
+        return lectureName;
+    }
+
+    public void setLectureInfo(String lectureInfo) {
+        this.lectureInfo = lectureInfo;
+    }
+
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
+    }
+
 
     public String getPointType() {
         return pointType;

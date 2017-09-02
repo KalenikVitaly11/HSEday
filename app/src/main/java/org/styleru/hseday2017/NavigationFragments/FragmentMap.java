@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
+import com.google.android.gms.auth.TokenData;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.nearby.connection.Strategy;
 
 import org.styleru.hseday2017.ApiClasses.ApiLectures;
 import org.styleru.hseday2017.ApiClasses.ApiMics;
@@ -124,7 +127,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         googleMap = map;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        Bitmap myMap = BitmapFactory.decodeResource(getResources(), R.drawable.map3);
+        Bitmap myMap = BitmapFactory.decodeResource(getResources(), R.drawable.map_park2);
         GroundOverlayOptions newarkMap = new GroundOverlayOptions() // Загрузка картинки в карту
                 .position(new LatLng(0, 0), 27000000f, 12735849f)
                 .image(BitmapDescriptorFactory.fromBitmap(myMap));
@@ -134,13 +137,17 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         CameraPosition cameraPosition = new CameraPosition.Builder().target(start).zoom(3).build(); // Начальное положение камеры
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+        LatLng quest2 = new LatLng(0 + 57, 242 - 121);
+        Marker marke2r = googleMap.addMarker(new MarkerOptions().position(quest2).title("0 242").snippet("0 242"));
+        LatLng quest1 = new LatLng(0 + 57, 0 - 121);
+        Marker marker2 = googleMap.addMarker(new MarkerOptions().position(quest1).title("0 0").snippet("0 0"));
 
         LatLngBounds cameraBorder = new LatLngBounds(  //  Границы движения камеры
                 new LatLng(-24, -89), new LatLng(24, 89));
-        googleMap.setLatLngBoundsForCameraTarget(cameraBorder);
+        //googleMap.setLatLngBoundsForCameraTarget(cameraBorder);
 
-        googleMap.setMinZoomPreference(3f);  // Ограничения по зуму
-        googleMap.setMaxZoomPreference(3.5f);
+        //googleMap.setMinZoomPreference(3f);  // Ограничения по зуму
+        //googleMap.setMaxZoomPreference(3.5f);
 
         googleMap.getUiSettings().setMapToolbarEnabled(false); // Выключить кнопки, которые вылезают сбоку при нажатии на метку
         googleMap.setOnInfoWindowClickListener(this);
@@ -179,7 +186,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataQuests.size(); i++) { // Отрисовка всех квестов на карте
             questName = dataQuests.get(i).getName();
             questDescription = dataQuests.get(i).getDescription();
-            LatLng quest = new LatLng(dataQuests.get(i).getYposition(), dataQuests.get(i).getXposition());
+            LatLng quest = new LatLng(dataQuests.get(i).getYposition() + 57, dataQuests.get(i).getXposition() - 121);
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(quest).title("Квест").snippet(questDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_quest));
@@ -215,7 +222,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataTents.size(); i++) {
             tentName = dataTents.get(i).getName();
             tentDescription = dataTents.get(i).getDescription();
-            LatLng tent = new LatLng(dataTents.get(i).getYposition(), dataTents.get(i).getXposition());
+            LatLng tent = new LatLng(dataTents.get(i).getYposition() + 57, dataTents.get(i).getXposition() - 121);
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(tent).title(tentName).snippet(tentDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_tent));
@@ -223,6 +230,8 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagTent);
             markerTag.setPointId(dataTents.get(i).getId());
+            markerTag.setLectureName(tentName);
+            markerTag.setLectureInfo(tentDescription);
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -251,7 +260,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataSports.size(); i++) {
             sportName = dataSports.get(i).getName();
             sportDescription = dataSports.get(i).getDescription();
-            LatLng sport = new LatLng(dataSports.get(i).getYposition(), dataSports.get(i).getXposition());
+            LatLng sport = new LatLng(dataSports.get(i).getYposition() + 57, dataSports.get(i).getXposition() - 121);
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(sport).title(sportName).snippet(sportDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_ball));
@@ -286,7 +295,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataLectures.size(); i++) {
             lectureName = dataLectures.get(i).getName();
             lectureDescription = dataLectures.get(i).getDescription();
-            LatLng lecture = new LatLng(dataLectures.get(i).getYposition(), dataLectures.get(i).getXposition());
+            LatLng lecture = new LatLng(dataLectures.get(i).getYposition() + 57, dataLectures.get(i).getXposition() - 121);
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(lecture).title(lectureName).snippet(lectureDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_list));
@@ -294,6 +303,8 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagLecture);
             markerTag.setPointId(dataLectures.get(i).getId());
+            markerTag.setLectureName(lectureName);
+            markerTag.setLectureInfo(lectureDescription);
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -322,13 +333,16 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         for (int i = 0; i < dataMics.size(); i++) {
             micName = dataMics.get(i).getName();
             micDescription = dataMics.get(i).getDescription();
-            LatLng mic = new LatLng(dataMics.get(i).getYposition(), dataMics.get(i).getXposition());
+            LatLng mic = new LatLng(dataMics.get(i).getYposition() + 57, dataMics.get(i).getXposition() - 121);
 
-            Marker marker = googleMap.addMarker(new MarkerOptions().position(mic).title(micName).snippet(micDescription));
+            Marker marker = googleMap.addMarker(new MarkerOptions().position(mic).title(micName).
+                    snippet(micDescription));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_microphone));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagMicrophone);
             markerTag.setPointId(dataMics.get(i).getId());
+            markerTag.setLectureName(micName);
+            markerTag.setLectureInfo(micDescription);
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -343,6 +357,8 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             intent = new Intent(getActivity(), ActivityLection.class);
             intent.putExtra("pointtype", myTag.getPointType());
             intent.putExtra("pointid", myTag.getPointId());
+            intent.putExtra("name", myTag.getLectureName());
+            intent.putExtra("info", myTag.getLectureInfo());
             getActivity().startActivity(intent);
         } else if (myTag.getPointType().equals(tagQuest)) {
             Bundle args = new Bundle();
