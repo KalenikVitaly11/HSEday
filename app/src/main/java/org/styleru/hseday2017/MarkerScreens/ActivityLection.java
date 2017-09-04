@@ -53,10 +53,10 @@ public class ActivityLection extends AppCompatActivity {
 
         dataEvents = new ArrayList<ApiEvents>();
         myEvent = new ApiEvents();
-        myEvent.setName(intent.getStringExtra("name"));
+        myEvent.setName("marker"); // Это своего рода ключ, который показывает, что это запись для описания самой метки (используется в адаптере)
         myEvent.setDescription(intent.getStringExtra("info"));
-        myEvent.setStarttime("-10");
         dataEvents.add(myEvent);
+
         dbHelper = new DataBaseHelper(this);
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         Cursor cursorEvent = database.query(DataBaseHelper.TABLE_EVENTS_NAME, null, null, null, null, null, null);
@@ -76,7 +76,6 @@ public class ActivityLection extends AppCompatActivity {
                     myEvent.setEndtime(cursorEvent.getString(endtimeIndex));
                     dataEvents.add(myEvent);
                 }
-                Log.d("tags", cursorEvent.getString(nameIndex) + "   " + cursorEvent.getString(pointTypeIndex) + "  id =  " + String.valueOf(cursorEvent.getInt(pointIdIndex)));
             }while (cursorEvent.moveToNext());
         }
         //lectureName.setText(intent.getStringExtra("name"));
