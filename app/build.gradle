@@ -49,5 +49,6 @@ dependencies {
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile 'com.github.Mariovc:ImagePicker:1.0.5'
     compile 'com.google.android.gms:play-services:11.0.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }

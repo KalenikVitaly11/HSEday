@@ -1,4 +1,4 @@
-package org.styleru.hseday2017.DialogFragments;
+package org.styleru.hseday2017.MarkerScreens;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

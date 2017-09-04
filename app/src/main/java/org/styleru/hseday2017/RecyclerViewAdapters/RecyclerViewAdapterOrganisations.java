@@ -3,6 +3,7 @@ package org.styleru.hseday2017.RecyclerViewAdapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,7 @@ import org.styleru.hseday2017.ItemClickListener;
 
 import java.util.ArrayList;
 
-/**
- * Created by Виталий on 31.01.2017.
- */
+
 
 public class RecyclerViewAdapterOrganisations extends RecyclerView.Adapter<RecyclerViewAdapterOrganisations.ViewHolder> {
     Context mContext;
@@ -28,25 +27,21 @@ public class RecyclerViewAdapterOrganisations extends RecyclerView.Adapter<Recyc
     public RecyclerViewAdapterOrganisations(Context contexts, ArrayList<ApiOrganisations> organisationsList) {
         this.mContext = contexts;
         this.organisationsList = organisationsList;
-        //Toast.makeText(mContext, "размер1111 = " + String.valueOf(organisationsList.size()), Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(org.styleru.hseday2017.R.layout.cardview_organisation, viewGroup, false);
         ViewHolder cvh = new ViewHolder(v);
-        //Toast.makeText(mContext, "123", Toast.LENGTH_LONG).show();
         return cvh;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.OrganisationName.setText(organisationsList.get(position).getName());
+        Log.d("mylogs", organisationsList.get(position).getName());
         Glide.with(mContext).load(organisationsList.get(position).getImageurl()).into(holder.OrganisationIcon);
-        //Toast.makeText(mContext, organisationsList.get(position).toString(), Toast.LENGTH_LONG).show();
-        //Toast.makeText(mContext, "123", Toast.LENGTH_LONG).show();
-
-
         holder.setClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
@@ -66,6 +61,16 @@ public class RecyclerViewAdapterOrganisations extends RecyclerView.Adapter<Recyc
     @Override
     public int getItemCount() {
         return organisationsList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{

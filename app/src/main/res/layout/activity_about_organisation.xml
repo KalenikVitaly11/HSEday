@@ -28,7 +28,7 @@
                 android:id="@+id/organisation_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:text="@string/faculty_title"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="1dp"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:text="@string/contancts"
                 android:textColor="#323432"
                 android:textSize="16sp"
@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/contancts"
+                android:autoLink="web"
                 android:textColor="#323432"
                 android:textStyle="normal" />
         </LinearLayout>

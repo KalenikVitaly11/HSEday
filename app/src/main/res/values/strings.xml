@@ -69,4 +69,8 @@
     <string name="why_login">Войди в приложение, используя Facebook или ВКонтакте, чтобы иметь возможность комментирования событий.</string>
     <string name="title_activity_comments">ActivityComments</string>
 
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

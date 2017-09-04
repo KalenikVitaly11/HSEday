@@ -6,6 +6,15 @@ public class CustomMarkerTag {
     public Integer pointId;
     public String lectureName;
     public String lectureInfo;
+    public String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public String getLectureInfo() {
         return lectureInfo;

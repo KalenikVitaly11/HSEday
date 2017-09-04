@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -46,6 +48,11 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         dbHelper = new DataBaseHelper(this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
+        int UI_OPTIONS = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;  // Спрятать системные кнопки навигации
+        getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
 
 
         Cursor organisationsCursor = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
@@ -134,6 +141,7 @@ public class SplashActivity extends AppCompatActivity {
                         myContent.put(DataBaseHelper.QUESTS_NUMBER, dataQuests.get(i).getNumber());
                         myContent.put(DataBaseHelper.QUESTS_NAME, dataQuests.get(i).getName());
                         myContent.put(DataBaseHelper.QUESTS_DESCRIPTION, dataQuests.get(i).getDescription());
+                        myContent.put(DataBaseHelper.QUESTS_SHORT_DESCRIPTION, dataQuests.get(i).getShortdesc());
                         myContent.put(DataBaseHelper.QUESTS_PASSCODE, dataQuests.get(i).getPasscode());
                         myContent.put(DataBaseHelper.QUESTS_IMAGE_URL, dataQuests.get(i).getImageurl());
                         myContent.put(DataBaseHelper.QUESTS_XCOORDINATE, dataQuests.get(i).getXposition());
@@ -169,6 +177,7 @@ public class SplashActivity extends AppCompatActivity {
                         myContent.put(DataBaseHelper.TENTS_ID, dataTents.get(i).getId());
                         myContent.put(DataBaseHelper.TENTS_NAME, dataTents.get(i).getName());
                         myContent.put(DataBaseHelper.TENTS_DESCRIPTION, dataTents.get(i).getDescription());
+                        myContent.put(DataBaseHelper.TENTS_SHORT_DESCRIPTION, dataTents.get(i).getShortdesc());
                         myContent.put(DataBaseHelper.TENTS_XCOORDINATE, dataTents.get(i).getXposition());
                         myContent.put(DataBaseHelper.TENTS_YCOORDINATE, dataTents.get(i).getYposition());
                         database.insert(DataBaseHelper.TABLE_TENTS_NAME, null, myContent);
@@ -201,6 +210,7 @@ public class SplashActivity extends AppCompatActivity {
                         myContent.put(DataBaseHelper.SPORTS_ID, dataSports.get(i).getId());
                         myContent.put(DataBaseHelper.SPORTS_NAME, dataSports.get(i).getName());
                         myContent.put(DataBaseHelper.SPORTS_DESCRIPTION, dataSports.get(i).getDescription());
+                        myContent.put(DataBaseHelper.SPORTS_SHORT_DESCRIPTION, dataSports.get(i).getShortdesc());
                         myContent.put(DataBaseHelper.SPORTS_IMAGE_URL, dataSports.get(i).getImageurl());
                         myContent.put(DataBaseHelper.SPORTS_XCOORDINATE, dataSports.get(i).getXposition());
                         myContent.put(DataBaseHelper.SPORTS_YCOORDINATE, dataSports.get(i).getYposition());
@@ -233,6 +243,7 @@ public class SplashActivity extends AppCompatActivity {
                         myContent.put(DataBaseHelper.LECTURES_ID, dataLectures.get(i).getId());
                         myContent.put(DataBaseHelper.LECTURES_NAME, dataLectures.get(i).getName());
                         myContent.put(DataBaseHelper.LECTURES_DESCRIPTION, dataLectures.get(i).getDescription());
+                        myContent.put(DataBaseHelper.LECTURES_SHORT_DESCRIPTION, dataLectures.get(i).getShortdesc());
                         myContent.put(DataBaseHelper.LECTURES_XCOORDINATE, dataLectures.get(i).getXposition());
                         myContent.put(DataBaseHelper.LECTURES_YCOORDINATE, dataLectures.get(i).getYposition());
                         database.insert(DataBaseHelper.TABLE_LECTIONS_NAME, null, myContent);
@@ -265,6 +276,7 @@ public class SplashActivity extends AppCompatActivity {
                         myContent.put(DataBaseHelper.MICROPHONES_ID, dataMics.get(i).getId());
                         myContent.put(DataBaseHelper.MICROPHONES_NAME, dataMics.get(i).getName());
                         myContent.put(DataBaseHelper.MICROPHONES_DESCRIPTION, dataMics.get(i).getDescription());
+                        myContent.put(DataBaseHelper.MICROPHONES_SHORT_DESCRIPTION, dataMics.get(i).getShortdesc());
                         myContent.put(DataBaseHelper.MICROPHONES_XCOORDINATE, dataMics.get(i).getXposition());
                         myContent.put(DataBaseHelper.MICROPHONES_YCOORDINATE, dataMics.get(i).getYposition());
                         database.insert(DataBaseHelper.TABLE_MICROPHONES_NAME, null, myContent);

@@ -4,6 +4,7 @@ package org.styleru.hseday2017.RecyclerViewAdapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,16 +38,14 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.LectionTitle.setText(dataEvents.get(position).getName());
-        if (!dataEvents.get(position).getStarttime().equals("-10")) {
-            holder.LectionTime.setText(dataEvents.get(position).getStarttime() + " - " + dataEvents.get(position).getEndtime());
-        } else {
-            LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            LayoutParams.setMargins(0, 0, 0, 0);
-            ((ViewGroup) holder.OpenComments.getParent()).removeView(holder.OpenComments);
-            ((ViewGroup) holder.LectionTime.getParent()).removeView(holder.LectionTime);
-        }
+        holder.LectionTime.setText(dataEvents.get(position).getStarttime() + " - " + dataEvents.get(position).getEndtime());
         holder.LectionInfo.setText(dataEvents.get(position).getDescription());
-        //holder.LectionContacts.setText(mContext.getResources().getText(org.styleru.hseday.R.string.cardview_contacts_string).toString().concat(parts[3].toString()).concat(parts[4].toString()));
+        if (dataEvents.get(position).getStarttime().equals("-10")) {
+            //((ViewGroup) holder.OpenComments.getParent()).removeView(holder.OpenComments);
+            //((ViewGroup) holder.LectionTitle.getParent()).removeView(holder.LectionTitle);
+            //((ViewGroup) holder.LectionTime.getParent()).removeView(holder.LectionTime);
+            holder.LectionInfo.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+        }
 
         holder.setClickListener(new ItemClickListener() {
             @Override
@@ -82,12 +81,8 @@ public class RecyclerViewAdapterLections extends RecyclerView.Adapter<RecyclerVi
             LectionInfo = (TextView) itemView.findViewById(org.styleru.hseday2017.R.id.lection_info);
             OpenComments = (Button) itemView.findViewById(org.styleru.hseday2017.R.id.button_open_comments);
 
-
             itemView.setTag(itemView);
             OpenComments.setOnClickListener(this);
-
-            //itemView.setOnClickListener(this);
-            //itemView.setOnLongClickListener(this);
         }
 
         public void setClickListener(ItemClickListener itemClickListener) {

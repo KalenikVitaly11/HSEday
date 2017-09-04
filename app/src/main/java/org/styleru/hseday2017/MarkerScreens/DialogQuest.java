@@ -1,4 +1,4 @@
-package org.styleru.hseday2017.DialogFragments;
+package org.styleru.hseday2017.MarkerScreens;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;

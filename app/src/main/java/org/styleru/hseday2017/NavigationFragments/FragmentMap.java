@@ -7,14 +7,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 
-import com.google.android.gms.auth.TokenData;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.nearby.connection.Strategy;
 
 import org.styleru.hseday2017.ApiClasses.ApiLectures;
 import org.styleru.hseday2017.ApiClasses.ApiMics;
@@ -36,9 +34,10 @@ import org.styleru.hseday2017.ApiClasses.ApiSports;
 import org.styleru.hseday2017.ApiClasses.ApiTents;
 import org.styleru.hseday2017.CustomMarkerTag;
 import org.styleru.hseday2017.DataBaseHelper;
-import org.styleru.hseday2017.DialogFragments.ActivityLection;
-import org.styleru.hseday2017.DialogFragments.DialogQuest;
+import org.styleru.hseday2017.MarkerScreens.ActivityLection;
+import org.styleru.hseday2017.MarkerScreens.DialogQuest;
 import org.styleru.hseday2017.MainActivity;
+import org.styleru.hseday2017.MarkerScreens.SportActivity;
 import org.styleru.hseday2017.R;
 
 import java.util.ArrayList;
@@ -137,17 +136,12 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         CameraPosition cameraPosition = new CameraPosition.Builder().target(start).zoom(3).build(); // Начальное положение камеры
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        LatLng quest2 = new LatLng(0 + 57, 242 - 121);
-        Marker marke2r = googleMap.addMarker(new MarkerOptions().position(quest2).title("0 242").snippet("0 242"));
-        LatLng quest1 = new LatLng(0 + 57, 0 - 121);
-        Marker marker2 = googleMap.addMarker(new MarkerOptions().position(quest1).title("0 0").snippet("0 0"));
-
         LatLngBounds cameraBorder = new LatLngBounds(  //  Границы движения камеры
                 new LatLng(-24, -89), new LatLng(24, 89));
-        //googleMap.setLatLngBoundsForCameraTarget(cameraBorder);
+        googleMap.setLatLngBoundsForCameraTarget(cameraBorder);
 
-        //googleMap.setMinZoomPreference(3f);  // Ограничения по зуму
-        //googleMap.setMaxZoomPreference(3.5f);
+        googleMap.setMinZoomPreference(3f);  // Ограничения по зуму
+        googleMap.setMaxZoomPreference(3.5f);
 
         googleMap.getUiSettings().setMapToolbarEnabled(false); // Выключить кнопки, которые вылезают сбоку при нажатии на метку
         googleMap.setOnInfoWindowClickListener(this);
@@ -163,6 +157,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             int nameIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_NAME);
             int numberIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_NUMBER);
             int descriptionIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_DESCRIPTION);
+            int shortDescIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_SHORT_DESCRIPTION);
             int passcodeIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_PASSCODE);
             int imageIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_IMAGE_URL);
             int xcoordinateIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_XCOORDINATE);
@@ -172,6 +167,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 myQuest.setId(cursorQuests.getInt(idIndex));
                 myQuest.setName(cursorQuests.getString(nameIndex));
                 myQuest.setDescription(cursorQuests.getString(descriptionIndex));
+                myQuest.setShortdesc(cursorQuests.getString(shortDescIndex));
                 myQuest.setNumber(cursorQuests.getString(numberIndex));
                 myQuest.setPasscode(cursorQuests.getString(passcodeIndex));
                 myQuest.setXposition(cursorQuests.getFloat(xcoordinateIndex));
@@ -185,11 +181,12 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         String questDescription;
         for (int i = 0; i < dataQuests.size(); i++) { // Отрисовка всех квестов на карте
             questName = dataQuests.get(i).getName();
-            questDescription = dataQuests.get(i).getDescription();
+            questDescription = dataQuests.get(i).getShortdesc();
             LatLng quest = new LatLng(dataQuests.get(i).getYposition() + 57, dataQuests.get(i).getXposition() - 121);
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(quest).title("Квест").snippet(questDescription));
-            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_quest));
+            Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_quest);
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 65, 90)));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagQuest);
             markerTag.setPointId(dataQuests.get(i).getId());
@@ -204,6 +201,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             int idIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_ID);
             int nameIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_NAME);
             int descriptionIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_DESCRIPTION);
+            int shortDescIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_SHORT_DESCRIPTION);
             int xcoordinateIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_XCOORDINATE);
             int ycoordinateIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_YCOORDINATE);
             do {
@@ -211,6 +209,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 myTent.setId(cursorTent.getInt(idIndex));
                 myTent.setName(cursorTent.getString(nameIndex));
                 myTent.setDescription(cursorTent.getString(descriptionIndex));
+                myTent.setShortdesc(cursorTent.getString(shortDescIndex));
                 myTent.setXposition(cursorTent.getFloat(xcoordinateIndex));
                 myTent.setYposition(cursorTent.getFloat(ycoordinateIndex));
                 dataTents.add(myTent);
@@ -224,8 +223,9 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             tentDescription = dataTents.get(i).getDescription();
             LatLng tent = new LatLng(dataTents.get(i).getYposition() + 57, dataTents.get(i).getXposition() - 121);
 
-            Marker marker = googleMap.addMarker(new MarkerOptions().position(tent).title(tentName).snippet(tentDescription));
-            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_tent));
+            Marker marker = googleMap.addMarker(new MarkerOptions().position(tent).title(tentName).snippet(dataTents.get(i).getShortdesc()));
+            Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_tent);
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 100, 80)));
 
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagTent);
@@ -242,12 +242,16 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             int idIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_ID);
             int nameIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_NAME);
             int descriptionIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_DESCRIPTION);
+            int shortDescIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_SHORT_DESCRIPTION);
+            int imageIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_IMAGE_URL);
             int xcooordinateIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_XCOORDINATE);
             int ycoordinateIndex = cursorSports.getColumnIndex(DataBaseHelper.SPORTS_YCOORDINATE);
             do {
                 mySport = new ApiSports();
                 mySport.setId(cursorSports.getInt(idIndex));
                 mySport.setName(cursorSports.getString(nameIndex));
+                mySport.setImageurl(cursorSports.getString(imageIndex));
+                mySport.setShortdesc(cursorSports.getString(shortDescIndex));
                 mySport.setDescription(cursorSports.getString(descriptionIndex));
                 mySport.setXposition(cursorSports.getFloat(xcooordinateIndex));
                 mySport.setYposition(cursorSports.getFloat(ycoordinateIndex));
@@ -259,14 +263,18 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         String sportDescription;
         for (int i = 0; i < dataSports.size(); i++) {
             sportName = dataSports.get(i).getName();
-            sportDescription = dataSports.get(i).getDescription();
-            LatLng sport = new LatLng(dataSports.get(i).getYposition() + 57, dataSports.get(i).getXposition() - 121);
+            sportDescription = dataSports.get(i).getShortdesc();
 
+            LatLng sport = new LatLng(dataSports.get(i).getYposition() + 57, dataSports.get(i).getXposition() - 121);
             Marker marker = googleMap.addMarker(new MarkerOptions().position(sport).title(sportName).snippet(sportDescription));
-            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_ball));
+            Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_ball);
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 80, 80)));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagSport);
             markerTag.setPointId(dataSports.get(i).getId());
+            markerTag.setLectureName(dataSports.get(i).getName());
+            markerTag.setLectureInfo(dataSports.get(i).getDescription());
+            markerTag.setImageUrl(dataSports.get(i).getImageurl());
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -276,6 +284,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         if (cursorLectures.moveToFirst()) {
             int idIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_ID);
             int nameIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_NAME);
+            int shortDescIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_SHORT_DESCRIPTION);
             int descriptionIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_DESCRIPTION);
             int xcoordinateIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_XCOORDINATE);
             int ycoordinateIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_YCOORDINATE);
@@ -284,6 +293,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 myLecture.setId(cursorLectures.getInt(idIndex));
                 myLecture.setName(cursorLectures.getString(nameIndex));
                 myLecture.setDescription(cursorLectures.getString(descriptionIndex));
+                myLecture.setShortdesc(cursorLectures.getString(shortDescIndex));
                 myLecture.setXposition(cursorLectures.getFloat(xcoordinateIndex));
                 myLecture.setYposition(cursorLectures.getFloat(ycoordinateIndex));
                 dataLectures.add(myLecture);
@@ -296,10 +306,9 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             lectureName = dataLectures.get(i).getName();
             lectureDescription = dataLectures.get(i).getDescription();
             LatLng lecture = new LatLng(dataLectures.get(i).getYposition() + 57, dataLectures.get(i).getXposition() - 121);
-
-            Marker marker = googleMap.addMarker(new MarkerOptions().position(lecture).title(lectureName).snippet(lectureDescription));
-            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_list));
-
+            Marker marker = googleMap.addMarker(new MarkerOptions().position(lecture).title(lectureName).snippet(dataLectures.get(i).getShortdesc()));
+            Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_list);
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 80, 80)));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagLecture);
             markerTag.setPointId(dataLectures.get(i).getId());
@@ -315,6 +324,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             int idIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_ID);
             int nameIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_NAME);
             int descriptionIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_DESCRIPTION);
+            int shortDescIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_SHORT_DESCRIPTION);
             int xcoordinateIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_XCOORDINATE);
             int ycoordinateIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_YCOORDINATE);
             do {
@@ -322,6 +332,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 myMic.setId(cursorMics.getInt(idIndex));
                 myMic.setName(cursorMics.getString(nameIndex));
                 myMic.setDescription(cursorMics.getString(descriptionIndex));
+                myMic.setShortdesc(cursorMics.getString(shortDescIndex));
                 myMic.setXposition(cursorMics.getFloat(xcoordinateIndex));
                 myMic.setYposition(cursorMics.getFloat(ycoordinateIndex));
                 dataMics.add(myMic);
@@ -336,8 +347,9 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             LatLng mic = new LatLng(dataMics.get(i).getYposition() + 57, dataMics.get(i).getXposition() - 121);
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(mic).title(micName).
-                    snippet(micDescription));
-            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_microphone));
+                    snippet(dataMics.get(i).shortdesc));
+            Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_microphone);
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 60, 90)));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagMicrophone);
             markerTag.setPointId(dataMics.get(i).getId());
@@ -372,6 +384,12 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             }
             DialogQuest.setArguments(args);
             DialogQuest.show(getFragmentManager(), "dialogQuest");
+        } else if (myTag.getPointType().equals(tagSport)){
+            intent = new Intent(getActivity(), SportActivity.class);
+            intent.putExtra("name", myTag.getLectureName());
+            intent.putExtra("info", myTag.getLectureInfo());
+            intent.putExtra("image", myTag.getImageUrl());
+            getActivity().startActivity(intent);
         }
     }
 
@@ -529,5 +547,10 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public Bitmap resizeMapIcons(Bitmap imageBitmap,int width, int height){
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
     }
 }

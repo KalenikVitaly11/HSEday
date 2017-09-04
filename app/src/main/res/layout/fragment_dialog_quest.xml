@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="org.styleru.hseday2017.DialogFragments.DialogQuest">
+    tools:context="org.styleru.hseday2017.MarkerScreens.DialogQuest">
 
     <ImageView
         android:id="@+id/quest_dialog_image"

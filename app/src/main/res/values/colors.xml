@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="actionBarbackground">#149fda</color>
+    <color name="actionBarbackground">#25484c</color>
     <color name="dialog_button_color_blue">#25484c</color>
     <color name="recycler_view_backgroung_grey">#e9e9e9</color>
     <color name="secondary_text">#c8000000</color>
@@ -11,4 +11,6 @@
     <color name="vk_logo_color">#597da3</color>
     <color name="my_orange">#ff7f00</color>
     <color name="add_comment_text_color">#7a9598</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

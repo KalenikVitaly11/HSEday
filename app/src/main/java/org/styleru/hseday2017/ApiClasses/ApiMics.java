@@ -8,7 +8,15 @@ public class ApiMics {
     public Float xposition;
     public Float yposition;
     public Integer id;
+    public String shortdesc;
 
+    public String getShortdesc() {
+        return shortdesc;
+    }
+
+    public void setShortdesc(String shortdesc) {
+        this.shortdesc = shortdesc;
+    }
     public Integer getId() {
         return this.id;
     }

@@ -9,7 +9,15 @@ public class ApiSports {
     public String imageurl;
     public Float xposition;
     public Float yposition;
+    public String shortdesc;
 
+    public String getShortdesc() {
+        return shortdesc;
+    }
+
+    public void setShortdesc(String shortdesc) {
+        this.shortdesc = shortdesc;
+    }
     public Integer getId() {
         return this.id;
     }
