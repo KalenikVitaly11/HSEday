@@ -42,6 +42,7 @@
             android:fontFamily="sans-serif-light"
             android:text="Time"
             android:textColor="@android:color/black"
+            android:textColorLink="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
             android:textSize="17sp"
             android:textStyle="normal" />
 

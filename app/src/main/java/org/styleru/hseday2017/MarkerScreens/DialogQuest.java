@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import org.styleru.hseday2017.DataBaseHelper;
 import org.styleru.hseday2017.MainActivity;
 import org.styleru.hseday2017.R;
@@ -78,9 +80,9 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener 
 
 
         Bundle mArgs = getArguments();
-       // Glide.with(this).load("http://dayhse.styleru.net/docs/img/qst/sunlit.jpg").into(QuestImage);
         passCode = mArgs.getString("passcode");
         String imageUrl = mArgs.getString("imageurl");
+        Glide.with(this).load(imageUrl).into(QuestImage);
         QuestText.setText(mArgs.getString("description"));
         QuestTitle.setText(mArgs.getString("name"));
         sPref = getActivity().getPreferences(MODE_PRIVATE);
@@ -100,6 +102,7 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener 
                     EditCodeText.setClickable(false);
                     EditCodeText.setFocusable(false);
                     EditCodeText.setFocusableInTouchMode(false);
+                    CheckCodeButton.setVisibility(View.INVISIBLE);
                 }
             } while (cursorQuest.moveToNext());
         }

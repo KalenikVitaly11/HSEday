@@ -9,8 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+
+import com.bumptech.glide.Glide;
 
 import org.styleru.hseday2017.ApiClasses.ApiAboutHSE;
 import org.styleru.hseday2017.ApiClasses.ApiDepartment;
@@ -42,6 +45,7 @@ public class SplashActivity extends AppCompatActivity {
     public ArrayList<ApiAboutHSE> dataAboutHSE;
     public ArrayList<ApiDepartment> dataDepartments;
     DataBaseHelper dbHelper;
+    ImageView hseLogo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +57,8 @@ public class SplashActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;  // Спрятать системные кнопки навигации
         getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
-
+        hseLogo = (ImageView) findViewById(R.id.splash_screen_logo);
+        Glide.with(this).load(R.drawable.logo).into(hseLogo);
 
         Cursor organisationsCursor = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
         organisationsCursor.moveToFirst();

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -159,6 +160,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             int shortDescIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_SHORT_DESCRIPTION);
             int passcodeIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_PASSCODE);
             int imageIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_IMAGE_URL);
+            int passedIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_PASSED);
             int xcoordinateIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_XCOORDINATE);
             int ycoordinateIndex = cursorQuests.getColumnIndex(DataBaseHelper.QUESTS_YCOORDINATE);
             do {
@@ -169,6 +171,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 myQuest.setShortdesc(cursorQuests.getString(shortDescIndex));
                 myQuest.setNumber(cursorQuests.getString(numberIndex));
                 myQuest.setPasscode(cursorQuests.getString(passcodeIndex));
+                myQuest.setPassed(cursorQuests.getInt(passedIndex));
                 myQuest.setXposition(cursorQuests.getFloat(xcoordinateIndex));
                 myQuest.setYposition(cursorQuests.getFloat(ycoordinateIndex));
                 myQuest.setImageurl(cursorQuests.getString(imageIndex));
@@ -183,12 +186,18 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             questDescription = dataQuests.get(i).getShortdesc();
             LatLng quest = new LatLng(dataQuests.get(i).getYposition() + 57, dataQuests.get(i).getXposition() - 121);
 
-            Marker marker = googleMap.addMarker(new MarkerOptions().position(quest).title("Квест").snippet(questDescription));
-            Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_quest);
-            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 65, 90)));
+            Marker marker = googleMap.addMarker(new MarkerOptions().position(quest).title(questName).snippet(questDescription));
+            Bitmap iconImage;
+            if (dataQuests.get(i).getPassed() == 1) {
+                iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_quest_passed);
+            } else {
+                iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_quest);
+            }
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconImage));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagQuest);
             markerTag.setPointId(dataQuests.get(i).getId());
+            markerTag.setInfo(dataQuests.get(i).getDescription());
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -224,13 +233,13 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(tent).title(tentName).snippet(dataTents.get(i).getShortdesc()));
             Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_tent);
-            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 100, 80)));
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconImage));
 
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagTent);
             markerTag.setPointId(dataTents.get(i).getId());
-            markerTag.setLectureName(tentName);
-            markerTag.setLectureInfo(tentDescription);
+            markerTag.setName(tentName);
+            markerTag.setInfo(tentDescription);
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -267,12 +276,12 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             LatLng sport = new LatLng(dataSports.get(i).getYposition() + 57, dataSports.get(i).getXposition() - 121);
             Marker marker = googleMap.addMarker(new MarkerOptions().position(sport).title(sportName).snippet(sportDescription));
             Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_ball);
-            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 80, 80)));
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconImage));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagSport);
             markerTag.setPointId(dataSports.get(i).getId());
-            markerTag.setLectureName(dataSports.get(i).getName());
-            markerTag.setLectureInfo(dataSports.get(i).getDescription());
+            markerTag.setName(dataSports.get(i).getName());
+            markerTag.setInfo(dataSports.get(i).getDescription());
             markerTag.setImageUrl(dataSports.get(i).getImageurl());
             marker.setTag(markerTag);
             listMarker.add(marker);
@@ -307,12 +316,12 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             LatLng lecture = new LatLng(dataLectures.get(i).getYposition() + 57, dataLectures.get(i).getXposition() - 121);
             Marker marker = googleMap.addMarker(new MarkerOptions().position(lecture).title(lectureName).snippet(dataLectures.get(i).getShortdesc()));
             Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_list);
-            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 80, 80)));
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconImage));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagLecture);
             markerTag.setPointId(dataLectures.get(i).getId());
-            markerTag.setLectureName(lectureName);
-            markerTag.setLectureInfo(lectureDescription);
+            markerTag.setName(lectureName);
+            markerTag.setInfo(lectureDescription);
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -348,12 +357,12 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             Marker marker = googleMap.addMarker(new MarkerOptions().position(mic).title(micName).
                     snippet(dataMics.get(i).shortdesc));
             Bitmap iconImage = BitmapFactory.decodeResource(getResources(), R.drawable.map_microphone);
-            marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconImage, 60, 90)));
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconImage));
             CustomMarkerTag markerTag = new CustomMarkerTag();
             markerTag.setPointType(tagMicrophone);
             markerTag.setPointId(dataMics.get(i).getId());
-            markerTag.setLectureName(micName);
-            markerTag.setLectureInfo(micDescription);
+            markerTag.setName(micName);
+            markerTag.setInfo(micDescription);
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -368,14 +377,14 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             intent = new Intent(getActivity(), ActivityLection.class);
             intent.putExtra("pointtype", myTag.getPointType());
             intent.putExtra("pointid", myTag.getPointId());
-            intent.putExtra("name", myTag.getLectureName());
-            intent.putExtra("info", myTag.getLectureInfo());
+            intent.putExtra("name", myTag.getName());
+            intent.putExtra("info", myTag.getInfo());
             getActivity().startActivity(intent);
         } else if (myTag.getPointType().equals(tagQuest)) {
             Bundle args = new Bundle();
-            args.putString("description", marker.getSnippet());
+            args.putString("description", myTag.getInfo());
             for (int i = 0; i < dataQuests.size(); i++) {
-                if (dataQuests.get(i).getDescription().equals(marker.getSnippet())) {
+                if (dataQuests.get(i).getShortdesc().equals(marker.getSnippet())) {
                     args.putString("passcode", dataQuests.get(i).getPasscode());
                     args.putString("name", dataQuests.get(i).getName());
                     args.putString("imageurl", dataQuests.get(i).getImageurl());
@@ -383,10 +392,10 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             }
             DialogQuest.setArguments(args);
             DialogQuest.show(getFragmentManager(), "dialogQuest");
-        } else if (myTag.getPointType().equals(tagSport)){
+        } else if (myTag.getPointType().equals(tagSport)) {
             intent = new Intent(getActivity(), SportActivity.class);
-            intent.putExtra("name", myTag.getLectureName());
-            intent.putExtra("info", myTag.getLectureInfo());
+            intent.putExtra("name", myTag.getName());
+            intent.putExtra("info", myTag.getInfo());
             intent.putExtra("image", myTag.getImageUrl());
             getActivity().startActivity(intent);
         }
@@ -548,7 +557,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    public Bitmap resizeMapIcons(Bitmap imageBitmap,int width, int height){
+    public Bitmap resizeMapIcons(Bitmap imageBitmap, int width, int height) {
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }

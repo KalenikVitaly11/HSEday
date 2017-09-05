@@ -11,9 +11,18 @@ public class ApiQuest {
     public String description;
     public String imageurl;
     public String passcode;
+    public int passed;
     public Float xposition;
     public Float yposition;
     public String shortdesc;
+
+    public int getPassed() {
+        return passed;
+    }
+
+    public void setPassed(int passed) {
+        this.passed = passed;
+    }
 
     public String getShortdesc() {
         return shortdesc;
@@ -22,6 +31,7 @@ public class ApiQuest {
     public void setShortdesc(String shortdesc) {
         this.shortdesc = shortdesc;
     }
+
     public Integer getId() {
         return this.id;
     }

@@ -80,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/contancts"
+                android:textColorLink="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
                 android:autoLink="web"
                 android:textColor="@color/third_text"
                 android:textStyle="normal" />
