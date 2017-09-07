@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.styleru.hseday2017.ActivityAddComment">
+    tools:context="org.styleru.hseday2017_2.ActivityAddComment">
 
     <EditText
         android:layout_width="match_parent"

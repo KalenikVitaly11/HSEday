@@ -5,7 +5,7 @@
     android:background="#ffffff"
     android:elevation="1dp"
     android:orientation="vertical"
-    tools:context="org.styleru.hseday2017.NavigationFragments.FragmentAboutHSE">
+    tools:context="org.styleru.hseday2017_2.NavigationFragments.FragmentAboutHSE">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +16,7 @@
             android:id="@+id/sport_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/about_hse" />
+            android:adjustViewBounds="true" />
 
         <TextView
             android:id="@+id/sport_title"
@@ -37,6 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:autoLink="web"
+            android:textColorLink="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"

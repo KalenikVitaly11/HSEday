@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="org.styleru.hseday2017.AboutFacultyActivity"
+    tools:context="org.styleru.hseday2017_2.AboutFacultyActivity"
     tools:ignore="ContentDescription">
 
     <LinearLayout

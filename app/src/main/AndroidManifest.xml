@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.styleru.hseday2017">
+    package="org.styleru.hseday2017_2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".Application"
+        android:name="org.styleru.hseday2017_2.Application"
         android:allowBackup="true"
         android:configChanges="keyboardHidden|orientation"
         android:hardwareAccelerated="true"
@@ -22,7 +22,7 @@
             android:value="AIzaSyAZygfR-4KMkw83XvtRLof5tLQiNb_ubLg" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="org.styleru.hseday2017_2.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -31,31 +31,30 @@
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
         <activity
-            android:name=".AboutFacultyActivity"
+            android:name="org.styleru.hseday2017_2.AboutFacultyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AboutOrganisationActivity"
+            android:name="org.styleru.hseday2017_2.AboutOrganisationActivity"
             android:label="@string/title_activity_about_organisation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MarkerScreens.ActivityLection"
+            android:name="org.styleru.hseday2017_2.MarkerScreens.ActivityLection"
             android:label="ActivityLection"
             android:screenOrientation="portrait" />
-        <activity android:name=".MarkerScreens.ActivityTent" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".ActivityLogin" />
+        <activity android:name="org.styleru.hseday2017_2.ActivityLogin" />
         <activity
-            android:name=".ActivityComments"
+            android:name="org.styleru.hseday2017_2.ActivityComments"
             android:label="@string/title_activity_comments" />
         <activity
-            android:name=".ActivityAddComment"
+            android:name="org.styleru.hseday2017_2.ActivityAddComment"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SplashActivity"
+            android:name="org.styleru.hseday2017_2.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,7 +62,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MarkerScreens.SportActivity"></activity>
+        <activity android:name="org.styleru.hseday2017_2.MarkerScreens.SportActivity"></activity>
     </application>
 
 </manifest>
