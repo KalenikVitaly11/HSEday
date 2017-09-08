@@ -95,8 +95,8 @@ public class FragmentOrganisations extends android.support.v4.app.Fragment {
         mAdapter.setHasStableIds(true);
         mRecyclerView.setAdapter(mAdapter);
 
-
         return view;
+
     }
 
     public void onButtonPressed(Uri uri) {

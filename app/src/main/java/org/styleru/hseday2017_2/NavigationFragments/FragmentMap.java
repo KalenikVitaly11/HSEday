@@ -210,6 +210,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             int nameIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_NAME);
             int descriptionIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_DESCRIPTION);
             int shortDescIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_SHORT_DESCRIPTION);
+            int activeIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_ISACTIVE);
             int xcoordinateIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_XCOORDINATE);
             int ycoordinateIndex = cursorTent.getColumnIndex(DataBaseHelper.TENTS_YCOORDINATE);
             do {
@@ -218,6 +219,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 myTent.setName(cursorTent.getString(nameIndex));
                 myTent.setDescription(cursorTent.getString(descriptionIndex));
                 myTent.setShortdesc(cursorTent.getString(shortDescIndex));
+                myTent.setIsactive(cursorTent.getInt(activeIndex));
                 myTent.setXposition(cursorTent.getFloat(xcoordinateIndex));
                 myTent.setYposition(cursorTent.getFloat(ycoordinateIndex));
                 dataTents.add(myTent);
@@ -239,6 +241,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             markerTag.setPointType(tagTent);
             markerTag.setPointId(dataTents.get(i).getId());
             markerTag.setName(tentName);
+            markerTag.setIsActive(dataTents.get(i).getIsactive());
             markerTag.setInfo(tentDescription);
             marker.setTag(markerTag);
             listMarker.add(marker);
@@ -294,6 +297,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             int nameIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_NAME);
             int shortDescIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_SHORT_DESCRIPTION);
             int descriptionIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_DESCRIPTION);
+            int activeIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_ISACTIVE);
             int xcoordinateIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_XCOORDINATE);
             int ycoordinateIndex = cursorLectures.getColumnIndex(DataBaseHelper.LECTURES_YCOORDINATE);
             do {
@@ -302,6 +306,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 myLecture.setName(cursorLectures.getString(nameIndex));
                 myLecture.setDescription(cursorLectures.getString(descriptionIndex));
                 myLecture.setShortdesc(cursorLectures.getString(shortDescIndex));
+                myLecture.setIsactive(cursorLectures.getInt(activeIndex));
                 myLecture.setXposition(cursorLectures.getFloat(xcoordinateIndex));
                 myLecture.setYposition(cursorLectures.getFloat(ycoordinateIndex));
                 dataLectures.add(myLecture);
@@ -322,6 +327,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             markerTag.setPointId(dataLectures.get(i).getId());
             markerTag.setName(lectureName);
             markerTag.setInfo(lectureDescription);
+            markerTag.setIsActive(dataLectures.get(i).getIsactive());
             marker.setTag(markerTag);
             listMarker.add(marker);
         }
@@ -333,6 +339,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             int nameIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_NAME);
             int descriptionIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_DESCRIPTION);
             int shortDescIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_SHORT_DESCRIPTION);
+            int activeIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_ISACTIVE);
             int xcoordinateIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_XCOORDINATE);
             int ycoordinateIndex = cursorMics.getColumnIndex(DataBaseHelper.MICROPHONES_YCOORDINATE);
             do {
@@ -340,6 +347,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
                 myMic.setId(cursorMics.getInt(idIndex));
                 myMic.setName(cursorMics.getString(nameIndex));
                 myMic.setDescription(cursorMics.getString(descriptionIndex));
+                myMic.setIsactive(cursorMics.getInt(activeIndex));
                 myMic.setShortdesc(cursorMics.getString(shortDescIndex));
                 myMic.setXposition(cursorMics.getFloat(xcoordinateIndex));
                 myMic.setYposition(cursorMics.getFloat(ycoordinateIndex));
@@ -362,6 +370,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
             markerTag.setPointType(tagMicrophone);
             markerTag.setPointId(dataMics.get(i).getId());
             markerTag.setName(micName);
+            markerTag.setIsActive(dataMics.get(i).getIsactive());
             markerTag.setInfo(micDescription);
             marker.setTag(markerTag);
             listMarker.add(marker);
@@ -372,8 +381,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     public void onInfoWindowClick(Marker marker) {
         Intent intent;
         CustomMarkerTag myTag = (CustomMarkerTag) marker.getTag();
-
-        if (myTag.getPointType().equals(tagMicrophone) || myTag.getPointType().equals(tagTent) || myTag.getPointType().equals(tagLecture)) {
+        if ((myTag.getPointType().equals(tagMicrophone) || myTag.getPointType().equals(tagTent) || myTag.getPointType().equals(tagLecture)) && myTag.getIsActive() == 1) {
             intent = new Intent(getActivity(), ActivityLection.class);
             intent.putExtra("pointtype", myTag.getPointType());
             intent.putExtra("pointid", myTag.getPointId());

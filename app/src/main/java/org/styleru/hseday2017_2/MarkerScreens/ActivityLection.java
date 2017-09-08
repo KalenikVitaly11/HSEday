@@ -1,5 +1,6 @@
 package org.styleru.hseday2017_2.MarkerScreens;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,13 +12,21 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.styleru.hseday2017_2.ApiClasses.ApiComments;
 import org.styleru.hseday2017_2.ApiClasses.ApiEvents;
 import org.styleru.hseday2017_2.DataBaseHelper;
+import org.styleru.hseday2017_2.HseDayApi;
 import org.styleru.hseday2017_2.R;
 import org.styleru.hseday2017_2.RecyclerViewAdapters.RecyclerViewAdapterLections;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ActivityLection extends AppCompatActivity {
@@ -26,6 +35,7 @@ public class ActivityLection extends AppCompatActivity {
     private StaggeredGridLayoutManager mGridLayoutManager;
     DataBaseHelper dbHelper;
     ArrayList<ApiEvents> dataEvents;
+    public ArrayList<ApiComments> dataComments;
     ApiEvents myEvent;
     TextView lectureName;
     TextView lectureInfo;
@@ -61,6 +71,7 @@ public class ActivityLection extends AppCompatActivity {
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         Cursor cursorEvent = database.query(DataBaseHelper.TABLE_EVENTS_NAME, null, null, null, null, null, null);
         if(cursorEvent.moveToFirst()){
+            int idIndex = cursorEvent.getColumnIndex(DataBaseHelper.EVENTS_ID);
             int pointIdIndex = cursorEvent.getColumnIndex(DataBaseHelper.EVENTS_POINTID);
             int pointTypeIndex = cursorEvent.getColumnIndex(DataBaseHelper.EVENTS_POINTTYPE);
             int nameIndex = cursorEvent.getColumnIndex(DataBaseHelper.EVENTS_NAME);
@@ -70,6 +81,7 @@ public class ActivityLection extends AppCompatActivity {
             do{
                 if(cursorEvent.getString(pointTypeIndex).equals(pointType) && cursorEvent.getInt(pointIdIndex) == pointId){
                     myEvent = new ApiEvents();
+                    myEvent.setId(cursorEvent.getInt(idIndex));
                     myEvent.setName(cursorEvent.getString(nameIndex));
                     myEvent.setDescription(cursorEvent.getString(descriptionIndex));
                     myEvent.setStarttime(cursorEvent.getString(starttimeIndex));
@@ -87,6 +99,7 @@ public class ActivityLection extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
 
 
         //setHasOptionsMenu(true);

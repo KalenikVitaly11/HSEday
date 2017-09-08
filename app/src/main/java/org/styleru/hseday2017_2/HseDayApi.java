@@ -15,11 +15,13 @@ import org.styleru.hseday2017_2.ApiClasses.ApiTents;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -58,8 +60,12 @@ public interface HseDayApi {
     @GET("/api/comments")
     Call<List<ApiComments>> getComments();
 
+    //@FormUrlEncoded
+    //@POST("/api/comments/add/text")
+    //Call<ResponseBody> postComment(@Body ApiPostComment comment);
+    @FormUrlEncoded
     @POST("/api/comments/add/text")
-    Call<ApiPostComment> postComment(@Query("author") String author, @Query("content") String content, @Query("eventid") int id);
+    Call<ResponseBody> postComment(@Field("author") String author, @Field("content") String content, @Field("eventid") int eventid);
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://dayhse.styleru.net/")

@@ -7,6 +7,15 @@ public class CustomMarkerTag {
     public String name;
     public String info;
     public String imageUrl;
+    public int isActive;
+
+    public int getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
+    }
 
     public String getImageUrl() {
         return imageUrl;

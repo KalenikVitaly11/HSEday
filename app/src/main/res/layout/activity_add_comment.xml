@@ -8,6 +8,7 @@
     tools:context="org.styleru.hseday2017_2.ActivityAddComment">
 
     <EditText
+        android:id="@+id/comment_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="12"
@@ -24,59 +25,7 @@
         android:textCursorDrawable="@drawable/edittext_cursor_color"
         android:textSize="18sp" />
 
-    <HorizontalScrollView
-        android:id="@+id/scroll_view_images"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:scrollbars="none">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingBottom="3dp">
-
-            <ImageView
-                android:id="@+id/comment_image_1"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:visibility="invisible"
-                android:scaleType="centerCrop"
-                android:layout_marginLeft="5dp"/>
-
-            <ImageView
-                android:id="@+id/comment_image_2"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:visibility="invisible"
-                android:scaleType="centerCrop"
-                android:layout_marginLeft="5dp"/>
-
-            <ImageView
-                android:id="@+id/comment_image_3"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:visibility="invisible"
-                android:scaleType="centerCrop"
-                android:layout_marginLeft="5dp"/>
-
-            <ImageView
-                android:id="@+id/comment_image_4"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:visibility="invisible"
-                android:scaleType="centerCrop"
-                android:layout_marginLeft="5dp"/>
-
-            <ImageView
-                android:id="@+id/comment_image_5"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:visibility="invisible"
-                android:scaleType="centerCrop"
-                android:layout_marginLeft="5dp"/>
-        </LinearLayout>
-    </HorizontalScrollView>
 
 
     <RelativeLayout
@@ -84,25 +33,6 @@
         android:layout_height="50dp"
         android:background="@color/actionBarbackground"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/button_delete_photos"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Удалить фото"
-            android:background="@android:color/transparent"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/add_comment_text_color"
-            android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/button_add_photo"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/button_send_comment"
-            android:background="@android:drawable/ic_menu_camera"
-            android:textColorLink="@color/my_orange"
-            android:textCursorDrawable="@drawable/edittext_cursor_color" />
 
         <Button
             android:id="@+id/button_send_comment"

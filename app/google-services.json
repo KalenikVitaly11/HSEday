@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "846132942022",
+    "firebase_url": "https://hse-day-2017.firebaseio.com",
+    "project_id": "hse-day-2017",
+    "storage_bucket": "hse-day-2017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846132942022:android:0756ab44df8a4509",
+        "android_client_info": {
+          "package_name": "org.styleru.hseday2017_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846132942022-hst6ro0rkauvqd2s2kmrc5qc6hmk9rhu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK0AM3BKbemnmhkE-CAtSQGPv9SzQXE8U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

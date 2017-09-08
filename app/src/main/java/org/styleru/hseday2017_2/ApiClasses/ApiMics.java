@@ -1,7 +1,6 @@
 package org.styleru.hseday2017_2.ApiClasses;
 
 
-
 public class ApiMics {
     public String name;
     public String description;
@@ -9,6 +8,15 @@ public class ApiMics {
     public Float yposition;
     public Integer id;
     public String shortdesc;
+    public int isactive;
+
+    public int getIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(int isactive) {
+        this.isactive = isactive;
+    }
 
     public String getShortdesc() {
         return shortdesc;
@@ -17,6 +25,7 @@ public class ApiMics {
     public void setShortdesc(String shortdesc) {
         this.shortdesc = shortdesc;
     }
+
     public Integer getId() {
         return this.id;
     }

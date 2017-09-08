@@ -87,6 +87,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String TENTS_NAME = "tents_name";
     public static final String TENTS_DESCRIPTION = "tents_description";
     public static final String TENTS_SHORT_DESCRIPTION = "tents_short_description";
+    public static final String TENTS_ISACTIVE = "tents_isactive";
     public static final String TENTS_XCOORDINATE = "tents_xcoordinate";
     public static final String TENTS_YCOORDINATE = "tents_ycoordinate";
 
@@ -96,6 +97,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + TENTS_NAME + " text,"
             + TENTS_DESCRIPTION + " text,"
             + TENTS_SHORT_DESCRIPTION + " text,"
+            + TENTS_ISACTIVE + " text,"
             + TENTS_XCOORDINATE + " real,"
             + TENTS_YCOORDINATE + " real"
             + ");";
@@ -132,6 +134,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String LECTURES_NAME = "lections_name";
     public static final String LECTURES_DESCRIPTION = "lections_description";;
     public static final String LECTURES_SHORT_DESCRIPTION = "lections_short_description";
+    public static final String LECTURES_ISACTIVE = "lections_isactive";
     public static final String LECTURES_XCOORDINATE = "lections_xcoordinate";
     public static final String LECTURES_YCOORDINATE = "lections_ycoordinate";
 
@@ -141,6 +144,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + LECTURES_NAME + " text,"
             + LECTURES_DESCRIPTION + " text,"
             + LECTURES_SHORT_DESCRIPTION + " text,"
+            + LECTURES_ISACTIVE + " text,"
             + LECTURES_XCOORDINATE + " real,"
             + LECTURES_YCOORDINATE + " real"
             + ");";
@@ -153,6 +157,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String MICROPHONES_NAME = "microphones_name";
     public static final String MICROPHONES_DESCRIPTION = "microphones_description";
     public static final String MICROPHONES_SHORT_DESCRIPTION = "microphones_short_description";
+    public static final String MICROPHONES_ISACTIVE = "microphones_isactive";
     public static final String MICROPHONES_XCOORDINATE = "microphones_xcoordinate";
     public static final String MICROPHONES_YCOORDINATE = "microphones_ycoordinate";
 
@@ -162,6 +167,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + MICROPHONES_NAME + " text,"
             + MICROPHONES_DESCRIPTION + " text,"
             + MICROPHONES_SHORT_DESCRIPTION + " text,"
+            + MICROPHONES_ISACTIVE + " text,"
             + MICROPHONES_XCOORDINATE + " real,"
             + MICROPHONES_YCOORDINATE + " real"
             + ");";

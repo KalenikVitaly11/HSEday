@@ -1,33 +1,40 @@
 package org.styleru.hseday2017_2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.mvc.imagepicker.ImagePicker;
+import com.vk.sdk.VKSdk;
+
+import org.styleru.hseday2017_2.ApiClasses.ApiPostComment;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ActivityAddComment extends AppCompatActivity implements View.OnClickListener {
     private final static int SELECT_PHOTO = 100;
 
-    Button addPhotoButton;
-    Button deleteAllPhotos;
-    HorizontalScrollView scrollViewImages;
-    ImageView commentImage1;
-    ImageView commentImage2;
-    ImageView commentImage3;
-    ImageView commentImage4;
-    ImageView commentImage5;
-
+    Button sendComment;
+    EditText commentContent;
+    String userName;
+    int eventId;
     boolean isImageFitToScreen;
 
     @Override
@@ -36,18 +43,24 @@ public class ActivityAddComment extends AppCompatActivity implements View.OnClic
         setTitle("Новый комментарий");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_add_comment);
-        addPhotoButton = (Button) findViewById(R.id.button_add_photo);
-        deleteAllPhotos = (Button) findViewById(R.id.button_delete_photos);
-        scrollViewImages = (HorizontalScrollView) findViewById(R.id.scroll_view_images);
-        addPhotoButton.setOnClickListener(this);
-        deleteAllPhotos.setOnClickListener(this);
+        Intent intent = getIntent();
+        eventId = intent.getIntExtra("eventid", 0);
+        Log.d("myLogs", String.valueOf(eventId));
+        commentContent = (EditText) findViewById(R.id.comment_content);
+        sendComment = (Button) findViewById(R.id.button_send_comment);
+        SharedPreferences sharedPref = getSharedPreferences("userInfo", MODE_PRIVATE);
+        if (VKSdk.isLoggedIn()) {
+            userName = sharedPref.getString("VKname", "");
+        } else {
+            userName = sharedPref.getString("FBname", "");
+        }
+        sendComment.setOnClickListener(this);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -56,75 +69,30 @@ public class ActivityAddComment extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_add_photo:
-                ImagePicker.pickImage(this, "Выбери фото:");
-                break;
-            case R.id.button_delete_photos:
-                if (commentImage1.getDrawable() != null) {
-                    deleteAllPhotos.setVisibility(View.INVISIBLE);
-                    fadeOutAndHideImage(commentImage1);
-                    fadeOutAndHideImage(commentImage2);
-                    fadeOutAndHideImage(commentImage3);
-                    fadeOutAndHideImage(commentImage4);
-                    fadeOutAndHideImage(commentImage5);
+            case R.id.button_send_comment:
+                if (commentContent.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Но тут ведь пусто", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), commentContent.getText().toString() + "   " + userName + "   " + String.valueOf(eventId), Toast.LENGTH_LONG).show();
+
+                    HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
+                    Call<ResponseBody> postComment = hseDayApi.postComment(userName, commentContent.getText().toString(), eventId);
+                    postComment.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        }
+                    });
                 }
+                break;
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        commentImage1 = (ImageView) findViewById(R.id.comment_image_1);
-        commentImage2 = (ImageView) findViewById(R.id.comment_image_2);
-        commentImage3 = (ImageView) findViewById(R.id.comment_image_3);
-        commentImage4 = (ImageView) findViewById(R.id.comment_image_4);
-        commentImage5 = (ImageView) findViewById(R.id.comment_image_5);
-
-        Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
-        if (bitmap != null) {
-
-            scrollViewImages.setVisibility(View.VISIBLE);
-
-            if (commentImage1.getDrawable() == null) {
-                commentImage1.setVisibility(View.VISIBLE);
-                commentImage1.setImageBitmap(bitmap);
-            } else if (commentImage2.getDrawable() == null) {
-                commentImage2.setVisibility(View.VISIBLE);
-                commentImage2.setImageBitmap(bitmap);
-            } else if (commentImage3.getDrawable() == null) {
-                commentImage3.setVisibility(View.VISIBLE);
-                commentImage3.setImageBitmap(bitmap);
-            } else if (commentImage4.getDrawable() == null) {
-                commentImage4.setVisibility(View.VISIBLE);
-                commentImage4.setImageBitmap(bitmap);
-            } else if (commentImage5.getDrawable() == null) {
-                commentImage5.setVisibility(View.VISIBLE);
-                commentImage5.setImageBitmap(bitmap);
-            }
-            deleteAllPhotos.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void fadeOutAndHideImage(final ImageView img) {
-        Animation fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setInterpolator(new AccelerateInterpolator());
-        fadeOut.setDuration(500);
-
-        fadeOut.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationEnd(Animation animation) {
-                img.setImageResource(0);
-            }
-
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            public void onAnimationStart(Animation animation) {
-            }
-        });
-
-        img.startAnimation(fadeOut);
-    }
 
     @Override
     public void onBackPressed() {

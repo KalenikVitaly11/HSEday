@@ -11,6 +11,15 @@ public class ApiTents {
     public Float xposition;
     public Float yposition;
     public String shortdesc;
+    public int isactive;
+
+    public int getIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(int isactive) {
+        this.isactive = isactive;
+    }
 
     public String getShortdesc() {
         return shortdesc;

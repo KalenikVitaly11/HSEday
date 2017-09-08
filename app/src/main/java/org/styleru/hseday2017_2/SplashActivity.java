@@ -31,6 +31,7 @@ import org.styleru.hseday2017_2.ApiClasses.ApiTents;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -187,6 +188,7 @@ public class SplashActivity extends AppCompatActivity {
                         myContent.put(DataBaseHelper.TENTS_NAME, dataTents.get(i).getName());
                         myContent.put(DataBaseHelper.TENTS_DESCRIPTION, dataTents.get(i).getDescription());
                         myContent.put(DataBaseHelper.TENTS_SHORT_DESCRIPTION, dataTents.get(i).getShortdesc());
+                        myContent.put(DataBaseHelper.TENTS_ISACTIVE, dataTents.get(i).getIsactive());
                         myContent.put(DataBaseHelper.TENTS_XCOORDINATE, dataTents.get(i).getXposition());
                         myContent.put(DataBaseHelper.TENTS_YCOORDINATE, dataTents.get(i).getYposition());
                         database.insert(DataBaseHelper.TABLE_TENTS_NAME, null, myContent);
@@ -253,6 +255,7 @@ public class SplashActivity extends AppCompatActivity {
                         myContent.put(DataBaseHelper.LECTURES_NAME, dataLectures.get(i).getName());
                         myContent.put(DataBaseHelper.LECTURES_DESCRIPTION, dataLectures.get(i).getDescription());
                         myContent.put(DataBaseHelper.LECTURES_SHORT_DESCRIPTION, dataLectures.get(i).getShortdesc());
+                        myContent.put(DataBaseHelper.LECTURES_ISACTIVE, dataLectures.get(i).getIsactive());
                         myContent.put(DataBaseHelper.LECTURES_XCOORDINATE, dataLectures.get(i).getXposition());
                         myContent.put(DataBaseHelper.LECTURES_YCOORDINATE, dataLectures.get(i).getYposition());
                         database.insert(DataBaseHelper.TABLE_LECTIONS_NAME, null, myContent);
@@ -286,6 +289,7 @@ public class SplashActivity extends AppCompatActivity {
                         myContent.put(DataBaseHelper.MICROPHONES_NAME, dataMics.get(i).getName());
                         myContent.put(DataBaseHelper.MICROPHONES_DESCRIPTION, dataMics.get(i).getDescription());
                         myContent.put(DataBaseHelper.MICROPHONES_SHORT_DESCRIPTION, dataMics.get(i).getShortdesc());
+                        myContent.put(DataBaseHelper.MICROPHONES_ISACTIVE, dataMics.get(i).getIsactive());
                         myContent.put(DataBaseHelper.MICROPHONES_XCOORDINATE, dataMics.get(i).getXposition());
                         myContent.put(DataBaseHelper.MICROPHONES_YCOORDINATE, dataMics.get(i).getYposition());
                         database.insert(DataBaseHelper.TABLE_MICROPHONES_NAME, null, myContent);
@@ -396,54 +400,53 @@ public class SplashActivity extends AppCompatActivity {
 
         Cursor commentsCursor = database.query(DataBaseHelper.TABLE_COMMENTS_NAME, null, null, null, null, null, null);
         commentsCursor.moveToFirst();
-        if (!commentsCursor.moveToFirst()) {
-            dataComments = new ArrayList<ApiComments>();
-            HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
-            Call<List<ApiComments>> callComments = hseDayApi.getComments();
-            callComments.enqueue(new Callback<List<ApiComments>>() {
-                @Override
-                public void onResponse(Call<List<ApiComments>> call, Response<List<ApiComments>> response) {
-                    SQLiteDatabase database = dbHelper.getWritableDatabase();
-                    dataComments.addAll(response.body());
-                    for (int i = 0; i < dataComments.size(); i++) {
-                        ContentValues myContent = new ContentValues();
-                        myContent.put(DataBaseHelper.COMMENTS_ID, dataComments.get(i).getId());
-                        myContent.put(DataBaseHelper.COMMENTS_CONTENT, dataComments.get(i).getContent());
-                        myContent.put(DataBaseHelper.COMMENTS_AUTHOR, dataComments.get(i).getAuthor());
-                        Log.d("myLogs", dataComments.get(i).getAuthor());
-                        myContent.put(DataBaseHelper.COMMENTS_TIME, dataComments.get(i).getTime());
-                        myContent.put(DataBaseHelper.COMMENTS_EVENT_ID, dataComments.get(i).getEventid());
-                        myContent.put(DataBaseHelper.COMMENTS_IMAGE_URL, dataComments.get(i).getImageurl());
-                        myContent.put(DataBaseHelper.COMMENTS_TYPE, dataComments.get(i).getType());
-                        database.insert(DataBaseHelper.TABLE_COMMENTS_NAME, null, myContent);
-                        myContent.clear();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<ApiComments>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
+        dataComments = new ArrayList<ApiComments>();
         HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
-        Call<ApiPostComment> postComment = hseDayApi.postComment("Каленик Виталий", "Тестовый запрос", 12);
-        postComment.enqueue(new Callback<ApiPostComment>() {
+        Call<List<ApiComments>> callComments = hseDayApi.getComments();
+        callComments.enqueue(new Callback<List<ApiComments>>() {
             @Override
-            public void onResponse(Call<ApiPostComment> call, Response<ApiPostComment> response) {
-                Toast.makeText(getApplicationContext(), "Пост запрос успешен", Toast.LENGTH_LONG).show();
-                Log.d("myLogs", response.toString());
-                Log.d("myLogs", String.valueOf(response.errorBody()));
-                Log.d("myLogs", String.valueOf(response.code()));
-
+            public void onResponse(Call<List<ApiComments>> call, Response<List<ApiComments>> response) {
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+                database.delete(DataBaseHelper.TABLE_COMMENTS_NAME, null, null);
+                dataComments.addAll(response.body());
+                for (int i = 0; i < dataComments.size(); i++) {
+                    ContentValues myContent = new ContentValues();
+                    myContent.put(DataBaseHelper.COMMENTS_ID, dataComments.get(i).getId());
+                    myContent.put(DataBaseHelper.COMMENTS_CONTENT, dataComments.get(i).getContent());
+                    myContent.put(DataBaseHelper.COMMENTS_AUTHOR, dataComments.get(i).getAuthor());
+                    myContent.put(DataBaseHelper.COMMENTS_TIME, dataComments.get(i).getTime());
+                    myContent.put(DataBaseHelper.COMMENTS_EVENT_ID, dataComments.get(i).getEventid());
+                    myContent.put(DataBaseHelper.COMMENTS_IMAGE_URL, dataComments.get(i).getImageurl());
+                    myContent.put(DataBaseHelper.COMMENTS_TYPE, dataComments.get(i).getType());
+                    database.insert(DataBaseHelper.TABLE_COMMENTS_NAME, null, myContent);
+                    myContent.clear();
+                }
             }
 
             @Override
-            public void onFailure(Call<ApiPostComment> call, Throwable t) {
-
+            public void onFailure(Call<List<ApiComments>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Требуется подключение к интернету, подключись пожалуйста и перезапусти приложение", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        //HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
+        //ApiPostComment comment = new ApiPostComment();
+        //comment.setAuthor("Author");
+        //comment.setContent("Test");
+        //comment.setEventid(123);
+        //Call<ResponseBody> postComment = hseDayApi.postComment("Vitaly test", "mycomment", 12);
+        //postComment.enqueue(new Callback<ResponseBody>() {
+        //    @Override
+        //    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//
+        //    }
+//
+        //    @Override
+        //    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+        //    }
+        //});
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

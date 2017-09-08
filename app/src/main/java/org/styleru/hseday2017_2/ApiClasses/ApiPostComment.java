@@ -2,9 +2,9 @@ package org.styleru.hseday2017_2.ApiClasses;
 
 
 public class ApiPostComment {
-    int eventid;
-    String author;
-    String content;
+    private int eventid;
+    private String author;
+    private String content;
 
     public void setEventid(int eventid) {
         this.eventid = eventid;

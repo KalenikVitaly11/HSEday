@@ -38,7 +38,6 @@ public class RecyclerViewAdapterComments extends RecyclerView.Adapter<RecyclerVi
         holder.userName.setText(dataComments.get(position).getAuthor());
         holder.userComment.setText(dataComments.get(position).getContent());
         holder.userTime.setText(dataComments.get(position).getTime());
-        Glide.with(mContext).load(dataComments.get(position).getImageurl()).into(holder.userAvatar);
 
     }
 
@@ -50,12 +49,10 @@ public class RecyclerViewAdapterComments extends RecyclerView.Adapter<RecyclerVi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView userComment;
         private  TextView userName;
-        private ImageView userAvatar;
         private TextView userTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            userAvatar = (ImageView) itemView.findViewById(R.id.comments_user_avatar);
             userComment = (TextView) itemView.findViewById(R.id.comments_user_comment);
             userName = (TextView) itemView.findViewById(R.id.comments_user_name);
             userTime = (TextView) itemView.findViewById(R.id.comments_time);
