@@ -16,7 +16,7 @@
         android:id="@+id/quest_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
@@ -81,7 +81,7 @@
             android:layout_toStartOf="@+id/check_button"
             android:background="@android:color/transparent"
             android:text="Назад"
-            android:textColor="@color/dialog_button_color_blue" />
+            android:textColor="@color/my_orange" />
 
         <Button
             android:id="@+id/check_button"
@@ -93,7 +93,7 @@
             android:layout_marginRight="15dp"
             android:background="@android:color/transparent"
             android:text="Проверить"
-            android:textColor="@color/dialog_button_color_blue" />
+            android:textColor="@color/my_orange" />
     </RelativeLayout>
 
 </LinearLayout>

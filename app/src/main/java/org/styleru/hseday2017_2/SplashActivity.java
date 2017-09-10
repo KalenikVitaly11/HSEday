@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,7 +65,6 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
         hseLogo = (ImageView) findViewById(R.id.splash_screen_logo);
         Glide.with(this).load(R.drawable.logo).into(hseLogo);
-
         Cursor organisationsCursor = database.query(DataBaseHelper.TABLE_ORGANISATIONS_NAME, null, null, null, null, null, null);
         organisationsCursor.moveToFirst();
         if (!organisationsCursor.moveToFirst()) { // Проверяем пустоту базы данных

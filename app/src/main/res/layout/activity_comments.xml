@@ -7,18 +7,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="org.styleru.hseday2017_2.ActivityComments">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comments_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
-        <android.support.design.widget.FloatingActionButton
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/comments_spin_kit"
+            style="@style/SpinKitView.Large.Circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/comments_floating_button"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_add_black_24dp"
-            app:backgroundTint="@color/my_orange"/>
+            android:layout_centerInParent="true"
+            app:SpinKit_Color="@color/my_orange" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comments_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/comments_floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_black_24dp"
+        app:backgroundTint="@color/my_orange" />
 
 </android.support.design.widget.CoordinatorLayout>

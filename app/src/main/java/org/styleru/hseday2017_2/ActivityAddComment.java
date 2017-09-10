@@ -22,6 +22,8 @@ import com.vk.sdk.VKSdk;
 
 import org.styleru.hseday2017_2.ApiClasses.ApiPostComment;
 
+import java.net.URLEncoder;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,8 +75,7 @@ public class ActivityAddComment extends AppCompatActivity implements View.OnClic
                 if (commentContent.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Но тут ведь пусто", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), commentContent.getText().toString() + "   " + userName + "   " + String.valueOf(eventId), Toast.LENGTH_LONG).show();
-
+                    //URLEncoder.encode(userName, "UTF-8");
                     HseDayApi hseDayApi = HseDayApi.retrofit.create(HseDayApi.class);
                     Call<ResponseBody> postComment = hseDayApi.postComment(userName, commentContent.getText().toString(), eventId);
                     postComment.enqueue(new Callback<ResponseBody>() {
@@ -88,7 +89,9 @@ public class ActivityAddComment extends AppCompatActivity implements View.OnClic
 
                         }
                     });
+                    finish();
                 }
+
                 break;
         }
     }

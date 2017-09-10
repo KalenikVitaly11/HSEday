@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         Integer questsPassedNumber = sPref.getInt("questsPassed", -1);
-        if(questsPassedNumber >= 1){
+        if(questsPassedNumber >= 20){
             snackbar.show();
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

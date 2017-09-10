@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -74,7 +75,7 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle("Title!");
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         View view = inflater.inflate(R.layout.fragment_dialog_quest, null);
         CheckCodeButton = (Button) view.findViewById(R.id.check_button);
         BackButton = (Button) view.findViewById(R.id.back_button);
@@ -181,7 +182,7 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener 
                     SharedPreferences.Editor ed = sPref.edit();
                     ed.putInt("questsPassed", questsPassedNumber);
                     ed.apply();
-                    if(questsPassedNumber >= 2){
+                    if(questsPassedNumber >= 20){
                         MainActivity.snackbar.show();
                     }
 

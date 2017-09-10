@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -130,8 +131,9 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         GroundOverlayOptions newarkMap = new GroundOverlayOptions() // Загрузка картинки в карту
                 .position(new LatLng(0, 0), 27000000f, 12735849f)
                 .image(BitmapDescriptorFactory.fromBitmap(myMap));
-        googleMap.addGroundOverlay(newarkMap);
 
+        googleMap.addGroundOverlay(newarkMap);
+        Log.d("myLogs", "prikoli");
         LatLng start = new LatLng(0, 0);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(start).zoom(3).build(); // Начальное положение камеры
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -149,6 +151,8 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
         listMarker = new ArrayList<Marker>();
         dbHelper = new DataBaseHelper(getContext());
         SQLiteDatabase database = dbHelper.getReadableDatabase();
+
+
 
         dataQuests = new ArrayList<ApiQuest>();
         Cursor cursorQuests = database.query(DataBaseHelper.TABLE_QUESTS_NAME, null, null, null, null, null, null);  // Взятие из БД всех квестов

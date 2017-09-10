@@ -16,7 +16,6 @@ import org.styleru.hseday2017_2.R;
 import java.util.ArrayList;
 
 
-
 public class RecyclerViewAdapterComments extends RecyclerView.Adapter<RecyclerViewAdapterComments.ViewHolder> {
     Context mContext;
     ArrayList<ApiComments> dataComments;
@@ -46,9 +45,19 @@ public class RecyclerViewAdapterComments extends RecyclerView.Adapter<RecyclerVi
         return dataComments.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView userComment;
-        private  TextView userName;
+        private TextView userName;
         private TextView userTime;
 
         public ViewHolder(View itemView) {

@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:text="@string/open_comments"
-            android:textColor="@color/actionBarbackground"
+            android:textColor="@color/my_orange"
             android:textSize="14sp" />
     </LinearLayout>
 </android.support.v7.widget.CardView>
