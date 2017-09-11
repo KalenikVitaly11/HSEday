@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.remove(FragmentAboutHSE);
             setActionBarTitle("Карта");
             Integer questsPassedNumber = sPref.getInt("questsPassed", -1);
-            if(questsPassedNumber >= 2){
+            if(questsPassedNumber >= 20){
                 snackbar.show();
             }
             //transaction.replace(R.id.content_map, FragmentMap);
