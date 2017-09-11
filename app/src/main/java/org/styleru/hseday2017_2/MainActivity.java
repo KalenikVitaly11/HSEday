@@ -220,7 +220,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(questsPassedNumber >= 20){
                 snackbar.show();
             }
-            //transaction.replace(R.id.content_map, FragmentMap);
         } else if (id == R.id.nav_faculties) {
             transaction.remove(FragmentFaculties);
             transaction.remove(FragmentOrganisations);

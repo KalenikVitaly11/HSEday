@@ -13,6 +13,7 @@
         android:configChanges="keyboardHidden|orientation"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/crow_icon"
+        android:roundIcon="@mipmap/crow_icon_round"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
