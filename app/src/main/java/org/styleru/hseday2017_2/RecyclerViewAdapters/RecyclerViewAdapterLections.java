@@ -4,7 +4,6 @@ package org.styleru.hseday2017_2.RecyclerViewAdapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;

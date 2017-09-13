@@ -8,7 +8,6 @@ import org.styleru.hseday2017_2.ApiClasses.ApiFaculties;
 import org.styleru.hseday2017_2.ApiClasses.ApiLectures;
 import org.styleru.hseday2017_2.ApiClasses.ApiMics;
 import org.styleru.hseday2017_2.ApiClasses.ApiOrganisations;
-import org.styleru.hseday2017_2.ApiClasses.ApiPostComment;
 import org.styleru.hseday2017_2.ApiClasses.ApiQuest;
 import org.styleru.hseday2017_2.ApiClasses.ApiSports;
 import org.styleru.hseday2017_2.ApiClasses.ApiTents;
@@ -19,15 +18,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface HseDayApi {
     @GET("/api/organizations")

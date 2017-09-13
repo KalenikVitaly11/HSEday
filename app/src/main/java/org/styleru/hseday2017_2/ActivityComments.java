@@ -1,10 +1,7 @@
 package org.styleru.hseday2017_2;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -31,8 +28,6 @@ import retrofit2.Response;
 
 public class ActivityComments extends AppCompatActivity {
     ArrayList<ApiComments> dataComments;
-    DataBaseHelper dbHelper;
-    ApiComments myComment;
 
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapterComments mAdapter;
@@ -44,7 +39,9 @@ public class ActivityComments extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         setTitle("Комментарии");
     }
     @Override
@@ -55,7 +52,6 @@ public class ActivityComments extends AppCompatActivity {
 
     public void updateData(){
         dataComments = new ArrayList<ApiComments>();
-        dbHelper = new DataBaseHelper(this);
         Intent intent = getIntent();
         final int eventId = intent.getIntExtra("eventId", 0);
 

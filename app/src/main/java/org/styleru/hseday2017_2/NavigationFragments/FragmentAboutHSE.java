@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -86,10 +87,14 @@ public class FragmentAboutHSE extends android.support.v4.app.Fragment {
             } while (cursorAboutHSE.moveToNext());
         }
         cursorAboutHSE.close();
-        name.setText(aboutHSE.getName());
-        description.setText(aboutHSE.getDescription());
-        contacts.setText(aboutHSE.getContacts());
-        Glide.with(getContext()).load(aboutHSE.getImageurl()).into(image);
+        try {
+            name.setText(aboutHSE.getName());
+            description.setText(aboutHSE.getDescription());
+            contacts.setText(aboutHSE.getContacts());
+            Glide.with(getContext()).load(aboutHSE.getImageurl()).into(image);
+        } catch (NullPointerException e){
+            Log.d("myLogs", e.toString());
+        }
         return view;
     }
 

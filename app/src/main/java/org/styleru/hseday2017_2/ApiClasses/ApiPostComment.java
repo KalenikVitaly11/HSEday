@@ -1,7 +1,7 @@
 package org.styleru.hseday2017_2.ApiClasses;
 
 
-public class ApiPostComment {
+class ApiPostComment {
     private int eventid;
     private String author;
     private String content;

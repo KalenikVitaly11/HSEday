@@ -5,9 +5,9 @@ package org.styleru.hseday2017_2.ApiClasses;
  */
 
 public class ApiDepartment {
-    public int id;
-    public String name;
-    public int faculty;
+    private int id;
+    private String name;
+    private int faculty;
 
     public int getId() {
         return id;

@@ -2,13 +2,13 @@ package org.styleru.hseday2017_2.ApiClasses;
 
 
 public class ApiComments {
-    public int id;
-    public int eventid;
-    public String author;
-    public String content;
-    public String time;
-    public String imageurl;
-    public String type;
+    private int id;
+    private int eventid;
+    private String author;
+    private String content;
+    private String time;
+    private String imageurl;
+    private String type;
 
     public String getType() {
         return type;

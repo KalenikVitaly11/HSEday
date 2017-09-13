@@ -42,7 +42,7 @@ import com.vk.sdk.api.model.VKList;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     FragmentFaculties FragmentFaculties;
     FragmentOrganisations FragmentOrganisations;
-    org.styleru.hseday2017_2.NavigationFragments.FragmentAboutHSE FragmentAboutHSE;
+    FragmentAboutHSE FragmentAboutHSE;
 
     FragmentMap FragmentMap;
     NavigationView navigationView;
@@ -178,7 +178,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void setActionBarTitle(String title) {
-        getSupportActionBar().setTitle(title);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle(title);
+        }
     }
 
     @Override
@@ -186,9 +188,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } /*else {
             super.onBackPressed();
-        }
+        }*/
     }
 
     @Override

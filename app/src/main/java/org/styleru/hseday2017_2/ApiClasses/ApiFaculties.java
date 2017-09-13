@@ -5,11 +5,11 @@ package org.styleru.hseday2017_2.ApiClasses;
  */
 
 public class ApiFaculties {
-    public Integer id;
-    public String name;
-    public String description;
-    public String contacts;
-    public String imageurl;
+    private Integer id;
+    private String name;
+    private String description;
+    private String contacts;
+    private String imageurl;
 
     public Integer getId() {
         return this.id;

@@ -64,7 +64,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String QUESTS_XCOORDINATE = "quests_xcoordinate";
     public static final String QUESTS_YCOORDINATE = "quests_ycoordinate";
 
-    public static final String CREATE_TABLE_QUESTS = "create table "
+    private static final String CREATE_TABLE_QUESTS = "create table "
             + TABLE_QUESTS_NAME
             + " (" + QUESTS_ID + " integer,"
             + QUESTS_NUMBER + " text,"
@@ -91,7 +91,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String TENTS_XCOORDINATE = "tents_xcoordinate";
     public static final String TENTS_YCOORDINATE = "tents_ycoordinate";
 
-    public static final String CREATE_TABLE_TENTS = "create table "
+    private static final String CREATE_TABLE_TENTS = "create table "
             + TABLE_TENTS_NAME
             + " (" + TENTS_ID + " integer,"
             + TENTS_NAME + " text,"
@@ -114,7 +114,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String SPORTS_XCOORDINATE = "sports_xcoordinate";
     public static final String SPORTS_YCOORDINATE = "sports_ycoordinate";
 
-    public static final String CREATE_TABLE_SPORTS = "create table "
+    private static final String CREATE_TABLE_SPORTS = "create table "
             + TABLE_SPORTS_NAME
             + " (" + SPORTS_ID + " integer,"
             + SPORTS_NAME + " text,"
@@ -138,7 +138,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String LECTURES_XCOORDINATE = "lections_xcoordinate";
     public static final String LECTURES_YCOORDINATE = "lections_ycoordinate";
 
-    public static final String CREATE_TABLE_LECTIONS = "create table "
+    private static final String CREATE_TABLE_LECTIONS = "create table "
             + TABLE_LECTIONS_NAME
             + " (" + LECTURES_ID + " integer,"
             + LECTURES_NAME + " text,"
@@ -161,7 +161,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String MICROPHONES_XCOORDINATE = "microphones_xcoordinate";
     public static final String MICROPHONES_YCOORDINATE = "microphones_ycoordinate";
 
-    public static final String CREATE_TABLE_MICROPHONES = "create table "
+    private static final String CREATE_TABLE_MICROPHONES = "create table "
             + TABLE_MICROPHONES_NAME
             + " (" + MICROPHONES_ID + " integer,"
             + MICROPHONES_NAME + " text,"
@@ -183,7 +183,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String EVENTS_POINTTYPE = "events_pointtype";
     public static final String EVENTS_POINTID = "events_pointid";
 
-    public static final String CREATE_TABLE_EVENTS = "create table "
+    private static final String CREATE_TABLE_EVENTS = "create table "
             + TABLE_EVENTS_NAME
             + " (" + EVENTS_ID + " integer,"
             + EVENTS_NAME + " text,"
@@ -196,14 +196,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // Таблица о ВШЭ
     public static final String TABLE_ABOUT_HSE_NAME = "about_hse";
     public static final int TABLE_ABOUT_HSE_VERSION = 1;
-    public static final String ABOUT_HSE_ID = "about_hse_id";
+    private static final String ABOUT_HSE_ID = "about_hse_id";
     public static final String ABOUT_HSE_NAME = "about_hse_name";
     public static final String ABOUT_HSE_DESCRIPTION = "about_hse_description";
     public static final String ABOUT_HSE_IMAGE_URL = "about_hse_image_url";
     public static final String ABOUT_HSE_CONTACTS = "about_hse_contacts";
     public static final String ABOUT_HSE_CODE =  "about_hse_code";
 
-    public static final String CREATE_TABLE_ABOUT_HSE = "create table "
+    private static final String CREATE_TABLE_ABOUT_HSE = "create table "
             + TABLE_ABOUT_HSE_NAME
             + " (" + ABOUT_HSE_ID + " integer,"
             + ABOUT_HSE_NAME + " text,"
@@ -219,7 +219,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String DEPARTMENTS_NAME = "department_name";
     public static final String DEPARTMENTS_FACULTY_ID = "department_faculty_id";
 
-    public static final String CREATE_TABLE_DEPARTMENTS = "create table "
+    private static final String CREATE_TABLE_DEPARTMENTS = "create table "
             + TABLE_DEPARTMENTS_NAME
             + " (" + DEPARTMENTS_ID + " integer,"
             + DEPARTMENTS_NAME + " text,"
@@ -236,7 +236,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COMMENTS_IMAGE_URL = "comments_image_url";
     public static final String COMMENTS_TYPE= "comments_type";
 
-    public static final String CREATE_TABLE_COMMENTS = "create table "
+    private static final String CREATE_TABLE_COMMENTS = "create table "
             + TABLE_COMMENTS_NAME
             + " (" + COMMENTS_ID + " integer,"
             + COMMENTS_CONTENT + " text,"

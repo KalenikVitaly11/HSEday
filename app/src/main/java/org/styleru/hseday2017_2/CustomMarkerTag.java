@@ -2,12 +2,12 @@ package org.styleru.hseday2017_2;
 
 
 public class CustomMarkerTag {
-    public String pointType;
-    public Integer pointId;
-    public String name;
-    public String info;
-    public String imageUrl;
-    public int isActive;
+    private String pointType;
+    private Integer pointId;
+    private String name;
+    private String info;
+    private String imageUrl;
+    private int isActive;
 
     public int getIsActive() {
         return isActive;

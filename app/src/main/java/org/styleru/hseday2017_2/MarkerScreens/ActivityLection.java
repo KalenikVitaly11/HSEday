@@ -1,6 +1,5 @@
 package org.styleru.hseday2017_2.MarkerScreens;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,27 +11,20 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.styleru.hseday2017_2.ApiClasses.ApiComments;
 import org.styleru.hseday2017_2.ApiClasses.ApiEvents;
 import org.styleru.hseday2017_2.DataBaseHelper;
-import org.styleru.hseday2017_2.HseDayApi;
 import org.styleru.hseday2017_2.R;
 import org.styleru.hseday2017_2.RecyclerViewAdapters.RecyclerViewAdapterLections;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class ActivityLection extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
-    private RecyclerViewAdapterLections mAdapter;
-    private StaggeredGridLayoutManager mGridLayoutManager;
+    RecyclerView mRecyclerView;
+    RecyclerViewAdapterLections mAdapter;
+    StaggeredGridLayoutManager mGridLayoutManager;
     DataBaseHelper dbHelper;
     ArrayList<ApiEvents> dataEvents;
     public ArrayList<ApiComments> dataComments;
@@ -45,14 +37,15 @@ public class ActivityLection extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lection);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //lectureInfo = (TextView)findViewById(R.id.lection_info);
-        //lectureName = (TextView) findViewById(R.id.lection_title);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Intent intent = getIntent();
         String pointType = intent.getStringExtra("pointtype");
         Integer pointId = intent.getIntExtra("pointid", 1);
         Log.d("tags", pointType + "   " + String.valueOf(pointId));
+
         if(pointType.equals("tent")){
             setTitle("Тент");
         } else if(pointType.equals("lecture")){

@@ -68,7 +68,7 @@
                 <View
                     android:layout_width="80dp"
                     android:layout_height="0.5dp"
-                    android:background="@color/com_facebook_button_background_color_focused_disabled"></View>
+                    android:background="@color/com_facebook_button_background_color_focused_disabled" />
 
                 <TextView
                     android:layout_width="40dp"
@@ -79,7 +79,7 @@
                 <View
                     android:layout_width="80dp"
                     android:layout_height="0.5dp"
-                    android:background="@color/com_facebook_button_background_color_focused_disabled"></View>
+                    android:background="@color/com_facebook_button_background_color_focused_disabled" />
 
             </LinearLayout>
 

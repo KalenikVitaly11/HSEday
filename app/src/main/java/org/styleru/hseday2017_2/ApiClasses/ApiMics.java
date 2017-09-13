@@ -2,13 +2,13 @@ package org.styleru.hseday2017_2.ApiClasses;
 
 
 public class ApiMics {
-    public String name;
-    public String description;
-    public Float xposition;
-    public Float yposition;
-    public Integer id;
+    private String name;
+    private String description;
+    private Float xposition;
+    private Float yposition;
+    private Integer id;
     public String shortdesc;
-    public int isactive;
+    private int isactive;
 
     public int getIsactive() {
         return isactive;

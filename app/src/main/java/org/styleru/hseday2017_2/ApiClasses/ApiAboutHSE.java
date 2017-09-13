@@ -5,11 +5,11 @@ package org.styleru.hseday2017_2.ApiClasses;
  */
 
 public class ApiAboutHSE {
-    public String name;
-    public String description;
-    public String imageurl;
-    public String contacts;
-    public String code;
+    private String name;
+    private String description;
+    private String imageurl;
+    private String contacts;
+    private String code;
 
     public String getCode() {
         return code;

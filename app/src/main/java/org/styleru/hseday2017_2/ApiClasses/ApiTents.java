@@ -5,13 +5,13 @@ package org.styleru.hseday2017_2.ApiClasses;
  */
 
 public class ApiTents {
-    public Integer id;
-    public String name;
-    public String description;
-    public Float xposition;
-    public Float yposition;
-    public String shortdesc;
-    public int isactive;
+    private Integer id;
+    private String name;
+    private String description;
+    private Float xposition;
+    private Float yposition;
+    private String shortdesc;
+    private int isactive;
 
     public int getIsactive() {
         return isactive;

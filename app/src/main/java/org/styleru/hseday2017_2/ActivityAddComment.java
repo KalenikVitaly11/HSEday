@@ -2,27 +2,16 @@ package org.styleru.hseday2017_2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.mvc.imagepicker.ImagePicker;
 import com.vk.sdk.VKSdk;
-
-import org.styleru.hseday2017_2.ApiClasses.ApiPostComment;
-
-import java.net.URLEncoder;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -31,19 +20,18 @@ import retrofit2.Response;
 
 
 public class ActivityAddComment extends AppCompatActivity implements View.OnClickListener {
-    private final static int SELECT_PHOTO = 100;
-
     Button sendComment;
     EditText commentContent;
     String userName;
     int eventId;
-    boolean isImageFitToScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Новый комментарий");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         setContentView(R.layout.activity_add_comment);
         Intent intent = getIntent();
         eventId = intent.getIntExtra("eventid", 0);

@@ -26,7 +26,6 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-light"
-            android:text="@string/about_hse_title"
             android:textColor="@android:color/black"
             android:textSize="22sp"
             android:textStyle="normal" />
@@ -42,7 +41,6 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-light"
-            android:text="@string/about_hse_text"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
             android:textStyle="normal" />

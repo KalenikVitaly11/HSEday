@@ -3,13 +3,13 @@ package org.styleru.hseday2017_2.ApiClasses;
 
 
 public class ApiSports {
-    public Integer id;
-    public String name;
-    public String description;
-    public String imageurl;
-    public Float xposition;
-    public Float yposition;
-    public String shortdesc;
+    private Integer id;
+    private String name;
+    private String description;
+    private String imageurl;
+    private Float xposition;
+    private Float yposition;
+    private String shortdesc;
 
     public String getShortdesc() {
         return shortdesc;

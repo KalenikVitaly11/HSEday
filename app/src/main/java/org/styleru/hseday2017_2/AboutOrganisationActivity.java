@@ -64,8 +64,9 @@ public class AboutOrganisationActivity extends AppCompatActivity {
 
         //organisationImage;
 
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item){

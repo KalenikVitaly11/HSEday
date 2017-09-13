@@ -36,7 +36,10 @@ public class AboutFacultyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_faculty);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         facultyImage = (ImageView) this.findViewById(R.id.faculty);
         facultyTitle = (TextView) this.findViewById(R.id.faculty_title);

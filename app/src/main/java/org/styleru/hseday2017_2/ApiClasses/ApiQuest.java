@@ -1,20 +1,17 @@
 package org.styleru.hseday2017_2.ApiClasses;
 
-/**
- * Created by Виталий on 18.08.2017.
- */
 
 public class ApiQuest {
-    public Integer id;
-    public String number;
-    public String name;
-    public String description;
-    public String imageurl;
-    public String passcode;
-    public int passed;
-    public Float xposition;
-    public Float yposition;
-    public String shortdesc;
+    private Integer id;
+    private String number;
+    private String name;
+    private String description;
+    private String imageurl;
+    private String passcode;
+    private int passed;
+    private Float xposition;
+    private Float yposition;
+    private String shortdesc;
 
     public int getPassed() {
         return passed;

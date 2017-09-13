@@ -5,13 +5,13 @@ package org.styleru.hseday2017_2.ApiClasses;
  */
 
 public class ApiEvents {
-    public Integer id;
-    public String name;
-    public String description;
-    public String starttime;
-    public String endtime;
-    public String pointtype;
-    public Integer pointid;
+    private Integer id;
+    private String name;
+    private String description;
+    private String starttime;
+    private String endtime;
+    private String pointtype;
+    private Integer pointid;
 
     public Integer getId() {
         return this.id;

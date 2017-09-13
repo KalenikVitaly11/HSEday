@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +27,6 @@ import org.styleru.hseday2017_2.DataBaseHelper;
 import org.styleru.hseday2017_2.MainActivity;
 import org.styleru.hseday2017_2.NavigationFragments.FragmentMap;
 import org.styleru.hseday2017_2.R;
-import org.styleru.hseday2017_2.SplashActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -39,17 +36,17 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener 
 
     private String mParam1;
     private String mParam2;
-    DataBaseHelper dbHelper;
+    private DataBaseHelper dbHelper;
 
-    Button CheckCodeButton;
-    Button BackButton;
-    EditText EditCodeText;
-    TextView QuestTitle;
-    TextView QuestsPassed;
-    TextView QuestText;
-    ImageView QuestImage;
-    String passCode;
-    SharedPreferences sPref;
+    private Button CheckCodeButton;
+    private Button BackButton;
+    private EditText EditCodeText;
+    private TextView QuestTitle;
+    private TextView QuestsPassed;
+    private TextView QuestText;
+    private ImageView QuestImage;
+    private String passCode;
+    private SharedPreferences sPref;
     private OnFragmentInteractionListener mListener;
 
     public DialogQuest() {
@@ -165,7 +162,6 @@ public class DialogQuest extends DialogFragment implements View.OnClickListener 
                     SQLiteDatabase database = dbHelper.getWritableDatabase();
                     Cursor cursorQuest = database.query(DataBaseHelper.TABLE_QUESTS_NAME, null, null, null, null, null, null);
                     if (cursorQuest.moveToFirst()) {
-                        int passedIndex = cursorQuest.getColumnIndex(DataBaseHelper.QUESTS_PASSED);
                         int descriptionIndex = cursorQuest.getColumnIndex(DataBaseHelper.QUESTS_DESCRIPTION);
                         int nameIndex = cursorQuest.getColumnIndex(DataBaseHelper.QUESTS_NAME);
                         do {

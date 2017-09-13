@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,7 +48,7 @@ public class FragmentMap extends android.support.v4.app.Fragment implements
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     MapView mMapView;
-    private GoogleMap googleMap;
+    GoogleMap googleMap;
     ArrayList<ApiQuest> dataQuests;
     ArrayList<ApiTents> dataTents;
     ArrayList<ApiSports> dataSports;
